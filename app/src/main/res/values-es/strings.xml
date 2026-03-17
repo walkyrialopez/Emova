@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Emova</string>
+
+    <!-- Greetings -->
+    <string name="greeting_morning">Buenos días 🌅</string>
+    <string name="greeting_afternoon">Buenas tardes ☀️</string>
+    <string name="greeting_evening">Buenas noches 🌙</string>
+    <string name="greeting_late">¿Aún despierto? 🌟</string>
+
+    <!-- Today screen -->
+    <string name="today_subtitle_all_done">¡Completaste todos tus hábitos hoy! 🎉</string>
+    <string name="today_subtitle_default">Tu revisión de bienestar diaria</string>
+    <string name="today_label">Hoy</string>
+    <string name="today_day_streak">días seguidos</string>
+    <string name="today_habits_title">Hábitos de Hoy</string>
+    <string name="today_all_done_title">¡Todo listo por hoy!</string>
+    <string name="today_all_done_subtitle">Tu constancia está generando un cambio real.</string>
+
+    <!-- Habit cards -->
+    <string name="habit_checkin_title">Registro Emocional</string>
+    <string name="habit_checkin_done">Hecho a las %1$s — toca para registrarte de nuevo</string>
+    <string name="habit_checkin_pending">¿Cómo te sientes hoy?</string>
+
+    <string name="habit_gratitude_title">Diario de Gratitud</string>
+    <string name="habit_gratitude_done">10 cosas escritas ✓</string>
+    <string name="habit_gratitude_progress">%1$d/10 escritas — ¡sigue así!</string>
+    <string name="habit_gratitude_pending">Escribe 10 cosas por las que estás agradecido</string>
+
+    <string name="habit_breathing_title">Ejercicio de Respiración</string>
+    <string name="habit_breathing_done">Sesión completada ✓</string>
+    <string name="habit_breathing_pending">Tómate 3 minutos para respirar</string>
+
+    <string name="habit_lesson_title">Lección Diaria</string>
+    <string name="habit_lesson_done">Lección completada ✓</string>
+    <string name="habit_lesson_pending">Aprende algo nuevo sobre tus emociones</string>
+
+    <!-- Micro habits card -->
+    <string name="micro_habits_title">Micro Hábitos</string>
+    <string name="micro_habits_pending">Pequeñas acciones, gran impacto</string>
+    <string name="micro_habits_all_done">¡Los %1$d de hoy, listos! 🏆</string>
+    <string name="micro_habits_progress">%1$d de %2$d hábitos hechos</string>
+
+    <!-- Check-In screen -->
+    <string name="checkin_title">¿Cómo te sientes?</string>
+    <string name="checkin_subtitle">Elige la emoción que más se acerca a lo que sientes ahora</string>
+    <string name="checkin_intensity">Intensidad</string>
+    <string name="checkin_intensity_value">%1$d / 10</string>
+    <string name="checkin_mild">Leve</string>
+    <string name="checkin_intense">Intenso</string>
+    <string name="checkin_save">Guardar Registro</string>
+    <string name="checkin_saving">Guardando…</string>
+
+    <!-- Settings / Language -->
+    <string name="settings_language">Idioma</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Español</string>
+
+    <!-- Wellness tip of the day -->
+    <string name="wellness_tip_label">Consejo de bienestar del día</string>
+    <string-array name="wellness_tip_titles">
+        <item>La limpieza da paz</item>
+        <item>Luz natural</item>
+        <item>Vístete para triunfar</item>
+        <item>Sin distracciones</item>
+        <item>El poder del agua</item>
+        <item>Aire fresco</item>
+        <item>Menos azúcar, más calma</item>
+        <item>Cinco minutos de orden</item>
+        <item>Estiramientos simples</item>
+        <item>Lectura edificante</item>
+        <item>Gratitud en voz alta</item>
+        <item>Música tranquila</item>
+        <item>Una cosa a la vez</item>
+        <item>El descanso es necesario</item>
+        <item>Plantas en casa</item>
+        <item>Palabras amables</item>
+        <item>Desintoxicación digital</item>
+        <item>Escucha con atención</item>
+        <item>Pequeños logros</item>
+        <item>Respiración consciente</item>
+        <item>Sonríe primero</item>
+        <item>Agua fría en el rostro</item>
+        <item>Escríbelo</item>
+        <item>Sonidos de la naturaleza</item>
+        <item>La regla de los dos minutos</item>
+        <item>Abraza a alguien</item>
+        <item>Cocina algo sencillo</item>
+        <item>Deja de seguir para dejar de sentir</item>
+        <item>Celebra los pequeños pasos</item>
+        <item>Pide ayuda</item>
+        <item>Mueve tu cuerpo</item>
+        <item>Ejercicio y emociones</item>
+        <item>Empieza pequeño</item>
+        <item>La constancia supera la intensidad</item>
+    </string-array>
+    <string-array name="wellness_tip_bodies">
+        <item>Limpiar tu espacio de trabajo al final del día ayuda a tu mente a descansar.</item>
+        <item>Abrir las cortinas al despertar permite que la luz solar mejore tu estado de ánimo de inmediato.</item>
+        <item>Arreglarte, aunque te quedes en casa, te ayuda a sentirte más preparado para el día.</item>
+        <item>Intenta comer sin mirar el teléfono. Disfrutar el sabor de la comida calma los sentidos.</item>
+        <item>Beber un vaso de agua al levantarte ayuda a tu cuerpo a despertar suavemente.</item>
+        <item>Caminar diez minutos al aire libre te ayuda a ver las cosas con más claridad.</item>
+        <item>Evitar el exceso de dulces previene que tus emociones suban y bajen de golpe.</item>
+        <item>Recoger lo que está fuera de lugar antes de dormir te ayuda a despertar con menos estrés.</item>
+        <item>Estirar los brazos y el cuello alivia la tensión que se acumula sin que te des cuenta.</item>
+        <item>Leer algo positivo antes de dormir prepara tu corazón para un descanso profundo.</item>
+        <item>Decir "gracias" por algo pequeño fortalece los lazos de amistad.</item>
+        <item>Escuchar algo suave mientras haces tareas del hogar hace que el tiempo pase mejor.</item>
+        <item>Intenta no hacer varias cosas a la vez. Concentrarte en una sola da más satisfacción.</item>
+        <item>Acostarte a la misma hora le da seguridad a tu cuerpo y a tu mente.</item>
+        <item>Cuidar una pequeña planta trae calma y vida a tu entorno.</item>
+        <item>Háblate con cariño, como le hablarías a un buen amigo.</item>
+        <item>Apagar las pantallas una hora antes de dormir ayuda a tu cerebro a relajarse.</item>
+        <item>Prestar toda tu atención cuando alguien habla hace la relación más profunda.</item>
+        <item>Al terminar una tarea, por pequeña que sea, reconoce el esfuerzo realizado.</item>
+        <item>Cuando llegue un momento tenso, detente y respira profundo tres veces.</item>
+        <item>Sonreír al despertar — aunque sea brevemente — le dice a tu cerebro que hoy es un buen día.</item>
+        <item>Mojarte la cara con agua fría restablece tu estado de alerta en segundos.</item>
+        <item>Cuando tu mente se sienta saturada, escribe todo en un papel. Genera alivio instantáneo.</item>
+        <item>Poner sonidos de lluvia o pájaros mientras trabajas reduce el estrés sin distraerte.</item>
+        <item>Si algo tarda menos de dos minutos, hazlo ahora. Las tareas pequeñas se acumulan en gran presión.</item>
+        <item>Un abrazo genuino de al menos seis segundos libera oxitocina y reduce la tensión.</item>
+        <item>Preparar una comida desde cero, aunque sea sencilla, te trae al momento presente.</item>
+        <item>Si una cuenta en redes sociales te hace sentir mal, silénciala o deja de seguirla. Tu feed es tu entorno.</item>
+        <item>El progreso no tiene que ser grande. Cada paso adelante merece una pequeña celebración.</item>
+        <item>Pedir ayuda no es debilidad — es confianza, y la confianza construye conexión.</item>
+        <item>Incluso 10 minutos de movimiento liberan endorfinas que mejoran tu estado de ánimo durante horas.</item>
+        <item>El ejercicio reduce el cortisol y la adrenalina —las hormonas del estrés— mientras aumenta la serotonina y la dopamina de forma natural.</item>
+        <item>No necesitas un gimnasio. Cinco sentadillas, una caminata corta o bailar una canción cuentan como movimiento.</item>
+        <item>Una caminata de 15 minutos diarios hace más por tu bienestar que un entrenamiento intenso una vez por semana.</item>
+    </string-array>
+    <!-- Journal screen -->
+    <string name="journal_title">Diario</string>
+    <string name="journal_feeling">Sintiéndome %1$s</string>
+    <string name="journal_placeholder">Escribe tus pensamientos aquí…</string>
+    <string name="journal_back">Atrás</string>
+    <string name="journal_skip">Omitir</string>
+    <string name="journal_next">Siguiente →</string>
+    <string name="journal_finish">Terminar ✓</string>
+
+    <!-- Emotion families -->
+    <string name="family_positive">Positivo</string>
+    <string name="family_difficult">Difícil</string>
+    <string name="family_activated">Activado</string>
+
+    <!-- Emotion names and descriptions — POSITIVE -->
+    <string name="emotion_pos_1_name">Feliz</string>
+    <string name="emotion_pos_1_desc">Sintiéndose satisfecho y contento.</string>
+    <string name="emotion_pos_2_name">Emocionado</string>
+    <string name="emotion_pos_2_desc">Anticipando algo con entusiasmo.</string>
+    <string name="emotion_pos_3_name">Orgulloso</string>
+    <string name="emotion_pos_3_desc">Sintiéndose profundamente satisfecho o realizado.</string>
+    <string name="emotion_pos_4_name">Amoroso</string>
+    <string name="emotion_pos_4_desc">Sintiéndose cálido y con afecto.</string>
+    <string name="emotion_pos_5_name">Agradecido</string>
+    <string name="emotion_pos_5_desc">Sintiéndose o mostrando agradecimiento.</string>
+    <string name="emotion_pos_6_name">Seguro</string>
+    <string name="emotion_pos_6_desc">Sintiéndose a salvo y apoyado.</string>
+    <string name="emotion_pos_7_name">Esperanzado</string>
+    <string name="emotion_pos_7_desc">Sintiéndose optimista sobre el futuro.</string>
+    <string name="emotion_pos_8_name">Curioso</string>
+    <string name="emotion_pos_8_desc">Con ganas de saber o aprender algo.</string>
+    <string name="emotion_pos_9_name">Entusiasta</string>
+    <string name="emotion_pos_9_desc">Listo y con muchas ganas de hacer algo.</string>
+    <string name="emotion_pos_10_name">Tranquilo</string>
+    <string name="emotion_pos_10_desc">Sin perturbaciones; calmado y a gusto.</string>
+    <string name="emotion_pos_11_name">Inspirado</string>
+    <string name="emotion_pos_11_desc">Sintiéndose estimulado mentalmente y creativo.</string>
+    <string name="emotion_pos_12_name">Juguetón</string>
+    <string name="emotion_pos_12_desc">Ligero de corazón y lleno de diversión.</string>
+    <string name="emotion_pos_13_name">Seguro de sí</string>
+    <string name="emotion_pos_13_desc">Sintiéndose seguro de tus propias habilidades.</string>
+    <string name="emotion_pos_14_name">Conectado</string>
+    <string name="emotion_pos_14_desc">Sintiéndose cercano y en armonía con los demás.</string>
+    <string name="emotion_pos_15_name">Satisfecho</string>
+    <string name="emotion_pos_15_desc">Contento con cómo han resultado las cosas.</string>
+
+    <!-- Emotion names and descriptions — DIFFICULT -->
+    <string name="emotion_dif_1_name">Triste</string>
+    <string name="emotion_dif_1_desc">Sintiéndose o mostrando tristeza.</string>
+    <string name="emotion_dif_2_name">Decepcionado</string>
+    <string name="emotion_dif_2_desc">Sintiéndose defraudado por alguien o algo.</string>
+    <string name="emotion_dif_3_name">Solo</string>
+    <string name="emotion_dif_3_desc">Triste por estar desconectado.</string>
+    <string name="emotion_dif_4_name">Asustado</string>
+    <string name="emotion_dif_4_desc">Con miedo; lleno de temor.</string>
+    <string name="emotion_dif_5_name">Ansioso</string>
+    <string name="emotion_dif_5_desc">Experimentando preocupación o inquietud.</string>
+    <string name="emotion_dif_6_name">Inseguro</string>
+    <string name="emotion_dif_6_desc">Sin confianza ni seguridad.</string>
+    <string name="emotion_dif_7_name">Abrumado</string>
+    <string name="emotion_dif_7_desc">Sepultado bajo demasiado a la vez.</string>
+    <string name="emotion_dif_8_name">Sin esperanza</string>
+    <string name="emotion_dif_8_desc">Sintiéndose sin esperanza ni posibilidad.</string>
+    <string name="emotion_dif_9_name">Duelo</string>
+    <string name="emotion_dif_9_desc">Profunda tristeza por una pérdida.</string>
+    <string name="emotion_dif_10_name">Avergonzado</string>
+    <string name="emotion_dif_10_desc">Sintiéndose culpable o avergonzado de uno mismo.</string>
+    <string name="emotion_dif_11_name">Confundido</string>
+    <string name="emotion_dif_11_desc">Incapaz de pensar con claridad; inseguro.</string>
+    <string name="emotion_dif_12_name">Agotado</string>
+    <string name="emotion_dif_12_desc">Completamente exhausto emocionalmente.</string>
+    <string name="emotion_dif_13_name">Entumecido</string>
+    <string name="emotion_dif_13_desc">Incapaz de sentir emociones; emocionalmente plano.</string>
+    <string name="emotion_dif_14_name">Celoso</string>
+    <string name="emotion_dif_14_desc">Envidioso de lo que tiene otra persona.</string>
+    <string name="emotion_dif_15_name">Culpable</string>
+    <string name="emotion_dif_15_desc">Sintiéndose responsable de un error.</string>
+
+    <!-- Emotion names and descriptions — ACTIVATED -->
+    <string name="emotion_act_1_name">Enojado</string>
+    <string name="emotion_act_1_desc">Sintiéndose muy molesto o disgustado.</string>
+    <string name="emotion_act_2_name">Furioso</string>
+    <string name="emotion_act_2_desc">Extremadamente enojado.</string>
+    <string name="emotion_act_3_name">Resentido</string>
+    <string name="emotion_act_3_desc">Amargura por un agravio no resuelto.</string>
+    <string name="emotion_act_4_name">Frustrado</string>
+    <string name="emotion_act_4_desc">Molesto por estar bloqueado o no poder cambiar algo.</string>
+    <string name="emotion_act_5_name">Irritado</string>
+    <string name="emotion_act_5_desc">Mostrando ligero enojo; molesto.</string>
+    <string name="emotion_act_6_name">Impaciente</string>
+    <string name="emotion_act_6_desc">Inquieto por tener que esperar.</string>
+    <string name="emotion_act_7_name">Disgustado</string>
+    <string name="emotion_act_7_desc">Sintiéndose repulsión o desaprobación.</string>
+    <string name="emotion_act_8_name">Repugnado</string>
+    <string name="emotion_act_8_desc">Aversión intensa hacia algo.</string>
+    <string name="emotion_act_9_name">Desprecio</string>
+    <string name="emotion_act_9_desc">Sintiéndose que algo no merece consideración.</string>
+    <string name="emotion_act_10_name">Envidioso</string>
+    <string name="emotion_act_10_desc">Queriendo lo que tiene otra persona.</string>
+    <string name="emotion_act_11_name">Tenso</string>
+    <string name="emotion_act_11_desc">Mental o emocionalmente estresado.</string>
+    <string name="emotion_act_12_name">Inquieto</string>
+    <string name="emotion_act_12_desc">Incapaz de quedarse quieto; agitado.</string>
+    <string name="emotion_act_13_name">Defensivo</string>
+    <string name="emotion_act_13_desc">Protegiéndose de las críticas.</string>
+    <string name="emotion_act_14_name">Celoso</string>
+    <string name="emotion_act_14_desc">Protegiendo con fuerza lo que es tuyo.</string>
+    <string name="emotion_act_15_name">Humillado</string>
+    <string name="emotion_act_15_desc">Hecho sentir avergonzado o tonto por otros.</string>
+
+    <!-- Insights screen -->
+    <string name="insights_title">Estadísticas</string>
+    <string name="insights_day_streak">Días seguidos</string>
+    <string name="insights_avg_intensity">Intensidad media</string>
+    <string name="insights_top_feeling">Emoción principal</string>
+    <string name="insights_weekly">Semanal</string>
+    <string name="insights_monthly">Mensual</string>
+    <string name="insights_all_time">Todo</string>
+    <string name="insights_checkins">Registros</string>
+    <string name="insights_emotion_mix">Mezcla de emociones</string>
+    <string name="insights_patterns">Patrones</string>
+    <string name="insights_empty_title">Aún no hay registros</string>
+    <string name="insights_empty_subtitle">Empieza a registrarte cada día para ver tus patrones aquí</string>
+
+    <!-- Growth screen tabs -->
+    <string name="growth_tab_lessons">⭐  Lecciones</string>
+    <string name="growth_tab_reflect">🤝  Reflexionar</string>
+    <string name="growth_tab_words">📚  Palabras</string>
+
+    <!-- Wellness screen tabs -->
+    <string name="wellness_tab_breathe">🌬️ Respirar</string>
+    <string name="wellness_tab_gratitude">🙏 Gratitud</string>
+    <string name="wellness_tab_habits">✨ Hábitos</string>
+    <string name="wellness_tab_tips">💡 Consejos</string>
+
+    <!-- Onboarding screen -->
+    <string name="onboarding_welcome">Bienvenido a Emova</string>
+    <string name="onboarding_subtitle">Tu compañero diario para el bienestar emocional.\n¿Cómo te llamamos?</string>
+    <string name="onboarding_placeholder">Tu nombre o apodo…</string>
+    <string name="onboarding_cta_name">¡Vamos, %1$s! →</string>
+    <string name="onboarding_cta_default">Continuar →</string>
+    <string name="onboarding_skip">Omitir por ahora</string>
+    <!-- Journal prompts — POSITIVE -->
+    <string name="prompt_pos_1">¿Qué hizo especial este momento para ti?</string>
+    <string name="prompt_pos_2">¿Quién o qué contribuyó a este sentimiento?</string>
+    <string name="prompt_pos_3">¿Cómo puedes crear más momentos así en tu vida?</string>
+
+    <!-- Journal prompts — DIFFICULT -->
+    <string name="prompt_dif_1">¿Qué te está resultando difícil en este momento?</string>
+    <string name="prompt_dif_2">¿Hay algo que necesitas y no estás obteniendo?</string>
+    <string name="prompt_dif_3">¿Qué le dirías a un amigo que se siente así?</string>
+
+    <!-- Journal prompts — ACTIVATED -->
+    <string name="prompt_act_1">¿Qué te parece injusto o incorrecto de esta situación?</string>
+    <string name="prompt_act_2">¿Qué necesidad tuya no está siendo satisfecha?</string>
+    <string name="prompt_act_3">¿Cómo podrías expresar este sentimiento sin hacer daño?</string>
+
+    <!-- Journal prompts — fallback -->
+    <string name="prompt_default_1">¿Qué tienes en mente ahora mismo?</string>
+    <string name="prompt_default_2">¿Qué desencadenó este sentimiento?</string>
+    <string name="prompt_default_3">¿Qué necesitas en este momento?</string>
+
+    <!-- Thought Thermometer -->
+    <string name="thermo_label">🌡️ Revisión de Pensamiento</string>
+    <string name="thermo_you_felt">Sentiste %1$s</string>
+    <string name="thermo_skip">Omitir</string>
+    <string name="thermo_step_of">Paso %1$d de 3</string>
+    <string name="thermo_placeholder">Escribe tus pensamientos aquí…</string>
+    <string name="thermo_next">Siguiente →</string>
+    <string name="thermo_complete">Completar ✓</string>
+    <string name="thermo_skip_step">Omitir este paso</string>
+
+    <string name="thermo_step1_title">Identificar</string>
+    <string name="thermo_step1_question">¿Qué frase o pensamiento sigue repitiéndose en tu mente ahora mismo?</string>
+    <string name="thermo_step1_hint">ej. \"Siempre la cago\" o \"A nadie le importo\"</string>
+
+    <string name="thermo_step2_title">Cuestionar</string>
+    <string name="thermo_step2_question">¿Este pensamiento es un hecho o es una interpretación de los eventos?</string>
+    <string name="thermo_step2_hint">Los hechos son comprobables. Las interpretaciones son historias que nos contamos.</string>
+
+    <string name="thermo_step3_title">Reformular</string>
+    <string name="thermo_step3_question">¿Cómo le explicarías esta situación a un buen amigo para que no se sienta mal?</string>
+    <string name="thermo_step3_hint">Usa la misma compasión que darías a otros — tú también la mereces.</string>
+
+    <string name="thermo_done_title">Bien hecho</string>
+    <string name="thermo_done_body">Tomarte un momento para examinar tus pensamientos es una de las cosas más poderosas que puedes hacer por tu salud mental.</string>
+    <string name="thermo_done_button">Volver a Hoy</string>
+    <!-- Insights period labels -->
+    <string name="period_this_week">Esta semana</string>
+    <string name="period_last_week">La semana pasada</string>
+    <string name="period_weeks_ago">Hace %1$d semanas</string>
+    <string name="period_all_time">Todo el tiempo</string>
+
+    <!-- Day names for patterns -->
+    <string name="day_sundays">Los domingos</string>
+    <string name="day_mondays">Los lunes</string>
+    <string name="day_tuesdays">Los martes</string>
+    <string name="day_wednesdays">Los miércoles</string>
+    <string name="day_thursdays">Los jueves</string>
+    <string name="day_fridays">Los viernes</string>
+    <string name="day_saturdays">Los sábados</string>
+
+    <!-- Pattern insights -->
+    <string name="pattern_hard_day_title">%1$s son más difíciles</string>
+    <string name="pattern_hard_day_desc">El %1$d%% de tus registros de %2$s son emociones difíciles. Intenta planear algo agradable ese día.</string>
+    <string name="pattern_best_day_title">%1$s son tus mejores días</string>
+    <string name="pattern_best_day_desc">El %1$d%% de tus %2$s son emociones positivas. ¡Observa qué hace especial ese día!</string>
+    <string name="pattern_streak_title">¡Racha de %1$d días!</string>
+    <string name="pattern_streak_desc">Te has registrado %1$d días seguidos. La constancia es la base del autoconocimiento.</string>
+    <string name="pattern_high_intensity_title">Semana de alta intensidad</string>
+    <string name="pattern_high_intensity_desc">Has sentido las cosas con profundidad este período. Asegúrate de darte tiempo para recuperarte.</string>
+    <string name="pattern_mostly_positive_title">Mayormente positivo</string>
+    <string name="pattern_mostly_positive_desc">El %1$d%% de tus emociones este período son positivas. Estás en una buena etapa.</string>
+    <!-- Breathing screen -->
+    <string name="breathe_title">Respirar</string>
+    <string name="breathe_subtitle">Elige un ejercicio de respiración</string>
+    <string name="breathe_back">← Atrás</string>
+    <string name="breathe_rounds_left">%1$d rondas restantes</string>
+    <string name="breathe_inhale">Inhalar</string>
+    <string name="breathe_hold">Mantener</string>
+    <string name="breathe_exhale">Exhalar</string>
+    <string name="breathe_chip_in">Inhala %1$ds</string>
+    <string name="breathe_chip_hold">Mant. %1$ds</string>
+    <string name="breathe_chip_out">Exhala %1$ds</string>
+    <string name="breathe_well_done">¡Bien hecho!</string>
+    <string name="breathe_completed">Completaste %1$s.</string>
+    <string name="breathe_done">Listo</string>
+    <string name="breathe_begin">Comenzar</string>
+    <string name="breathe_pause">Pausar</string>
+    <string name="breathe_tip_label">💡 Consejo</string>
+    <string name="breathe_tip_body">Incluso 3 minutos de respiración intencional pueden reducir los niveles de cortisol y calmar tu sistema nervioso.</string>
+    <string-array name="breathing_pattern_names">
+        <item>Respiración en Caja</item>
+        <item>4-7-8 Relajante</item>
+        <item>Calma Profunda</item>
+        <item>Energizante</item>
+    </string-array>
+    <string-array name="breathing_pattern_descs">
+        <item>Reduce el estrés y mejora la concentración. Usado por los Navy SEALs.</item>
+        <item>Calma el sistema nervioso. Ideal antes de dormir.</item>
+        <item>Respiración lenta y sencilla para aliviar la ansiedad.</item>
+        <item>Inhalaciones rápidas para aumentar el estado de alerta y la energía.</item>
+    </string-array>
+
+    <!-- Gratitude screen -->
+    <string name="gratitude_title">Diario de Gratitud</string>
+    <string name="gratitude_subtitle">Escribe por lo que estás agradecido hoy</string>
+    <string name="gratitude_history">Historial</string>
+    <string name="gratitude_save_single">Guardar 1 gratitud ✓</string>
+    <string name="gratitude_save_plural">Guardar %1$d gratitudes ✓</string>
+    <string name="gratitude_write_prompt">Escribe al menos una cosa…</string>
+    <string name="gratitude_beautiful">¡Hermoso!</string>
+    <string name="gratitude_done_body">Encontraste %1$d cosas por las que estar agradecido hoy.\nEsa es una práctica poderosa.</string>
+    <string name="gratitude_start_fresh">Empezar de Nuevo Mañana</string>
+    <string name="gratitude_back">← Atrás</string>
+    <string name="gratitude_past_entries">Entradas anteriores</string>
+    <string name="gratitude_days_count">%1$d días</string>
+    <string name="gratitude_items_single">%1$d gratitud</string>
+    <string name="gratitude_items_plural">%1$d gratitudes</string>
+    <string name="gratitude_empty">Aún no hay entradas.\n¡Empieza tu práctica de gratitud hoy!</string>
+    <string-array name="gratitude_placeholders">
+        <item>Alguien que te hizo sonreír…</item>
+        <item>Algo en la naturaleza que aprecias…</item>
+        <item>Un momento de hoy que disfrutaste…</item>
+        <item>Una habilidad o talento que te alegra tener…</item>
+        <item>Algo de tu hogar o espacio…</item>
+        <item>Una persona que te apoya…</item>
+        <item>Algo pequeño que salió bien hoy…</item>
+        <item>Un recuerdo que te da calidez…</item>
+        <item>Algo que sueles dar por sentado…</item>
+        <item>Cualquier otra cosa por la que te sientas agradecido…</item>
+    </string-array>
+
+    <!-- Gold Habits screen -->
+    <string name="habits_title">Hábitos de Oro</string>
+    <string name="habits_subtitle">Pequeñas acciones que suman un gran día</string>
+    <string name="habits_done_title">¡Todos los hábitos hechos!</string>
+    <string name="habits_done_subtitle">Hoy te cuidaste a ti mismo.</string>
+    <string-array name="gold_habit_titles">
+        <item>Vaso de agua al despertar</item>
+        <item>10 minutos de luz solar</item>
+        <item>Me vestí con intención</item>
+        <item>Le sonreí a alguien hoy</item>
+        <item>Ordené un espacio</item>
+        <item>Comida sin teléfono</item>
+        <item>Moví mi cuerpo / ejercicio</item>
+        <item>Me dije algo amable</item>
+        <item>Me conecté con alguien</item>
+        <item>Hice un momento de anclaje</item>
+        <item>Leí algo positivo</item>
+        <item>Me fui a dormir a tiempo</item>
+    </string-array>
+    <string-array name="gold_habit_subtitles">
+        <item>Hidrata tu cuerpo antes que cualquier otra cosa</item>
+        <item>Sal afuera o abre las cortinas a la luz natural</item>
+        <item>Invertir en tu apariencia construye autoestima</item>
+        <item>Una sonrisa es gratis y construye conexión</item>
+        <item>El orden exterior crea calma interior</item>
+        <item>Comí sin mirar una pantalla</item>
+        <item>Todo movimiento cuenta — caminar, gym, estirar, bailar</item>
+        <item>La autocompasión es una práctica diaria</item>
+        <item>Una llamada, un mensaje o una conversación</item>
+        <item>Noté mi entorno con los 5 sentidos</item>
+        <item>Alimenta tu mente con lo que la construye</item>
+        <item>Un horario de sueño constante regula el estado de ánimo</item>
+    </string-array>
+
+    <!-- Daily Tips screen -->
+    <string name="tips_title">Consejos Diarios</string>
+    <string name="tips_subtitle">Hábitos sencillos para un mejor día</string>
+    <string name="tips_search">Buscar consejos…</string>
+    <string name="tips_filter_all">Todos</string>
+    <string name="tips_count">%1$d consejos</string>
+    <string name="tip_cat_environment">Entorno</string>
+    <string name="tip_cat_body">Cuerpo</string>
+    <string name="tip_cat_mind">Mente</string>
+    <string name="tip_cat_relationships">Relaciones</string>
+    <string name="tip_cat_sleep">Sueño</string>
+    <string name="tip_cat_focus">Concentración</string>
+    <!-- SOS Panel -->
+    <string name="sos_overwhelmed">¿Te sientes abrumado?</string>
+    <string name="sos_subtitle">Toca para calmarte al instante</string>
+    <string name="sos_grounding_button">5-4-3-2-1\nAnclaje</string>
+    <string name="sos_breathing_button">4-7-8\nRespiración</string>
+    <string name="sos_next">Siguiente →</string>
+    <string name="sos_calmer">Me siento más tranquilo ✓</string>
+    <string name="sos_close">Cerrar</string>
+    <string-array name="sos_grounding_emojis">
+        <item>👀</item>
+        <item>🤚</item>
+        <item>👂</item>
+        <item>👃</item>
+        <item>👄</item>
+    </string-array>
+    <string-array name="sos_grounding_steps">
+        <item>Nombra 5 cosas que puedas ver ahora mismo.</item>
+        <item>Nota 4 cosas que puedas sentir físicamente — tus pies en el suelo, tu ropa en la piel.</item>
+        <item>Escucha 3 sonidos a tu alrededor.</item>
+        <item>Encuentra 2 cosas que puedas oler — o nota el aire.</item>
+        <item>Nombra 1 cosa que puedas saborear ahora mismo.</item>
+    </string-array>
+    <!-- Lessons screen -->
+    <string name="lessons_title">Lecciones Diarias</string>
+    <string name="lessons_subtitle">Desarrolla tu inteligencia emocional paso a paso</string>
+    <string name="lessons_today_label">LECCIÓN DE HOY</string>
+    <string name="lessons_start_button">Iniciar Lección →</string>
+    <string name="lessons_how_respond">¿Cómo respondes?</string>
+    <string name="lessons_great_choice">✅ ¡Buena elección!</string>
+    <string name="lessons_consider">💡 Considera esto</string>
+    <string name="lessons_breathing_rounds">4 rondas · %1$d pasos cada una</string>
+    <string name="lessons_start_breathing">Iniciar Ejercicio de Respiración</string>
+    <string name="lessons_breathe_circle">Respira con el círculo…</string>
+    <string name="lessons_write_reflection">Escribe tu reflexión…</string>
+    <string name="lessons_save_reflection">Guardar Reflexión ✓</string>
+    <string name="lessons_reflection_saved">¡Reflexión guardada!</string>
+    <string name="lessons_great_work">Buen trabajo en la lección de hoy.</string>
+    <string name="lessons_write_answer">Escribe tu respuesta…</string>
+    <string name="lessons_gratitude_done_title">¡Hermoso!</string>
+    <string name="lessons_gratitude_done_body">La gratitud reconfigura el cerebro para la positividad.</string>
+    <string name="lessons_finish">Terminar ✓</string>
+    <string name="lessons_next">Siguiente →</string>
+    <string name="lessons_intensity">Intensidad: </string>
+    <string name="lessons_mild">Leve</string>
+    <string name="lessons_moderate">Moderado</string>
+    <string name="lessons_intense">Intenso</string>
+
+    <!-- Conflict screen -->
+    <string name="conflict_title">Reflexión de Conflicto</string>
+    <string name="conflict_subtitle">Una guía para procesar una interacción difícil y crecer a partir de ella.</string>
+    <string name="conflict_begin">Iniciar Reflexión</string>
+    <string name="conflict_duration">~10 minutos · 5 pasos</string>
+    <string name="conflict_step_of">Paso %1$d de %2$d</string>
+    <string name="conflict_back">← Atrás</string>
+    <string name="conflict_next">Siguiente →</string>
+    <string name="conflict_complete">Completar ✓</string>
+    <string name="conflict_skip_step">Omitir este paso</string>
+    <string name="conflict_write_thoughts">Escribe tus pensamientos…</string>
+    <string name="conflict_done_title">Reflexión Completada</string>
+    <string name="conflict_done_body">Procesar un conflicto requiere valentía. Has dado un paso importante hacia el crecimiento.</string>
+    <string name="conflict_restart">Iniciar Nueva Reflexión</string>
+    <string name="conflict_step_label">Paso %1$d: %2$s</string>
+    <string-array name="conflict_step_titles">
+        <item>¿Qué Pasó?</item>
+        <item>Tus Sentimientos</item>
+        <item>Su Perspectiva</item>
+        <item>Tu Papel</item>
+        <item>Avanzando</item>
+    </string-array>
+    <string-array name="conflict_step_questions">
+        <item>Describe la situación de la forma más objetiva posible — solo los hechos, sin interpretaciones.</item>
+        <item>¿Qué emociones sentiste durante y después de esta interacción?</item>
+        <item>¿Cómo crees que se sentía la otra persona? ¿Qué pudo haber necesitado en ese momento?</item>
+        <item>Con honestidad — ¿qué papel jugaste en cómo se desarrolló esto? ¿Hay algo que harías diferente?</item>
+        <item>¿Cuál es una acción concreta que podrías tomar para mejorar esta situación o relación?</item>
+    </string-array>
+    <string-array name="conflict_step_hints">
+        <item>Cíñete a eventos observables: quién, qué, cuándo. Evita palabras como \'siempre\' o \'nunca\'.</item>
+        <item>Intenta nombrar emociones específicas — no solo \'enojado\' sino \'humillado\', \'ignorado\', \'irrespetado\'.</item>
+        <item>Intenta asumir una intención positiva o neutral. ¿Qué presiones o miedos pudo haber tenido?</item>
+        <item>No se trata de culpa, sino de crecimiento. Hasta los detalles pequeños cuentan.</item>
+        <item>Podría ser una conversación, una disculpa, establecer un límite o simplemente dejarlo ir.</item>
+    </string-array>
+
+    <!-- Vocabulary screen -->
+    <string name="vocab_title">Vocabulario Emocional</string>
+    <string name="vocab_subtitle">%1$d palabras para profundizar tu alfabetización emocional</string>
+    <string name="vocab_search">Buscar emociones…</string>
+    <string name="vocab_all">Todos</string>
+    <string name="vocab_back">Vocabulario</string>
+    <string name="vocab_section_definition">Definición</string>
+    <string name="vocab_section_real_life">En la Vida Real</string>
+    <string name="vocab_section_what_to_do">Qué Puedes Hacer</string>
+    <string name="vocab_section_related">Palabras Relacionadas</string>
+    <!-- Bottom navigation -->
+    <string name="nav_today">Hoy</string>
+    <string name="nav_checkin">Registro</string>
+    <string name="nav_insights">Estadísticas</string>
+    <string name="nav_wellness">Bienestar</string>
+    <string name="nav_growth">Crecimiento</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Settings screen remaining strings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_subtitle">Personaliza tu experiencia</string>
+    <string name="settings_notif_title">Recordatorio Diario</string>
+    <string name="settings_notif_subtitle">Recibe un recordatorio para registrarte</string>
+    <string name="settings_reminder_time">Hora del Recordatorio</string>
+    <string name="settings_export_title">Exportar tu Diario</string>
+    <string name="settings_export_subtitle">Descarga todos tus registros y entradas como un archivo CSV</string>
+    <string name="settings_export_button">Exportar a CSV</string>
+    <string name="settings_about_section">ℹ️ Acerca de</string>
+    <string name="settings_about_app">App</string>
+    <string name="settings_about_app_value">Emova – Inteligencia Emocional</string>
+    <string name="settings_about_version">Versión</string>
+    <string name="settings_about_built">Desarrollado con</string>
+
+    <!-- Lesson categories -->
+    <string name="lesson_cat_awareness">Autoconciencia</string>
+    <string name="lesson_cat_empathy">Empatía</string>
+    <string name="lesson_cat_regulation">Regulación</string>
+    <string name="lesson_cat_social">Habilidades Sociales</string>
+    <string name="lesson_cat_motivation">Motivación</string>
+
+    <!-- Lesson titles and descriptions -->
+    <string name="lesson_sa01_title">Nómbralo para Dominarlo</string>
+    <string name="lesson_sa01_desc">Etiquetar las emociones reduce su intensidad. Practica la precisión.</string>
+    <string name="lesson_sa02_title">Escaneo Corporal</string>
+    <string name="lesson_sa02_desc">Las emociones viven en el cuerpo. Aprende a leer tus señales físicas.</string>
+    <string name="lesson_sa03_title">Tu Mapa de Detonantes</string>
+    <string name="lesson_sa03_desc">Descubre qué desencadena sistemáticamente reacciones fuertes en ti.</string>
+    <string name="lesson_em01_title">La Otra Silla</string>
+    <string name="lesson_em01_desc">Ponte en el lugar de otra persona — incluso alguien difícil.</string>
+    <string name="lesson_em02_title">Empatía vs Simpatía</string>
+    <string name="lesson_em02_desc">Aprende la diferencia clave y practica responder con empatía.</string>
+    <string name="lesson_em03_title">Escucha Compasiva</string>
+    <string name="lesson_em03_desc">La mayoría escucha para responder. Practica escuchar para entender.</string>
+    <string name="lesson_re01_title">El Escaneo Corporal</string>
+    <string name="lesson_re01_desc">Una técnica de mindfulness para liberar la tensión en tu cuerpo.</string>
+    <string name="lesson_re02_title">La Pausa de 10 Segundos</string>
+    <string name="lesson_re02_desc">Un hábito que puede cambiar cómo respondes bajo estrés.</string>
+    <string name="lesson_ss01_title">Dar Retroalimentación con Cuidado</string>
+    <string name="lesson_ss01_desc">La retroalimentación es un regalo — cuando se da bien.</string>
+    <string name="lesson_mo01_title">Inmersión en Gratitud</string>
+    <string name="lesson_mo01_desc">Ve más allá de hacer listas — explora por qué estás agradecido.</string>
+
+    <!-- Lesson content: sa_01 -->
+    <string name="lesson_sa01_prompt">Piensa en un momento de esta semana en que te sentiste incómodo. En lugar de \'mal\' o \'estresado\', ¿cuál es la palabra más precisa para lo que sentiste?</string>
+    <string name="lesson_sa01_hint1">¿Fue más cercano a ansioso, abrumado o con temor?</string>
+    <string name="lesson_sa01_hint2">¿Fue frustración, resentimiento o decepción?</string>
+    <string name="lesson_sa01_hint3">¿Fue soledad, exclusión o rechazo?</string>
+
+    <!-- Lesson content: sa_02 -->
+    <string name="lesson_sa02_prompt">Cierra los ojos y recorre tu cuerpo de cabeza a pies. ¿Dónde sientes tensión, rigidez o calma? ¿Qué podría estar diciéndote esa sensación emocionalmente?</string>
+    <string name="lesson_sa02_hint1">El pecho o los hombros tensos suelen señalar estrés o ansiedad</string>
+    <string name="lesson_sa02_hint2">La pesadez en el estómago puede significar temor o culpa</string>
+    <string name="lesson_sa02_hint3">El calor en el pecho suele señalar alegría o amor</string>
+
+    <!-- Lesson content: sa_03 -->
+    <string name="lesson_sa03_prompt">Piensa en 3 situaciones que de manera consistente te hacen sentir enojado, ansioso o herido. ¿Qué tienen en común? ¿Qué valor o necesidad está siendo amenazada?</string>
+    <string name="lesson_sa03_hint1">Detonantes comunes: sentirse ignorado, perder el control, ser criticado</string>
+    <string name="lesson_sa03_hint2">Busca patrones en diferentes personas o lugares</string>
+    <string name="lesson_sa03_hint3">Detrás de cada detonante suele haber una necesidad insatisfecha</string>
+
+    <!-- Lesson content: em_01 -->
+    <string name="lesson_em01_prompt">Piensa en alguien con quien hayas tenido un conflicto recientemente. Intenta describir la situación desde su punto de vista — sus miedos, presiones e intenciones. ¿Qué pudo haber sentido?</string>
+    <string name="lesson_em01_hint1">Asume primero una intención positiva o neutral</string>
+    <string name="lesson_em01_hint2">¿Qué desafíos pueden estar enfrentando que tú no ves?</string>
+    <string name="lesson_em01_hint3">¿Cómo te sentirías si estuvieras exactamente en su situación?</string>
+
+    <!-- Lesson content: em_02 -->
+    <string name="lesson_em02_situation">Tu amigo dice: \'Últimamente estoy tan ansioso por el trabajo que casi no puedo dormir.\' ¿Cómo respondes?</string>
+    <string name="lesson_em02_opt1_text">\"¡Al menos tienes trabajo! Las cosas podrían ser peores.\"</string>
+    <string name="lesson_em02_opt1_fb">Esto minimiza su sentimiento. Comparar con situaciones peores rara vez ayuda — señala que su dolor no es válido.</string>
+    <string name="lesson_em02_opt2_text">\"Ay no, eso suena muy difícil. ¿Qué ha estado pasando?\"</string>
+    <string name="lesson_em02_opt2_fb">Esto es empatía — reconoces el sentimiento y lo invitas a compartir más sin juzgar.</string>
+    <string name="lesson_em02_opt3_text">\"Deberías probar la meditación, a mí me ayudó mucho.\"</string>
+    <string name="lesson_em02_opt3_fb">Saltar a soluciones omite la necesidad emocional de sentirse escuchado primero. Guarda los consejos para después.</string>
+
+    <!-- Lesson content: em_03 -->
+    <string name="lesson_em03_prompt">En tu próxima conversación hoy, intenta escuchar sin planear tu respuesta. Solo absorbe. Después reflexiona: ¿Qué notaste de la otra persona que podrías haber ignorado antes?</string>
+    <string name="lesson_em03_hint1">Nota su tono, no solo sus palabras</string>
+    <string name="lesson_em03_hint2">¿Qué emociones hay debajo de lo que están diciendo?</string>
+    <string name="lesson_em03_hint3">¿Qué parece que necesitan de esta conversación?</string>
+
+    <!-- Lesson content: re_01 -->
+    <string name="lesson_re01_prompt">Encuentra una posición cómoda. Cierra los ojos y escanea lentamente de cabeza a pies — nota la tensión sin juzgar, dejando que cada zona se suavice al exhalar.</string>
+    <string name="lesson_re01_hint1">Siéntate o acuéstate cómodamente</string>
+    <string name="lesson_re01_hint2">Cierra los ojos y toma 3 respiraciones lentas</string>
+    <string name="lesson_re01_hint3">Lleva la atención a la parte superior de tu cabeza</string>
+    <string name="lesson_re01_hint4">Escanea lentamente hacia abajo — nota la tensión sin juzgar</string>
+    <string name="lesson_re01_hint5">En cada zona, exhala y deja que se suavice</string>
+    <string name="lesson_re01_hint6">Continúa hasta llegar a los pies</string>
+    <string name="lesson_re01_hint7">Abre los ojos y nota cómo te sientes</string>
+
+    <!-- Lesson content: re_02 -->
+    <string name="lesson_re02_situation">Recibes un correo pasivo-agresivo de un colega frente a tu equipo. Tu primer instinto es responder de inmediato. ¿Qué haces?</string>
+    <string name="lesson_re02_opt1_text">Respondo de inmediato y aclaro las cosas</string>
+    <string name="lesson_re02_opt1_fb">Reaccionar de inmediato cuando estás emocionado suele escalar las cosas. Tu amígdala está al mando — no tu mejor yo.</string>
+    <string name="lesson_re02_opt2_text">Tomo 10 segundos, respiro y decido si necesito responder ahora</string>
+    <string name="lesson_re02_opt2_fb">La pausa interrumpe la respuesta al estrés. La mayoría de las situaciones se benefician de una breve espera — tu respuesta será más clara y tranquila.</string>
+    <string name="lesson_re02_opt3_text">Lo ignoro completamente y no digo nada</string>
+    <string name="lesson_re02_opt3_fb">Evitar puede funcionar a corto plazo, pero las tensiones sin resolver tienden a crecer. Una respuesta reflexiva después es generalmente mejor.</string>
+
+    <!-- Lesson content: ss_01 -->
+    <string name="lesson_ss01_situation">Un compañero sigue incumpliendo los plazos. Necesitas abordarlo. ¿Cómo inicias la conversación?</string>
+    <string name="lesson_ss01_opt1_text">\"Siempre llegas tarde con todo. Está afectando a todo el equipo.\"</string>
+    <string name="lesson_ss01_opt1_fb">Usar \'siempre\' y empezar con culpa genera defensividad. Se trata de ellos como persona, no del comportamiento.</string>
+    <string name="lesson_ss01_opt2_text">\"Quería hablar — noté que los últimos dos plazos no se cumplieron. ¿Está todo bien?\"</string>
+    <string name="lesson_ss01_opt2_fb">Esto abre con curiosidad y hechos específicos. Asume que algo puede estar mal en lugar de culpar — mucho más efectivo.</string>
+    <string name="lesson_ss01_opt3_text">\"Solo para que sepas, el equipo está frustrado.\"</string>
+    <string name="lesson_ss01_opt3_fb">La retroalimentación indirecta rara vez genera cambio y puede parecer cobarde. Sé específico y directo pero amable.</string>
+
+    <!-- Lesson content: mo_01 -->
+    <string name="lesson_mo01_prompt1">Nombra a alguien que haya hecho una diferencia positiva en tu vida recientemente. ¿Qué hizo específicamente?</string>
+    <string name="lesson_mo01_prompt2">¿Cuál es una cosa pequeña de hoy que normalmente pasarías por alto?</string>
+    <string name="lesson_mo01_prompt3">¿Por qué desafío estás agradecido, aunque haya sido difícil?</string>
+    <!-- Vocabulary words (29 entries, order must match vocabularyList) -->
+    <string-array name="vocab_words">
+        <item>Euforia</item><item>Contentamiento</item><item>Deleite</item><item>Éxtasis</item>
+        <item>Gratitud</item><item>Serenidad</item><item>Admiración</item><item>Seguridad</item>
+        <item>Esperanza</item><item>Entusiasmo</item><item>Curiosidad</item><item>Optimismo</item>
+        <item>Duelo</item><item>Melancolía</item><item>Nostalgia</item><item>Soledad</item>
+        <item>Desesperación</item><item>Decepción</item><item>Temor</item><item>Aprensión</item>
+        <item>Vulnerabilidad</item><item>Indignación</item><item>Resentimiento</item><item>Ultraje</item>
+        <item>Exasperación</item><item>Desprecio</item><item>Repulsión</item><item>Impaciencia</item>
+        <item>Amargura</item>
+    </string-array>
+    <string-array name="vocab_defs">
+        <item>Una intensa sensación de felicidad y emoción.</item>
+        <item>Una tranquila sensación de satisfacción y bienestar.</item>
+        <item>Un fuerte sentimiento de placer o alegría ante algo encantador.</item>
+        <item>Una abrumadora sensación de felicidad, casi más allá de la realidad.</item>
+        <item>Una cálida apreciación por la amabilidad recibida.</item>
+        <item>Un estado de calma, paz y tranquilidad sin perturbaciones.</item>
+        <item>Respeto y aprobación afectuosa hacia las cualidades de alguien.</item>
+        <item>Sentirse seguro, estable y libre de amenazas.</item>
+        <item>La sensación de que algo deseado es posible y probable.</item>
+        <item>Disposición entusiasta y deseo de hacer algo.</item>
+        <item>Un fuerte deseo de saber o aprender algo.</item>
+        <item>La tendencia a esperar el mejor resultado posible.</item>
+        <item>Profunda tristeza por una pérdida — de una persona, relación o etapa de vida.</item>
+        <item>Una tristeza pensativa y persistente sin causa clara.</item>
+        <item>Un suave anhelo por algo pasado o inalcanzable.</item>
+        <item>Una dolorosa conciencia de estar desconectado de los demás.</item>
+        <item>Una pérdida total de esperanza sobre una situación.</item>
+        <item>Tristeza por expectativas o esperanzas no cumplidas.</item>
+        <item>Miedo anticipatorio hacia algo específico e inevitable.</item>
+        <item>Leve ansiedad ante algo incierto en el futuro.</item>
+        <item>Exposición al riesgo o daño emocional sin certeza de seguridad.</item>
+        <item>Enojo provocado por algo percibido como injusto o indigno.</item>
+        <item>Amargura por un agravio o falta que no se ha resuelto.</item>
+        <item>Enojo ante una gran injusticia o violación moral.</item>
+        <item>Irritación intensa debido a obstáculos o fracasos repetidos.</item>
+        <item>La sensación de que alguien no merece consideración o atención.</item>
+        <item>Un fuerte sentimiento de asco y repulsión.</item>
+        <item>Inquietud por tener que esperar o tolerar demoras.</item>
+        <item>Enojo mezclado con tristeza y sensación de traición.</item>
+    </string-array>
+    <string-array name="vocab_examples">
+        <item>Sentir euforia cuando recibes una gran noticia inesperada.</item>
+        <item>Sentir contentamiento después de un tranquilo domingo en casa.</item>
+        <item>El deleite de ver a un niño reír sin parar.</item>
+        <item>Éxtasis después de terminar un maratón para el que entrenaste meses.</item>
+        <item>Gratitud hacia un amigo que apareció cuando lo necesitabas.</item>
+        <item>La serenidad de sentarse junto a un lago sin ningún plan.</item>
+        <item>Admiración por un mentor que superó grandes dificultades.</item>
+        <item>La seguridad de saber que alguien siempre está de tu lado.</item>
+        <item>Esperanza cuando las primeras señales sugieren que una situación difícil está mejorando.</item>
+        <item>Entusiasmo antes de comenzar un proyecto que te ha emocionado.</item>
+        <item>Curiosidad despertada por una pregunta en la que nunca habías pensado.</item>
+        <item>Optimismo de que mañana traerá un nuevo comienzo.</item>
+        <item>Duelo tras la muerte de un amigo de toda la vida.</item>
+        <item>Melancolía en una tarde gris de domingo sin ninguna razón particular.</item>
+        <item>Nostalgia al mirar fotos antiguas de un tiempo más feliz.</item>
+        <item>Soledad en un cuarto lleno de gente donde nadie realmente te conoce.</item>
+        <item>Desesperación cuando los esfuerzos fracasan repetidamente y no hay camino visible.</item>
+        <item>Decepción cuando un plan en el que trabajaste duro se viene abajo.</item>
+        <item>El temor antes de una conversación difícil que no puedes evitar.</item>
+        <item>Aprensión antes de comenzar un trabajo nuevo.</item>
+        <item>Vulnerabilidad al compartir algo profundamente personal.</item>
+        <item>Indignación al ser culpado por algo que no hiciste.</item>
+        <item>Resentimiento que crece cuando el esfuerzo no es reconocido con el tiempo.</item>
+        <item>Ultraje ante noticias de abuso de poder o corrupción.</item>
+        <item>Exasperación cuando el mismo error ocurre por quinta vez.</item>
+        <item>Desprecio por la hipocresía de quienes predican una cosa y hacen otra.</item>
+        <item>Repulsión al presenciar crueldad hacia alguien vulnerable.</item>
+        <item>Impaciencia en una fila que avanza lento cuando llegas tarde.</item>
+        <item>Amargura después de que una amistad termina con una inesperada traición.</item>
+    </string-array>
+    <string-array name="vocab_tips">
+        <item></item><item></item><item></item><item></item><item></item><item></item>
+        <item></item><item></item><item></item><item></item><item></item><item></item>
+        <item>Deja que el duelo tome su tiempo — no lo apresures. Escribir una carta a lo que has perdido externaliza el sentimiento y comienza suavemente la sanación.</item>
+        <item>El movimiento suave y la música tranquila pueden aliviar la melancolía sin obligarte a \'animarte\'. Déjate sentirla mientras haces algo amable por tu cuerpo.</item>
+        <item>La nostalgia es una emoción suave — honrala. Escribe un buen recuerdo que evoque. La gratitud por lo que fue es una forma de alegría.</item>
+        <item>Envía un mensaje corto a alguien que te importe. La conexión no requiere una larga conversación — un simple \'estoy pensando en ti\' es suficiente.</item>
+        <item>Encuentra una pequeña cosa bajo tu control hoy — incluso hacer tu cama. Los pequeños actos de agencia reconstruyen la esperanza paso a paso.</item>
+        <item>Nombra lo que esperabas. Reconocer la expectativa en voz alta o por escrito ayuda a liberar la decepción que lleva consigo.</item>
+        <item>Divide lo temido en el primer paso más pequeño posible y haz solo eso. La anticipación casi siempre es peor que la realidad.</item>
+        <item>Pregúntate: ¿cuál es el peor caso realista? Luego pregunta qué harías si eso ocurriera. Tener un plan en mente reduce significativamente el miedo.</item>
+        <item>La vulnerabilidad es valentía, no debilidad. Comparte lo que sientes con una persona de confianza — ser visto y aceptado sana.</item>
+        <item>Escribe lo que crees que fue injusto antes de decirlo en voz alta. El pensamiento claro lleva a una acción más efectiva que las palabras reactivas.</item>
+        <item>El resentimiento te daña más a ti que a la otra persona. Pregunta: ¿qué necesito para dejarlo ir? Una conversación, una disculpa o simplemente una decisión de soltarlo.</item>
+        <item>Tómate 10 minutos antes de responder a cualquier cosa. El ultraje estrecha el pensamiento — el espacio te permite actuar con intención en vez de reaccionar con emoción.</item>
+        <item>Aléjate 5 minutos. Un breve descanso restablece tu paciencia y te da perspectiva sobre lo que realmente importa versus lo que solo parece urgente.</item>
+        <item>El desprecio crea distancia. Pregúntate si hay una herida o necesidad insatisfecha detrás — abordar eso es más útil que el desprecio en sí.</item>
+        <item>La repulsión a menudo señala una violación de valores. Úsala como información: ¿qué límite fue cruzado y qué necesitas para sentirte seguro de nuevo?</item>
+        <item>Pregunta: ¿importará esta demora en un año? Si no, usa este momento para practicar la presencia. Tres respiraciones lentas pueden transformar la espera en descanso.</item>
+        <item>La amargura es un dolor antiguo sin salida. Llevar un diario sobre la herida original — no sobre la persona — puede comenzar a disolverla con el tiempo.</item>
+    </string-array>
+    <string-array name="vocab_related_00"><item>Éxtasis</item><item>Arrebato</item><item>Júbilo</item></string-array>
+    <string-array name="vocab_related_01"><item>Serenidad</item><item>Paz</item><item>Satisfacción</item></string-array>
+    <string-array name="vocab_related_02"><item>Alegría</item><item>Placer</item><item>Disfrute</item></string-array>
+    <string-array name="vocab_related_03"><item>Euforia</item><item>Dicha</item><item>Arrebato</item></string-array>
+    <string-array name="vocab_related_04"><item>Agradecimiento</item><item>Apreciación</item></string-array>
+    <string-array name="vocab_related_05"><item>Tranquilidad</item><item>Contentamiento</item><item>Paz</item></string-array>
+    <string-array name="vocab_related_06"><item>Respeto</item><item>Estima</item><item>Reverencia</item></string-array>
+    <string-array name="vocab_related_07"><item>Protección</item><item>Confianza</item><item>Comodidad</item></string-array>
+    <string-array name="vocab_related_08"><item>Optimismo</item><item>Expectativa</item><item>Fe</item></string-array>
+    <string-array name="vocab_related_09"><item>Entusiasmo</item><item>Fervor</item><item>Ardor</item></string-array>
+    <string-array name="vocab_related_10"><item>Interés</item><item>Asombro</item><item>Inquisitividad</item></string-array>
+    <string-array name="vocab_related_11"><item>Esperanza</item><item>Confianza</item><item>Positividad</item></string-array>
+    <string-array name="vocab_related_12"><item>Luto</item><item>Pena</item><item>Aflicción</item></string-array>
+    <string-array name="vocab_related_13"><item>Añoranza</item><item>Cavilación</item><item>Tristeza</item></string-array>
+    <string-array name="vocab_related_14"><item>Nostalgia</item><item>Anhelo</item><item>Añoranza</item></string-array>
+    <string-array name="vocab_related_15"><item>Aislamiento</item><item>Solitud</item><item>Alienación</item></string-array>
+    <string-array name="vocab_related_16"><item>Desesperanza</item><item>Duelo</item><item>Angustia</item></string-array>
+    <string-array name="vocab_related_17"><item>Desengaño</item><item>Arrepentimiento</item><item>Desilusión</item></string-array>
+    <string-array name="vocab_related_18"><item>Terror</item><item>Aprensión</item><item>Presentimiento</item></string-array>
+    <string-array name="vocab_related_19"><item>Inquietud</item><item>Preocupación</item><item>Nerviosismo</item></string-array>
+    <string-array name="vocab_related_20"><item>Exposición</item><item>Apertura</item><item>Fragilidad</item></string-array>
+    <string-array name="vocab_related_21"><item>Ultraje</item><item>Resentimiento</item><item>Enojo</item></string-array>
+    <string-array name="vocab_related_22"><item>Amargura</item><item>Rencor</item><item>Indignación</item></string-array>
+    <string-array name="vocab_related_23"><item>Furia</item><item>Indignación</item><item>Rabia</item></string-array>
+    <string-array name="vocab_related_24"><item>Frustración</item><item>Irritación</item><item>Molestia</item></string-array>
+    <string-array name="vocab_related_25"><item>Desdén</item><item>Escarnio</item><item>Irrespeto</item></string-array>
+    <string-array name="vocab_related_26"><item>Asco</item><item>Aversión</item><item>Repugnancia</item></string-array>
+    <string-array name="vocab_related_27"><item>Irritación</item><item>Inquietud</item></string-array>
+    <string-array name="vocab_related_28"><item>Resentimiento</item><item>Cinismo</item><item>Herida</item></string-array>
+
+</resources>

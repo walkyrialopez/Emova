@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Emova</string>
+
+    <!-- Greetings -->
+    <string name="greeting_morning">Good morning 🌅</string>
+    <string name="greeting_afternoon">Good afternoon ☀️</string>
+    <string name="greeting_evening">Good evening 🌙</string>
+    <string name="greeting_late">Still up? 🌟</string>
+
+    <!-- Today screen -->
+    <string name="today_subtitle_all_done">You\'ve completed all your habits today! 🎉</string>
+    <string name="today_subtitle_default">Here\'s your daily wellness check</string>
+    <string name="today_label">Today</string>
+    <string name="today_day_streak">day streak</string>
+    <string name="today_habits_title">Today\'s Habits</string>
+    <string name="today_all_done_title">All done for today!</string>
+    <string name="today_all_done_subtitle">Your consistency is building real change.</string>
+
+    <!-- Habit cards -->
+    <string name="habit_checkin_title">Emotional Check-In</string>
+    <string name="habit_checkin_done">Done at %1$s — tap to check in again</string>
+    <string name="habit_checkin_pending">How are you feeling today?</string>
+
+    <string name="habit_gratitude_title">Gratitude Diary</string>
+    <string name="habit_gratitude_done">10 things written ✓</string>
+    <string name="habit_gratitude_progress">%1$d/10 written — keep going!</string>
+    <string name="habit_gratitude_pending">Write 10 things you\'re grateful for</string>
+
+    <string name="habit_breathing_title">Breathing Exercise</string>
+    <string name="habit_breathing_done">Session completed ✓</string>
+    <string name="habit_breathing_pending">Take 3 minutes to breathe</string>
+
+    <string name="habit_lesson_title">Daily Lesson</string>
+    <string name="habit_lesson_done">Lesson completed ✓</string>
+    <string name="habit_lesson_pending">Learn something new about your emotions</string>
+
+    <!-- Micro habits card -->
+    <string name="micro_habits_title">Micro Habits</string>
+    <string name="micro_habits_pending">Small actions, big impact</string>
+    <string name="micro_habits_all_done">All %1$d done today! 🏆</string>
+    <string name="micro_habits_progress">%1$d of %2$d habits done</string>
+
+    <!-- Check-In screen -->
+    <string name="checkin_title">How are you feeling?</string>
+    <string name="checkin_subtitle">Pick the emotion that feels closest right now</string>
+    <string name="checkin_intensity">Intensity</string>
+    <string name="checkin_intensity_value">%1$d / 10</string>
+    <string name="checkin_mild">Mild</string>
+    <string name="checkin_intense">Intense</string>
+    <string name="checkin_save">Save Check-In</string>
+    <string name="checkin_saving">Saving…</string>
+
+    <!-- Settings / Language -->
+    <string name="settings_language">Language</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Español</string>
+
+    <!-- Wellness tip of the day -->
+    <string name="wellness_tip_label">Wellness tip of the day</string>
+    <string-array name="wellness_tip_titles">
+        <item>Cleanliness gives peace</item>
+        <item>Natural light</item>
+        <item>Dress for success</item>
+        <item>Zero distractions</item>
+        <item>The power of water</item>
+        <item>A breath of fresh air</item>
+        <item>Less sugar, more calm</item>
+        <item>Five minutes of order</item>
+        <item>Simple stretches</item>
+        <item>Edifying reading</item>
+        <item>Out loud gratitude</item>
+        <item>Calm music</item>
+        <item>One thing at a time</item>
+        <item>Rest is necessary</item>
+        <item>House plants</item>
+        <item>Kind words</item>
+        <item>Digital detox</item>
+        <item>Listen carefully</item>
+        <item>Small wins</item>
+        <item>Mindful breathing</item>
+        <item>Smile first</item>
+        <item>Cold water splash</item>
+        <item>Write it down</item>
+        <item>Nature sounds</item>
+        <item>The two-minute rule</item>
+        <item>Hug someone</item>
+        <item>Cook something simple</item>
+        <item>Unfollow to unfeel</item>
+        <item>Celebrate small steps</item>
+        <item>Ask for help</item>
+        <item>Move your body</item>
+        <item>Workout and emotions</item>
+        <item>Start small</item>
+        <item>Consistency beats intensity</item>
+    </string-array>
+    <string-array name="wellness_tip_bodies">
+        <item>Cleaning your workspace at the end of the day helps your mind rest.</item>
+        <item>Opening the curtains when you wake up lets sunlight improve your mood immediately.</item>
+        <item>Getting ready, even if you\'re staying in, helps you feel more prepared for the day.</item>
+        <item>Try eating without looking at your phone. Enjoying the flavour of food calms the senses.</item>
+        <item>Drinking a glass of water when you get up helps your body wake up gently.</item>
+        <item>Walking for ten minutes outside helps you see things more clearly.</item>
+        <item>Avoiding excess sweets prevents your emotions from spiking and dropping suddenly.</item>
+        <item>Picking up what\'s out of place before bed helps you wake up with less stress.</item>
+        <item>Stretching your arms and neck relieves tension that builds up unnoticed.</item>
+        <item>Reading something positive before bed prepares your heart for deep rest.</item>
+        <item>Saying "thank you" for something small strengthens bonds of friendship.</item>
+        <item>Listening to something soft while doing chores makes the time pass better.</item>
+        <item>Try not to multi-task. Focusing on just one thing gives more satisfaction.</item>
+        <item>Going to bed at the same time gives security to your body and mind.</item>
+        <item>Caring for a small plant brings a sense of calm and life to your environment.</item>
+        <item>Speak to yourself with affection, as you would speak to a good friend.</item>
+        <item>Turning off screens an hour before bed helps your brain relax.</item>
+        <item>Giving full attention when someone speaks makes the relationship deeper.</item>
+        <item>When finishing a task, no matter how small, recognise the effort made.</item>
+        <item>When a tense moment arrives, stop and take three deep breaths.</item>
+        <item>Smiling when you wake up — even briefly — signals your brain that today is a good day.</item>
+        <item>Splashing cold water on your face resets your alertness in seconds.</item>
+        <item>When your mind feels full, write down everything on a piece of paper. It creates instant relief.</item>
+        <item>Playing sounds of rain or birdsong while you work lowers stress without distraction.</item>
+        <item>If something takes less than two minutes, do it now. Small tasks pile up into big pressure.</item>
+        <item>A genuine hug for at least six seconds releases oxytocin and reduces tension.</item>
+        <item>Preparing a meal from scratch, even a simple one, brings you into the present moment.</item>
+        <item>If a social media account makes you feel worse, mute or unfollow it. Your feed is your environment.</item>
+        <item>Progress doesn\'t need to be big. Every step forward deserves a quiet celebration.</item>
+        <item>Asking someone for help isn\'t weakness — it\'s trust, and trust builds connection.</item>
+        <item>Even 10 minutes of movement releases endorphins that lift your mood for hours.</item>
+        <item>Exercise reduces cortisol and adrenaline — the stress hormones — while boosting serotonin and dopamine naturally.</item>
+        <item>You don\'t need a gym. Five squats, a short walk, or dancing to one song all count as movement.</item>
+        <item>A 15-minute walk every day does more for your wellbeing than one hard workout per week.</item>
+    </string-array>
+    <!-- Journal screen -->
+    <string name="journal_title">Journal</string>
+    <string name="journal_feeling">Feeling %1$s</string>
+    <string name="journal_placeholder">Write your thoughts here…</string>
+    <string name="journal_back">Back</string>
+    <string name="journal_skip">Skip</string>
+    <string name="journal_next">Next →</string>
+    <string name="journal_finish">Finish ✓</string>
+
+    <!-- Emotion families -->
+    <string name="family_positive">Positive</string>
+    <string name="family_difficult">Difficult</string>
+    <string name="family_activated">Activated</string>
+
+    <!-- Emotion names and descriptions — POSITIVE -->
+    <string name="emotion_pos_1_name">Happy</string>
+    <string name="emotion_pos_1_desc">Feeling pleased and content.</string>
+    <string name="emotion_pos_2_name">Excited</string>
+    <string name="emotion_pos_2_desc">Eagerly anticipating something.</string>
+    <string name="emotion_pos_3_name">Proud</string>
+    <string name="emotion_pos_3_desc">Feeling deep pleasure or satisfaction.</string>
+    <string name="emotion_pos_4_name">Loving</string>
+    <string name="emotion_pos_4_desc">Feeling warmth and affection.</string>
+    <string name="emotion_pos_5_name">Grateful</string>
+    <string name="emotion_pos_5_desc">Feeling or showing thankfulness.</string>
+    <string name="emotion_pos_6_name">Secure</string>
+    <string name="emotion_pos_6_desc">Feeling safe and supported.</string>
+    <string name="emotion_pos_7_name">Hopeful</string>
+    <string name="emotion_pos_7_desc">Feeling optimistic about the future.</string>
+    <string name="emotion_pos_8_name">Curious</string>
+    <string name="emotion_pos_8_desc">Eager to know or learn something.</string>
+    <string name="emotion_pos_9_name">Eager</string>
+    <string name="emotion_pos_9_desc">Enthusiastically ready and looking forward.</string>
+    <string name="emotion_pos_10_name">Peaceful</string>
+    <string name="emotion_pos_10_desc">Free from disturbance; calm and at ease.</string>
+    <string name="emotion_pos_11_name">Inspired</string>
+    <string name="emotion_pos_11_desc">Feeling mentally stimulated and creative.</string>
+    <string name="emotion_pos_12_name">Playful</string>
+    <string name="emotion_pos_12_desc">Light-hearted and full of fun.</string>
+    <string name="emotion_pos_13_name">Confident</string>
+    <string name="emotion_pos_13_desc">Feeling assured in your own abilities.</string>
+    <string name="emotion_pos_14_name">Connected</string>
+    <string name="emotion_pos_14_desc">Feeling close and in harmony with others.</string>
+    <string name="emotion_pos_15_name">Satisfied</string>
+    <string name="emotion_pos_15_desc">Content with how things have turned out.</string>
+
+    <!-- Emotion names and descriptions — DIFFICULT -->
+    <string name="emotion_dif_1_name">Sad</string>
+    <string name="emotion_dif_1_desc">Feeling or showing sorrow.</string>
+    <string name="emotion_dif_2_name">Disappointed</string>
+    <string name="emotion_dif_2_desc">Feeling let down by someone or something.</string>
+    <string name="emotion_dif_3_name">Lonely</string>
+    <string name="emotion_dif_3_desc">Sad from being disconnected.</string>
+    <string name="emotion_dif_4_name">Scared</string>
+    <string name="emotion_dif_4_desc">Afraid; filled with fear.</string>
+    <string name="emotion_dif_5_name">Anxious</string>
+    <string name="emotion_dif_5_desc">Experiencing worry or unease.</string>
+    <string name="emotion_dif_6_name">Insecure</string>
+    <string name="emotion_dif_6_desc">Not confident or assured.</string>
+    <string name="emotion_dif_7_name">Overwhelmed</string>
+    <string name="emotion_dif_7_desc">Buried under too much at once.</string>
+    <string name="emotion_dif_8_name">Hopeless</string>
+    <string name="emotion_dif_8_desc">Feeling no hope or possibility ahead.</string>
+    <string name="emotion_dif_9_name">Grief</string>
+    <string name="emotion_dif_9_desc">Deep sorrow from loss.</string>
+    <string name="emotion_dif_10_name">Ashamed</string>
+    <string name="emotion_dif_10_desc">Feeling guilt or embarrassment about yourself.</string>
+    <string name="emotion_dif_11_name">Confused</string>
+    <string name="emotion_dif_11_desc">Unable to think clearly; uncertain.</string>
+    <string name="emotion_dif_12_name">Drained</string>
+    <string name="emotion_dif_12_desc">Completely exhausted emotionally.</string>
+    <string name="emotion_dif_13_name">Numb</string>
+    <string name="emotion_dif_13_desc">Unable to feel emotions; emotionally flat.</string>
+    <string name="emotion_dif_14_name">Jealous</string>
+    <string name="emotion_dif_14_desc">Envious of what someone else has.</string>
+    <string name="emotion_dif_15_name">Guilty</string>
+    <string name="emotion_dif_15_desc">Feeling responsible for a wrongdoing.</string>
+
+    <!-- Emotion names and descriptions — ACTIVATED -->
+    <string name="emotion_act_1_name">Angry</string>
+    <string name="emotion_act_1_desc">Feeling strong annoyance or displeasure.</string>
+    <string name="emotion_act_2_name">Furious</string>
+    <string name="emotion_act_2_desc">Extremely angry.</string>
+    <string name="emotion_act_3_name">Resentful</string>
+    <string name="emotion_act_3_desc">Bitterness from a wrong not resolved.</string>
+    <string name="emotion_act_4_name">Frustrated</string>
+    <string name="emotion_act_4_desc">Upset at being blocked or unable to change something.</string>
+    <string name="emotion_act_5_name">Irritated</string>
+    <string name="emotion_act_5_desc">Showing slight anger; annoyed.</string>
+    <string name="emotion_act_6_name">Impatient</string>
+    <string name="emotion_act_6_desc">Restless from having to wait.</string>
+    <string name="emotion_act_7_name">Disgusted</string>
+    <string name="emotion_act_7_desc">Feeling revulsion or disapproval.</string>
+    <string name="emotion_act_8_name">Repulsed</string>
+    <string name="emotion_act_8_desc">Intense aversion to something.</string>
+    <string name="emotion_act_9_name">Contempt</string>
+    <string name="emotion_act_9_desc">Feeling something is beneath consideration.</string>
+    <string name="emotion_act_10_name">Envious</string>
+    <string name="emotion_act_10_desc">Wanting what someone else has.</string>
+    <string name="emotion_act_11_name">Tense</string>
+    <string name="emotion_act_11_desc">Mentally or emotionally strained.</string>
+    <string name="emotion_act_12_name">Restless</string>
+    <string name="emotion_act_12_desc">Unable to stay still; agitated.</string>
+    <string name="emotion_act_13_name">Defensive</string>
+    <string name="emotion_act_13_desc">Protecting yourself from criticism.</string>
+    <string name="emotion_act_14_name">Jealous</string>
+    <string name="emotion_act_14_desc">Fiercely protective of what is yours.</string>
+    <string name="emotion_act_15_name">Humiliated</string>
+    <string name="emotion_act_15_desc">Made to feel ashamed or foolish by others.</string>
+
+    <!-- Insights screen -->
+    <string name="insights_title">Insights</string>
+    <string name="insights_day_streak">Day streak</string>
+    <string name="insights_avg_intensity">Avg intensity</string>
+    <string name="insights_top_feeling">Top feeling</string>
+    <string name="insights_weekly">Weekly</string>
+    <string name="insights_monthly">Monthly</string>
+    <string name="insights_all_time">All Time</string>
+    <string name="insights_checkins">Check-ins</string>
+    <string name="insights_emotion_mix">Emotion mix</string>
+    <string name="insights_patterns">Patterns</string>
+    <string name="insights_empty_title">No check-ins yet</string>
+    <string name="insights_empty_subtitle">Start checking in daily to see your patterns here</string>
+
+    <!-- Growth screen tabs -->
+    <string name="growth_tab_lessons">⭐  Lessons</string>
+    <string name="growth_tab_reflect">🤝  Reflect</string>
+    <string name="growth_tab_words">📚  Words</string>
+
+    <!-- Wellness screen tabs -->
+    <string name="wellness_tab_breathe">🌬️ Breathe</string>
+    <string name="wellness_tab_gratitude">🙏 Gratitude</string>
+    <string name="wellness_tab_habits">✨ Habits</string>
+    <string name="wellness_tab_tips">💡 Tips</string>
+
+    <!-- Onboarding screen -->
+    <string name="onboarding_welcome">Welcome to Emova</string>
+    <string name="onboarding_subtitle">Your daily companion for emotional wellbeing.\nWhat should we call you?</string>
+    <string name="onboarding_placeholder">Your name or nickname…</string>
+    <string name="onboarding_cta_name">Let\'s go, %1$s! →</string>
+    <string name="onboarding_cta_default">Continue →</string>
+    <string name="onboarding_skip">Skip for now</string>
+    <!-- Journal prompts — POSITIVE -->
+    <string name="prompt_pos_1">What made this moment special to you?</string>
+    <string name="prompt_pos_2">Who or what contributed to this feeling?</string>
+    <string name="prompt_pos_3">How can you create more moments like this in your life?</string>
+
+    <!-- Journal prompts — DIFFICULT -->
+    <string name="prompt_dif_1">What are you finding hard right now?</string>
+    <string name="prompt_dif_2">Is there something you need that you\'re not getting?</string>
+    <string name="prompt_dif_3">What would you say to a friend feeling this way?</string>
+
+    <!-- Journal prompts — ACTIVATED -->
+    <string name="prompt_act_1">What feels unfair or wrong about this situation?</string>
+    <string name="prompt_act_2">What need of yours is not being met?</string>
+    <string name="prompt_act_3">How could you express this feeling without causing harm?</string>
+
+    <!-- Journal prompts — fallback -->
+    <string name="prompt_default_1">What\'s on your mind right now?</string>
+    <string name="prompt_default_2">What triggered this feeling?</string>
+    <string name="prompt_default_3">What do you need in this moment?</string>
+
+    <!-- Thought Thermometer -->
+    <string name="thermo_label">🌡️ Thought Check</string>
+    <string name="thermo_you_felt">You felt %1$s</string>
+    <string name="thermo_skip">Skip</string>
+    <string name="thermo_step_of">Step %1$d of 3</string>
+    <string name="thermo_placeholder">Write your thoughts here…</string>
+    <string name="thermo_next">Next →</string>
+    <string name="thermo_complete">Complete ✓</string>
+    <string name="thermo_skip_step">Skip this step</string>
+
+    <string name="thermo_step1_title">Identify</string>
+    <string name="thermo_step1_question">What phrase or thought keeps repeating in your mind right now?</string>
+    <string name="thermo_step1_hint">e.g. \"I always mess things up\" or \"Nobody cares about me\"</string>
+
+    <string name="thermo_step2_title">Question</string>
+    <string name="thermo_step2_question">Is this thought a fact, or is it an interpretation of events?</string>
+    <string name="thermo_step2_hint">Facts are provable. Interpretations are stories we tell ourselves.</string>
+
+    <string name="thermo_step3_title">Reframe</string>
+    <string name="thermo_step3_question">How would you explain this situation to a good friend so they don\'t feel bad about it?</string>
+    <string name="thermo_step3_hint">Use the same compassion you\'d give others — you deserve it too.</string>
+
+    <string name="thermo_done_title">Well done</string>
+    <string name="thermo_done_body">Taking a moment to examine your thoughts is one of the most powerful things you can do for your mental health.</string>
+    <string name="thermo_done_button">Back to Today</string>
+    <!-- Insights period labels -->
+    <string name="period_this_week">This week</string>
+    <string name="period_last_week">Last week</string>
+    <string name="period_weeks_ago">%1$d weeks ago</string>
+    <string name="period_all_time">All Time</string>
+
+    <!-- Day names for patterns -->
+    <string name="day_sundays">Sundays</string>
+    <string name="day_mondays">Mondays</string>
+    <string name="day_tuesdays">Tuesdays</string>
+    <string name="day_wednesdays">Wednesdays</string>
+    <string name="day_thursdays">Thursdays</string>
+    <string name="day_fridays">Fridays</string>
+    <string name="day_saturdays">Saturdays</string>
+
+    <!-- Pattern insights -->
+    <string name="pattern_hard_day_title">%1$s feel harder</string>
+    <string name="pattern_hard_day_desc">%1$d%% of your %2$s check-ins are difficult emotions. Try planning something enjoyable on this day.</string>
+    <string name="pattern_best_day_title">%1$s are your best</string>
+    <string name="pattern_best_day_desc">%1$d%% of your %2$s are positive emotions. Notice what makes this day work!</string>
+    <string name="pattern_streak_title">%1$d day streak!</string>
+    <string name="pattern_streak_desc">You\'ve checked in %1$d days in a row. Consistency is the foundation of self-awareness.</string>
+    <string name="pattern_high_intensity_title">High intensity week</string>
+    <string name="pattern_high_intensity_desc">You\'ve felt things deeply this period. Make sure you\'re giving yourself recovery time.</string>
+    <string name="pattern_mostly_positive_title">Mostly positive</string>
+    <string name="pattern_mostly_positive_desc">%1$d%% of your emotions this period are positive. You\'re in a good season.</string>
+    <!-- Breathing screen -->
+    <string name="breathe_title">Breathe</string>
+    <string name="breathe_subtitle">Choose a breathing exercise</string>
+    <string name="breathe_back">← Back</string>
+    <string name="breathe_rounds_left">%1$d rounds left</string>
+    <string name="breathe_inhale">Inhale</string>
+    <string name="breathe_hold">Hold</string>
+    <string name="breathe_exhale">Exhale</string>
+    <string name="breathe_chip_in">In %1$ds</string>
+    <string name="breathe_chip_hold">Hold %1$ds</string>
+    <string name="breathe_chip_out">Out %1$ds</string>
+    <string name="breathe_well_done">Well done!</string>
+    <string name="breathe_completed">You completed %1$s.</string>
+    <string name="breathe_done">Done</string>
+    <string name="breathe_begin">Begin</string>
+    <string name="breathe_pause">Pause</string>
+    <string name="breathe_tip_label">💡 Tip</string>
+    <string name="breathe_tip_body">Even 3 minutes of intentional breathing can measurably reduce cortisol levels and calm your nervous system.</string>
+    <string-array name="breathing_pattern_names">
+        <item>Box Breathing</item>
+        <item>4-7-8 Relaxing</item>
+        <item>Deep Calm</item>
+        <item>Energising</item>
+    </string-array>
+    <string-array name="breathing_pattern_descs">
+        <item>Reduces stress and improves focus. Used by Navy SEALs.</item>
+        <item>Calms the nervous system. Great before sleep.</item>
+        <item>Simple slow breathing for anxiety relief.</item>
+        <item>Quick inhales to boost alertness and energy.</item>
+    </string-array>
+
+    <!-- Gratitude screen -->
+    <string name="gratitude_title">Gratitude Diary</string>
+    <string name="gratitude_subtitle">Write what you\'re grateful for today</string>
+    <string name="gratitude_history">History</string>
+    <string name="gratitude_save_single">Save 1 gratitude ✓</string>
+    <string name="gratitude_save_plural">Save %1$d gratitudes ✓</string>
+    <string name="gratitude_write_prompt">Write at least one thing…</string>
+    <string name="gratitude_beautiful">Beautiful!</string>
+    <string name="gratitude_done_body">You found %1$d things to be grateful for today.\nThat\'s a powerful practice.</string>
+    <string name="gratitude_start_fresh">Start Fresh Tomorrow</string>
+    <string name="gratitude_back">← Back</string>
+    <string name="gratitude_past_entries">Past Entries</string>
+    <string name="gratitude_days_count">%1$d days</string>
+    <string name="gratitude_items_single">%1$d gratitude</string>
+    <string name="gratitude_items_plural">%1$d gratitudes</string>
+    <string name="gratitude_empty">No past entries yet.\nStart your gratitude practice today!</string>
+    <string-array name="gratitude_placeholders">
+        <item>Someone who made you smile…</item>
+        <item>Something in nature you appreciate…</item>
+        <item>A moment from today you enjoyed…</item>
+        <item>A skill or ability you\'re glad you have…</item>
+        <item>Something about your home or space…</item>
+        <item>A person who supports you…</item>
+        <item>Something small that went right today…</item>
+        <item>A memory that brings you warmth…</item>
+        <item>Something you often take for granted…</item>
+        <item>Anything else you feel grateful for…</item>
+    </string-array>
+
+    <!-- Gold Habits screen -->
+    <string name="habits_title">Gold Habits</string>
+    <string name="habits_subtitle">Small actions that add up to a great day</string>
+    <string name="habits_done_title">All habits done!</string>
+    <string name="habits_done_subtitle">You\'ve taken care of yourself today.</string>
+    <string-array name="gold_habit_titles">
+        <item>Glass of water on waking</item>
+        <item>10 minutes of sunlight</item>
+        <item>Got dressed intentionally</item>
+        <item>Smiled at someone today</item>
+        <item>Tidied one area</item>
+        <item>Phone-free meal</item>
+        <item>Moved my body / workout</item>
+        <item>Said something kind to myself</item>
+        <item>Connected with someone</item>
+        <item>Did a grounding moment</item>
+        <item>Read something positive</item>
+        <item>Went to bed on time</item>
+    </string-array>
+    <string-array name="gold_habit_subtitles">
+        <item>Hydrate your body before anything else</item>
+        <item>Step outside or open curtains to natural light</item>
+        <item>Investing in your appearance builds self-worth</item>
+        <item>A smile is free and builds connection</item>
+        <item>Order outside creates calm inside</item>
+        <item>Ate without looking at a screen</item>
+        <item>Any movement counts — walk, gym, stretch, dance</item>
+        <item>Self-compassion is a daily practice</item>
+        <item>A call, a message, or a conversation</item>
+        <item>Noticed your surroundings with all 5 senses</item>
+        <item>Feed your mind with what builds it up</item>
+        <item>Consistent sleep time regulates mood</item>
+    </string-array>
+
+    <!-- Daily Tips screen -->
+    <string name="tips_title">Daily Tips</string>
+    <string name="tips_subtitle">Simple habits for a better day</string>
+    <string name="tips_search">Search tips…</string>
+    <string name="tips_filter_all">All</string>
+    <string name="tips_count">%1$d tips</string>
+    <string name="tip_cat_environment">Environment</string>
+    <string name="tip_cat_body">Body</string>
+    <string name="tip_cat_mind">Mind</string>
+    <string name="tip_cat_relationships">Relationships</string>
+    <string name="tip_cat_sleep">Sleep</string>
+    <string name="tip_cat_focus">Focus</string>
+    <!-- SOS Panel -->
+    <string name="sos_overwhelmed">Feeling overwhelmed?</string>
+    <string name="sos_subtitle">Tap below for instant calm</string>
+    <string name="sos_grounding_button">5-4-3-2-1\nGrounding</string>
+    <string name="sos_breathing_button">4-7-8\nBreathing</string>
+    <string name="sos_next">Next →</string>
+    <string name="sos_calmer">I feel calmer ✓</string>
+    <string name="sos_close">Close</string>
+    <string-array name="sos_grounding_emojis">
+        <item>👀</item>
+        <item>🤚</item>
+        <item>👂</item>
+        <item>👃</item>
+        <item>👄</item>
+    </string-array>
+    <string-array name="sos_grounding_steps">
+        <item>Name 5 things you can see right now.</item>
+        <item>Notice 4 things you can physically feel — your feet on the floor, your clothes on your skin.</item>
+        <item>Listen for 3 sounds around you.</item>
+        <item>Find 2 things you can smell — or notice the air.</item>
+        <item>Name 1 thing you can taste right now.</item>
+    </string-array>
+    <!-- Lessons screen -->
+    <string name="lessons_title">Daily Lessons</string>
+    <string name="lessons_subtitle">Grow your EQ one exercise at a time</string>
+    <string name="lessons_today_label">TODAY\'S LESSON</string>
+    <string name="lessons_start_button">Start Lesson →</string>
+    <string name="lessons_how_respond">How do you respond?</string>
+    <string name="lessons_great_choice">✅ Great choice!</string>
+    <string name="lessons_consider">💡 Consider this</string>
+    <string name="lessons_breathing_rounds">4 rounds · %1$d steps each</string>
+    <string name="lessons_start_breathing">Start Breathing Exercise</string>
+    <string name="lessons_breathe_circle">Breathe with the circle…</string>
+    <string name="lessons_write_reflection">Write your reflection…</string>
+    <string name="lessons_save_reflection">Save Reflection ✓</string>
+    <string name="lessons_reflection_saved">Reflection saved!</string>
+    <string name="lessons_great_work">Great work on today\'s lesson.</string>
+    <string name="lessons_write_answer">Write your answer…</string>
+    <string name="lessons_gratitude_done_title">Beautiful!</string>
+    <string name="lessons_gratitude_done_body">Gratitude rewires the brain for positivity.</string>
+    <string name="lessons_finish">Finish ✓</string>
+    <string name="lessons_next">Next →</string>
+    <string name="lessons_intensity">Intensity: </string>
+    <string name="lessons_mild">Mild</string>
+    <string name="lessons_moderate">Moderate</string>
+    <string name="lessons_intense">Intense</string>
+
+    <!-- Conflict screen -->
+    <string name="conflict_title">Conflict Reflection</string>
+    <string name="conflict_subtitle">A guided walkthrough to process a difficult interaction and grow from it.</string>
+    <string name="conflict_begin">Begin Reflection</string>
+    <string name="conflict_duration">~10 minutes · 5 steps</string>
+    <string name="conflict_step_of">Step %1$d of %2$d</string>
+    <string name="conflict_back">← Back</string>
+    <string name="conflict_next">Next →</string>
+    <string name="conflict_complete">Complete ✓</string>
+    <string name="conflict_skip_step">Skip this step</string>
+    <string name="conflict_write_thoughts">Write your thoughts…</string>
+    <string name="conflict_done_title">Reflection Complete</string>
+    <string name="conflict_done_body">Processing conflict takes courage. You\'ve taken an important step toward growth.</string>
+    <string name="conflict_restart">Start New Reflection</string>
+    <string name="conflict_step_label">Step %1$d: %2$s</string>
+    <string-array name="conflict_step_titles">
+        <item>What Happened?</item>
+        <item>Your Feelings</item>
+        <item>Their Perspective</item>
+        <item>Your Role</item>
+        <item>Moving Forward</item>
+    </string-array>
+    <string-array name="conflict_step_questions">
+        <item>Describe the situation as factually as possible — just the facts, no interpretations.</item>
+        <item>What emotions did you feel during and after this interaction?</item>
+        <item>How do you think the other person was feeling? What might they have needed in that moment?</item>
+        <item>Honestly — what role did you play in how this unfolded? Is there anything you\'d do differently?</item>
+        <item>What is one concrete action you could take to improve this situation or relationship?</item>
+    </string-array>
+    <string-array name="conflict_step_hints">
+        <item>Stick to observable events: who, what, when. Avoid words like \'always\' or \'never\'.</item>
+        <item>Try to name specific emotions — not just \'angry\' but \'humiliated\', \'ignored\', \'disrespected\'.</item>
+        <item>Try to assume positive or neutral intent. What pressures or fears might they have had?</item>
+        <item>This isn\'t about blame, it\'s about growth. Even small things count.</item>
+        <item>It could be a conversation, an apology, setting a boundary, or simply letting it go.</item>
+    </string-array>
+
+    <!-- Vocabulary screen -->
+    <string name="vocab_title">Emotion Vocabulary</string>
+    <string name="vocab_subtitle">%1$d words to deepen your emotional literacy</string>
+    <string name="vocab_search">Search emotions…</string>
+    <string name="vocab_all">All</string>
+    <string name="vocab_back">Vocabulary</string>
+    <string name="vocab_section_definition">Definition</string>
+    <string name="vocab_section_real_life">In Real Life</string>
+    <string name="vocab_section_what_to_do">What You Can Do</string>
+    <string name="vocab_section_related">Related Words</string>
+    <!-- Bottom navigation -->
+    <string name="nav_today">Today</string>
+    <string name="nav_checkin">Check-In</string>
+    <string name="nav_insights">Insights</string>
+    <string name="nav_wellness">Wellness</string>
+    <string name="nav_growth">Growth</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Settings screen remaining strings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Customize your experience</string>
+    <string name="settings_notif_title">Daily Reminder</string>
+    <string name="settings_notif_subtitle">Get reminded to check in</string>
+    <string name="settings_reminder_time">Reminder Time</string>
+    <string name="settings_export_title">Export Your Journal</string>
+    <string name="settings_export_subtitle">Download all check-ins and journal entries as a CSV file</string>
+    <string name="settings_export_button">Export to CSV</string>
+    <string name="settings_about_section">ℹ️ About</string>
+    <string name="settings_about_app">App</string>
+    <string name="settings_about_app_value">Emova – Emotional Intelligence</string>
+    <string name="settings_about_version">Version</string>
+    <string name="settings_about_built">Built with</string>
+
+    <!-- Lesson categories -->
+    <string name="lesson_cat_awareness">Self-Awareness</string>
+    <string name="lesson_cat_empathy">Empathy</string>
+    <string name="lesson_cat_regulation">Regulation</string>
+    <string name="lesson_cat_social">Social Skills</string>
+    <string name="lesson_cat_motivation">Motivation</string>
+
+    <!-- Lesson titles and descriptions -->
+    <string name="lesson_sa01_title">Name It to Tame It</string>
+    <string name="lesson_sa01_desc">Labeling emotions reduces their intensity. Practice precision.</string>
+    <string name="lesson_sa02_title">Body Scan Check-In</string>
+    <string name="lesson_sa02_desc">Emotions live in the body. Learn to read your physical signals.</string>
+    <string name="lesson_sa03_title">Your Trigger Map</string>
+    <string name="lesson_sa03_desc">Discover what consistently sets off strong reactions in you.</string>
+    <string name="lesson_em01_title">The Other Chair</string>
+    <string name="lesson_em01_desc">Step into someone else\'s perspective — even someone difficult.</string>
+    <string name="lesson_em02_title">Empathy vs Sympathy</string>
+    <string name="lesson_em02_desc">Learn the crucial difference and practice responding with empathy.</string>
+    <string name="lesson_em03_title">Compassionate Listening</string>
+    <string name="lesson_em03_desc">Most people listen to reply. Practice listening to understand.</string>
+    <string name="lesson_re01_title">The Body Scan</string>
+    <string name="lesson_re01_desc">A mindfulness technique to release tension held in your body.</string>
+    <string name="lesson_re02_title">The 10-Second Pause</string>
+    <string name="lesson_re02_desc">One habit that can change how you respond under stress.</string>
+    <string name="lesson_ss01_title">Giving Feedback with Care</string>
+    <string name="lesson_ss01_desc">Feedback is a gift — when it\'s delivered well.</string>
+    <string name="lesson_mo01_title">Gratitude Depth Dive</string>
+    <string name="lesson_mo01_desc">Go beyond listing — explore why you\'re grateful.</string>
+
+    <!-- Lesson content: sa_01 -->
+    <string name="lesson_sa01_prompt">Think of a moment this week when you felt uncomfortable. Instead of \'bad\' or \'stressed\', what is the most precise word for what you felt?</string>
+    <string name="lesson_sa01_hint1">Was it closer to anxious, overwhelmed, or dread?</string>
+    <string name="lesson_sa01_hint2">Was it frustration, resentment, or disappointment?</string>
+    <string name="lesson_sa01_hint3">Was it loneliness, exclusion, or rejection?</string>
+
+    <!-- Lesson content: sa_02 -->
+    <string name="lesson_sa02_prompt">Close your eyes and scan your body from head to toe. Where do you feel tension, tightness, or ease? What might that sensation be telling you emotionally?</string>
+    <string name="lesson_sa02_hint1">Tight chest or shoulders often signal stress or anxiety</string>
+    <string name="lesson_sa02_hint2">Heaviness in the stomach can mean dread or guilt</string>
+    <string name="lesson_sa02_hint3">Warmth in the chest often signals joy or love</string>
+
+    <!-- Lesson content: sa_03 -->
+    <string name="lesson_sa03_prompt">Think of 3 situations that reliably make you feel angry, anxious, or hurt. What do they have in common? What value or need is being threatened?</string>
+    <string name="lesson_sa03_hint1">Common triggers: feeling ignored, losing control, being criticized</string>
+    <string name="lesson_sa03_hint2">Look for patterns across different people or places</string>
+    <string name="lesson_sa03_hint3">Behind every trigger is usually an unmet need</string>
+
+    <!-- Lesson content: em_01 -->
+    <string name="lesson_em01_prompt">Think of someone you recently had a conflict or tension with. Try to describe the situation entirely from their point of view — their fears, pressures, and intentions. What might they have been feeling?</string>
+    <string name="lesson_em01_hint1">Assume positive or neutral intent first</string>
+    <string name="lesson_em01_hint2">What challenges might they be dealing with that you don\'t see?</string>
+    <string name="lesson_em01_hint3">How would you feel if you were in their exact situation?</string>
+
+    <!-- Lesson content: em_02 -->
+    <string name="lesson_em02_situation">Your friend says: \'I\'ve been so anxious about work lately, I can barely sleep.\' How do you respond?</string>
+    <string name="lesson_em02_opt1_text">\"At least you still have a job! Things could be worse.\"</string>
+    <string name="lesson_em02_opt1_fb">This minimizes their feeling. Comparing to worse situations rarely helps — it signals that their pain isn\'t valid.</string>
+    <string name="lesson_em02_opt2_text">\"Oh no, that sounds really hard. What\'s been going on?\"</string>
+    <string name="lesson_em02_opt2_fb">This is empathy — you acknowledge the feeling and invite them to share more without judgment.</string>
+    <string name="lesson_em02_opt3_text">\"You should try meditation, it really helped me.\"</string>
+    <string name="lesson_em02_opt3_fb">Jumping to solutions skips over the emotional need to feel heard first. Save advice for later.</string>
+
+    <!-- Lesson content: em_03 -->
+    <string name="lesson_em03_prompt">In your next conversation today, try to listen without planning your response. Just absorb. Afterward, reflect: What did you notice about the other person that you might have missed before?</string>
+    <string name="lesson_em03_hint1">Notice their tone, not just their words</string>
+    <string name="lesson_em03_hint2">What emotions are underneath what they\'re saying?</string>
+    <string name="lesson_em03_hint3">What do they seem to need from this conversation?</string>
+
+    <!-- Lesson content: re_01 -->
+    <string name="lesson_re01_prompt">Find a comfortable position. Close your eyes and slowly scan from head to toe — noticing tension without judgment, letting each area soften as you breathe out.</string>
+    <string name="lesson_re01_hint1">Sit or lie down comfortably</string>
+    <string name="lesson_re01_hint2">Close your eyes and take 3 slow breaths</string>
+    <string name="lesson_re01_hint3">Bring attention to the top of your head</string>
+    <string name="lesson_re01_hint4">Slowly scan down — notice tension without judging</string>
+    <string name="lesson_re01_hint5">At each area, breathe out and let it soften</string>
+    <string name="lesson_re01_hint6">Continue all the way down to your feet</string>
+    <string name="lesson_re01_hint7">Open your eyes and notice how you feel</string>
+
+    <!-- Lesson content: re_02 -->
+    <string name="lesson_re02_situation">You get a passive-aggressive email from a colleague in front of your team. Your first instinct is to fire back immediately. What do you do?</string>
+    <string name="lesson_re02_opt1_text">Reply immediately and set the record straight</string>
+    <string name="lesson_re02_opt1_fb">Reacting immediately when emotional often escalates things. Your amygdala is driving — not your best self.</string>
+    <string name="lesson_re02_opt2_text">Take 10 seconds, breathe, then decide if a reply is even needed now</string>
+    <string name="lesson_re02_opt2_fb">The pause interrupts the stress response. Most situations benefit from a short delay — your reply will be clearer and calmer.</string>
+    <string name="lesson_re02_opt3_text">Ignore it completely and say nothing</string>
+    <string name="lesson_re02_opt3_fb">Avoidance can work short-term but unresolved tensions tend to grow. A thoughtful response later is usually better.</string>
+
+    <!-- Lesson content: ss_01 -->
+    <string name="lesson_ss01_situation">A teammate keeps missing deadlines. You need to address it. How do you start the conversation?</string>
+    <string name="lesson_ss01_opt1_text">\"You\'re always late with everything. It\'s affecting the whole team.\"</string>
+    <string name="lesson_ss01_opt1_fb">Using \'always\' and leading with blame triggers defensiveness. It\'s about them as a person, not the behavior.</string>
+    <string name="lesson_ss01_opt2_text">\"I wanted to check in — I\'ve noticed the last two deadlines were missed. Is everything okay?\"</string>
+    <string name="lesson_ss01_opt2_fb">This opens with curiosity and specific facts. It assumes something might be wrong rather than leading with blame — much more effective.</string>
+    <string name="lesson_ss01_opt3_text">\"Just a heads up, the team is getting frustrated.\"</string>
+    <string name="lesson_ss01_opt3_fb">Indirect feedback rarely leads to change and can feel cowardly. Be specific and direct but kind.</string>
+
+    <!-- Lesson content: mo_01 -->
+    <string name="lesson_mo01_prompt1">Name one person who made a positive difference in your life recently. What specifically did they do?</string>
+    <string name="lesson_mo01_prompt2">What is one small thing today that you might normally overlook?</string>
+    <string name="lesson_mo01_prompt3">What challenge are you grateful for, even if it was hard?</string>
+    <!-- Vocabulary words (29 entries, order must match vocabularyList) -->
+    <string-array name="vocab_words">
+        <item>Elation</item><item>Contentment</item><item>Delight</item><item>Euphoria</item>
+        <item>Gratitude</item><item>Serenity</item><item>Admiration</item><item>Security</item>
+        <item>Hope</item><item>Eagerness</item><item>Curiosity</item><item>Optimism</item>
+        <item>Grief</item><item>Melancholy</item><item>Wistfulness</item><item>Loneliness</item>
+        <item>Despair</item><item>Disappointment</item><item>Dread</item><item>Apprehension</item>
+        <item>Vulnerability</item><item>Indignation</item><item>Resentment</item><item>Outrage</item>
+        <item>Exasperation</item><item>Contempt</item><item>Revulsion</item><item>Impatience</item>
+        <item>Bitterness</item>
+    </string-array>
+    <string-array name="vocab_defs">
+        <item>An intense feeling of happiness and excitement.</item>
+        <item>A quiet sense of satisfaction and ease.</item>
+        <item>A strong feeling of pleasure or joy at something charming.</item>
+        <item>An overwhelming feeling of happiness, almost beyond reality.</item>
+        <item>A warm appreciation for kindness received.</item>
+        <item>A state of calm, peacefulness and untroubled ease.</item>
+        <item>Respect and warm approval for someone\'s qualities.</item>
+        <item>Feeling safe, stable and free from threat.</item>
+        <item>A feeling that something desired is possible and likely.</item>
+        <item>Enthusiastic readiness and desire to do something.</item>
+        <item>A strong desire to know or learn something.</item>
+        <item>A tendency to expect the best possible outcome.</item>
+        <item>Deep sorrow from loss — of a person, relationship or chapter of life.</item>
+        <item>A pensive, lingering sadness without a clear cause.</item>
+        <item>A gentle longing for something past or out of reach.</item>
+        <item>A painful awareness of being disconnected from others.</item>
+        <item>A complete loss of hope about a situation.</item>
+        <item>Sadness from unmet expectations or hopes.</item>
+        <item>Anticipatory fear of something specific and inevitable.</item>
+        <item>Mild anxiety about something uncertain in the future.</item>
+        <item>Exposure to emotional risk or harm without certainty of safety.</item>
+        <item>Anger aroused by something perceived as unjust or unworthy.</item>
+        <item>Bitterness from a wrong or slight that hasn\'t been resolved.</item>
+        <item>Anger at a great injustice or moral violation.</item>
+        <item>Intense irritation due to repeated obstacles or failures.</item>
+        <item>A feeling that someone is beneath consideration or worthless.</item>
+        <item>A strong feeling of disgust and repulsion.</item>
+        <item>Restlessness from having to wait or tolerate delay.</item>
+        <item>Anger mixed with sadness and a sense of betrayal.</item>
+    </string-array>
+    <string-array name="vocab_examples">
+        <item>Feeling elation when you get unexpected great news.</item>
+        <item>Feeling contentment after a peaceful Sunday at home.</item>
+        <item>The delight of watching a child laugh uncontrollably.</item>
+        <item>Euphoria after finishing a marathon you trained months for.</item>
+        <item>Gratitude toward a friend who showed up when you needed them.</item>
+        <item>The serenity of sitting by a lake with no agenda.</item>
+        <item>Admiration for a mentor who overcame great difficulty.</item>
+        <item>The security of knowing someone always has your back.</item>
+        <item>Hope when early signs suggest a difficult situation is turning around.</item>
+        <item>Eagerness before starting a project you\'ve been excited about.</item>
+        <item>Curiosity sparked by a question you\'ve never thought about before.</item>
+        <item>Optimism that tomorrow will bring a fresh start.</item>
+        <item>Grief after the death of a longtime friend.</item>
+        <item>Melancholy on a grey Sunday afternoon with no particular reason.</item>
+        <item>Wistfulness looking at old photos from a happier time.</item>
+        <item>Loneliness in a crowded room where nobody really knows you.</item>
+        <item>Despair when efforts repeatedly fail and no path forward is visible.</item>
+        <item>Disappointment when a plan you worked hard on falls through.</item>
+        <item>The dread before a difficult conversation you can\'t avoid.</item>
+        <item>Apprehension before starting a new job.</item>
+        <item>Vulnerability when sharing something deeply personal.</item>
+        <item>Indignation at being blamed for something you didn\'t do.</item>
+        <item>Resentment that builds when effort goes unrecognized over time.</item>
+        <item>Outrage at news of abuse of power or corruption.</item>
+        <item>Exasperation when the same mistake happens for the fifth time.</item>
+        <item>Contempt for hypocrisy in people who preach one thing and do another.</item>
+        <item>Revulsion at witnessing cruelty to someone vulnerable.</item>
+        <item>Impatience in a slow-moving queue when you\'re running late.</item>
+        <item>Bitterness after a friendship ends in unexpected betrayal.</item>
+    </string-array>
+    <string-array name="vocab_tips">
+        <item></item><item></item><item></item><item></item><item></item><item></item>
+        <item></item><item></item><item></item><item></item><item></item><item></item>
+        <item>Allow grief its time — don\'t rush it. Writing a letter to what you\'ve lost externalises the feeling and gently begins healing.</item>
+        <item>Gentle movement and soft music can ease melancholy without forcing you to \'cheer up\'. Let yourself feel it while doing something kind for your body.</item>
+        <item>Wistfulness is a soft emotion — honour it. Write down one good memory it brings up. Gratitude for what was is a form of joy.</item>
+        <item>Send one short message to someone you care about. Connection doesn\'t require a long conversation — a simple \'thinking of you\' is enough.</item>
+        <item>Find one tiny thing within your control today — even making your bed. Small acts of agency rebuild hope one step at a time.</item>
+        <item>Name what you hoped for. Acknowledging the expectation out loud or in writing helps release the disappointment attached to it.</item>
+        <item>Break the dreaded thing into the smallest possible first step and do only that. The anticipation is almost always worse than the reality.</item>
+        <item>Ask yourself: what\'s the realistic worst case? Then ask what you\'d do if that happened. Having a plan in mind reduces fear significantly.</item>
+        <item>Vulnerability is courage, not weakness. Share what you\'re feeling with one trusted person — being witnessed and accepted heals.</item>
+        <item>Write down what you believe was unfair before saying it aloud. Clear thinking leads to more effective action than reactive words.</item>
+        <item>Resentment harms you more than the other person. Ask: what do I need to let this go? A conversation, an apology, or simply a decision to release it.</item>
+        <item>Take 10 minutes before responding to anything. Outrage narrows thinking — space lets you act with intention rather than react with emotion.</item>
+        <item>Step away for 5 minutes. A short break resets your patience and gives you perspective on what truly matters versus what just feels urgent.</item>
+        <item>Contempt creates distance. Ask whether there\'s a hurt or unmet need underneath it — addressing that is more useful than the contempt itself.</item>
+        <item>Revulsion often signals a values violation. Use it as information: what boundary was crossed, and what do you need to feel safe again?</item>
+        <item>Ask: will this delay matter in one year? If not, use this moment to practise presence. Three slow breaths can transform waiting into rest.</item>
+        <item>Bitterness is old pain with nowhere to go. Journalling about the original hurt — not the person — can begin to dissolve it over time.</item>
+    </string-array>
+    <string-array name="vocab_related_00"><item>Euphoria</item><item>Ecstasy</item><item>Jubilation</item></string-array>
+    <string-array name="vocab_related_01"><item>Serenity</item><item>Peace</item><item>Satisfaction</item></string-array>
+    <string-array name="vocab_related_02"><item>Joy</item><item>Pleasure</item><item>Enjoyment</item></string-array>
+    <string-array name="vocab_related_03"><item>Elation</item><item>Bliss</item><item>Ecstasy</item></string-array>
+    <string-array name="vocab_related_04"><item>Thankfulness</item><item>Appreciation</item></string-array>
+    <string-array name="vocab_related_05"><item>Tranquility</item><item>Contentment</item><item>Peace</item></string-array>
+    <string-array name="vocab_related_06"><item>Respect</item><item>Esteem</item><item>Reverence</item></string-array>
+    <string-array name="vocab_related_07"><item>Safety</item><item>Trust</item><item>Comfort</item></string-array>
+    <string-array name="vocab_related_08"><item>Optimism</item><item>Expectation</item><item>Faith</item></string-array>
+    <string-array name="vocab_related_09"><item>Enthusiasm</item><item>Zeal</item><item>Keenness</item></string-array>
+    <string-array name="vocab_related_10"><item>Interest</item><item>Wonder</item><item>Inquisitiveness</item></string-array>
+    <string-array name="vocab_related_11"><item>Hope</item><item>Confidence</item><item>Positivity</item></string-array>
+    <string-array name="vocab_related_12"><item>Mourning</item><item>Sorrow</item><item>Bereavement</item></string-array>
+    <string-array name="vocab_related_13"><item>Wistfulness</item><item>Pensiveness</item><item>Sadness</item></string-array>
+    <string-array name="vocab_related_14"><item>Nostalgia</item><item>Longing</item><item>Yearning</item></string-array>
+    <string-array name="vocab_related_15"><item>Isolation</item><item>Solitude</item><item>Alienation</item></string-array>
+    <string-array name="vocab_related_16"><item>Hopelessness</item><item>Grief</item><item>Anguish</item></string-array>
+    <string-array name="vocab_related_17"><item>Letdown</item><item>Regret</item><item>Disillusionment</item></string-array>
+    <string-array name="vocab_related_18"><item>Terror</item><item>Apprehension</item><item>Foreboding</item></string-array>
+    <string-array name="vocab_related_19"><item>Unease</item><item>Worry</item><item>Nervousness</item></string-array>
+    <string-array name="vocab_related_20"><item>Exposure</item><item>Openness</item><item>Fragility</item></string-array>
+    <string-array name="vocab_related_21"><item>Outrage</item><item>Resentment</item><item>Anger</item></string-array>
+    <string-array name="vocab_related_22"><item>Bitterness</item><item>Grudge</item><item>Indignation</item></string-array>
+    <string-array name="vocab_related_23"><item>Fury</item><item>Indignation</item><item>Rage</item></string-array>
+    <string-array name="vocab_related_24"><item>Frustration</item><item>Vexation</item><item>Annoyance</item></string-array>
+    <string-array name="vocab_related_25"><item>Disdain</item><item>Scorn</item><item>Disrespect</item></string-array>
+    <string-array name="vocab_related_26"><item>Disgust</item><item>Loathing</item><item>Repulsion</item></string-array>
+    <string-array name="vocab_related_27"><item>Irritation</item><item>Restlessness</item></string-array>
+    <string-array name="vocab_related_28"><item>Resentment</item><item>Cynicism</item><item>Hurt</item></string-array>
+
+</resources>

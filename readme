@@ -1,0 +1,66 @@
+# Emova – Emotional Intelligence App
+
+A beautiful Android app to help you develop emotional intelligence through daily check-ins, journaling, and guided exercises.
+
+---
+
+## Features
+
+- 💙 **Check-In** — Log your emotions using Plutchik's emotion wheel with intensity and notes
+- 📓 **Journal** — Guided reflection prompts that adapt to your emotion
+- 📊 **Insights** — Weekly mood trends, streak counter, and emotion breakdown
+- ⭐ **Lessons** — Daily EQ exercises (reflection, scenarios, breathing, gratitude)
+- 🤝 **Conflict Reflection** — 5-step empathy walkthrough after difficult interactions
+- 📚 **Vocabulary** — 35+ emotion words with definitions and examples
+- 🔔 **Notifications** — Daily check-in reminders
+- 💾 **Export** — Download your journal as a CSV file
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Language | Kotlin |
+| UI | Jetpack Compose + Material 3 |
+| Architecture | MVVM |
+| Database | Room |
+| Navigation | Jetpack Navigation Compose |
+| Notifications | AlarmManager + BroadcastReceiver |
+
+---
+
+## Project Structure
+
+```
+com.emotionalintelligence.emova/
+├── model/          → Data classes and static content
+├── data/           → Room database, DAOs, export helper
+├── viewmodel/      → ViewModels for each screen
+├── notifications/  → Notification scheduler and receivers
+└── ui/
+    ├── checkin/    → Check-In screen
+    ├── journal/    → Guided Journal screen
+    ├── insights/   → Insights Dashboard
+    ├── lessons/    → EQ Micro-Lessons
+    ├── conflict/   → Conflict Reflection
+    ├── vocabulary/ → Emotion Vocabulary
+    ├── settings/   → Settings + Export
+    ├── navigation/ → Nav graph + Bottom bar
+    └── theme/      → App theme and colors
+```
+
+---
+
+## Getting Started
+
+1. Clone the repo
+2. Open in Android Studio (Hedgehog or later)
+3. Sync Gradle
+4. Run on emulator or device (min SDK 26)
+
+---
+
+## License
+
+MIT License — free to use and modify.
