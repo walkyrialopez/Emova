@@ -1,5 +1,6 @@
 package com.emotionalintelligence.emova.viewmodel
-
+import com.emotionalintelligence.emova.util.loadLanguage
+import kotlinx.coroutines.flow.first
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,6 +27,7 @@ data class JournalUiState(
     val isSaved: Boolean = false,
     val isComplete: Boolean = false,
     val aiResponse: String = "",
+    val aiError: String = "",          // new
     val isLoadingAiResponse: Boolean = false
 )
 
@@ -124,15 +126,51 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     private fun fetchAiResponse(answers: List<String>) {
         val state = _uiState.value
         viewModelScope.launch {
-            val response = GeminiService.getJournalResponse(
-                emotionName = state.emotionName,
-                emotionFamily = state.emotionFamily,
-                prompts = state.prompts,
-                answers = answers
+
+            // Get recent emotions for pattern context
+            val recentCheckIns = dao.getAllFlow().first()
+            val sevenDaysAgo = System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000L
+            val recentEmotions = recentCheckIns
+                .filter { it.timestamp >= sevenDaysAgo }
+                .map { it.emotionName }
+
+            // Get current language
+            val language = loadLanguage(getApplication()).code  // "en" or "es"
+
+            val result = GeminiService.getJournalResponse(
+                emotionName    = state.emotionName,
+                emotionFamily  = state.emotionFamily,
+                prompts        = state.prompts,
+                answers        = answers,
+                recentEmotions = recentEmotions,
+                language       = language
             )
-            _uiState.value = _uiState.value.copy(
-                aiResponse = response,
-                isLoadingAiResponse = false
+
+            result.fold(
+                onSuccess = { text ->
+                    _uiState.value = _uiState.value.copy(
+                        aiResponse          = text,
+                        aiError             = "",
+                        isLoadingAiResponse = false
+                    )
+                },
+                onFailure = { error ->
+                    val errorMsg = when (error.message) {
+                        "NO_CONNECTION" -> if (language == "es")
+                            "Sin conexión. Conéctate a internet para recibir tu reflexión."
+                        else "No connection. Connect to the internet to receive your reflection."
+                        "TIMEOUT" -> if (language == "es")
+                            "La respuesta tardó demasiado. Intenta de nuevo."
+                        else "Response timed out. Please try again."
+                        else -> if (language == "es")
+                            "No se pudo obtener una reflexión ahora."
+                        else "Couldn't get a reflection right now."
+                    }
+                    _uiState.value = _uiState.value.copy(
+                        aiError             = errorMsg,
+                        isLoadingAiResponse = false
+                    )
+                }
             )
         }
     }

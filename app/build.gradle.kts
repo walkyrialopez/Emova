@@ -30,8 +30,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Obtenemos la llave. Si no existe, ponemos un string vacío para que no falle el build
-        val apiKey = localProperties.getProperty("GEMINI_API_KEY") ?: ""
-        buildConfigField("String", "GEMINI_API_KEY", "\"$apiKey\"")
+        // Busca estas líneas y cámbialas para que digan GROQ:
+        val apiKey = localProperties.getProperty("GROQ_API_KEY") ?: ""
+        buildConfigField("String", "GROQ_API_KEY", "\"$apiKey\"")
     }
 
     buildTypes {
@@ -86,6 +87,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
 
-    // Gemini
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    // Asegúrate de que NO tenga barras inclinadas al principio:
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

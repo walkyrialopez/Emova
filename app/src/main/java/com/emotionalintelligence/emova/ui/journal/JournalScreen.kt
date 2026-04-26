@@ -228,7 +228,22 @@ fun JournalScreen(
                                 color = Color(0xFF6B6B8A)
                             )
                         }
+                    } else if (uiState.aiError.isNotBlank()) {
+                        // Error state
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Text("⚠️", fontSize = 16.sp)
+                            Text(
+                                uiState.aiError,
+                                fontSize = 13.sp,
+                                color = Color(0xFF6B6B8A),
+                                lineHeight = 19.sp
+                            )
+                        }
                     } else {
+                        // Success state — full text, no truncation
                         Column {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -245,10 +260,11 @@ fun JournalScreen(
                             }
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                uiState.aiResponse,
+                                text = uiState.aiResponse,
                                 fontSize = 14.sp,
                                 color = Color(0xFF1A1A2E),
                                 lineHeight = 22.sp
+                                // No maxLines — shows everything
                             )
                         }
                     }
