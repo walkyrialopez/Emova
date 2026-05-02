@@ -240,11 +240,20 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
 
         // Insights de Correlación (Prioridad Héroe)
         if (refDays >= 2 && diffOnRef == 0) {
-            patterns.add(PatternInsight("🛡️", "Tu escudo protector", "Los días de 'Calma Analógica', tus picos de estrés desaparecen. Es tu ancla emocional.", Color(0xFF6C63FF)))
+            patterns.add(PatternInsight(
+                emoji = "🛡️",
+                title = str(R.string.pattern_shield_title),
+                description = str(R.string.pattern_shield_desc),
+                color = Color(0xFF6C63FF)
+            ))
         } else if (gratDays >= 2 && posOnGrat >= (gratDays / 2)) {
-            patterns.add(PatternInsight("✨", "El efecto gratitud", "Tu práctica de aprecio funciona: esos días suelen terminar en positivo.", Color(0xFF06D6A0)))
+            patterns.add(PatternInsight(
+                emoji = "✨",
+                title = str(R.string.pattern_gratitude_title),
+                description = str(R.string.pattern_gratitude_desc),
+                color = Color(0xFF06D6A0)
+            ))
         }
-
         // --- Patrones de días (Hardest/Best) ---
         val byDayOfWeek = periodCheckIns.groupBy { Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.DAY_OF_WEEK) }
 

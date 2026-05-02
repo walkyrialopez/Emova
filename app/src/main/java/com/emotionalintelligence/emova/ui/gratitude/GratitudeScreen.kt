@@ -34,11 +34,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
 data class GratitudeUiState(
-    val entries: List<String> = List(3) { "" }, // 🎯 Reducido a 3
+    val entries: List<String> = List(3) { "" },
     val isSaved: Boolean = false,
     val currentFocus: Int = 0,
     val alreadyDoneToday: Boolean = false
@@ -317,26 +318,5 @@ fun GratitudeHistoryScreen(onBack: () -> Unit, vm: GratitudeViewModel = viewMode
                 item { Spacer(modifier = Modifier.height(16.dp)) }
             }
         }
-    }
-}
-
-@Composable
-fun WhyItWorksCard(message: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFF6C63FF).copy(alpha = 0.08f))
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("💡", fontSize = 20.sp)
-        Spacer(modifier = Modifier.width(12.dp))
-        Text(
-            text = message,
-            fontSize = 13.sp,
-            color = Color(0xFF1A1A2E),
-            lineHeight = 18.sp
-        )
     }
 }

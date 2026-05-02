@@ -411,6 +411,46 @@
         <item>Quick inhales to boost alertness and energy.</item>
     </string-array>
 
+    <string name="insights_discovery_label">✨ Discovery</string>
+    <string name="insights_first_checkin_cta">Make your first check-in</string>
+    <string name="insights_positive_label">Positive</string>
+    <string name="insights_checkins_label">Check-ins</string>
+
+    <string name="notif_channel_name">Daily Check-In</string>
+    <string name="notif_channel_desc">Reminds you to do your daily emotional check-in</string>
+
+    <string-array name="notif_titles">
+        <item>How are you feeling right now? 💙</item>
+        <item>Your daily check-in is waiting 🌿</item>
+        <item>Time to pause and reflect 🌿</item>
+        <item>Hey, how\'s your day going? 😊</item>
+        <item>A moment for yourself 🌙</item>
+        <item>Breathe for 3 minutes today 🌬️</item>
+        <item>Gratitude time! 🌟</item>
+        <item>Small check-in, big difference 💜</item>
+        <item>Your emotional health matters 🌈</item>
+        <item>Don\'t forget your gratitude diary ✨</item>
+    </string-array>
+
+    <string-array name="notif_bodies">
+        <item>Take 2 minutes to check in with yourself.</item>
+        <item>Name what you\'re feeling — it helps.</item>
+        <item>Emotional awareness starts with a single check-in.</item>
+        <item>Your feelings are worth noting.</item>
+        <item>How are you really doing today?</item>
+        <item>Open Emova and try a breathing exercise.</item>
+        <item>What are 3 things you\'re grateful for today?</item>
+        <item>Name one emotion you\'ve felt today.</item>
+        <item>A quick check-in can shift your whole day.</item>
+        <item>Pause and count your blessings today.</item>
+    </string-array>
+
+
+    <string name="pattern_shield_title">Your protective shield</string>
+    <string name="pattern_shield_desc">On your analogue calm days, your stress peaks disappear. It\'s your emotional anchor.</string>
+    <string name="pattern_gratitude_title">The gratitude effect</string>
+    <string name="pattern_gratitude_desc">Your appreciation practice works: those days tend to end on a positive note.</string>
+
     <!-- Gratitude screen -->
     <string name="gratitude_title">Gratitude Diary</string>
     <string name="gratitude_subtitle">Write what you\'re grateful for today</string>

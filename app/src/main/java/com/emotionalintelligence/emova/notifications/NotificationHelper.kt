@@ -8,18 +8,18 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.emotionalintelligence.emova.MainActivity
+import com.emotionalintelligence.emova.R
 
 const val CHANNEL_ID = "emova_checkin_channel"
 const val NOTIFICATION_ID = 1001
 
-
 fun createNotificationChannel(context: Context) {
     val channel = NotificationChannel(
         CHANNEL_ID,
-        "Daily Check-In",
-        NotificationManager.IMPORTANCE_HIGH  // HIGH so it shows as heads-up
+        context.getString(R.string.notif_channel_name),
+        NotificationManager.IMPORTANCE_HIGH
     ).apply {
-        description = "Reminds you to do your daily emotional check-in"
+        description = context.getString(R.string.notif_channel_desc)
         enableLights(true)
         enableVibration(true)
     }
@@ -28,7 +28,6 @@ fun createNotificationChannel(context: Context) {
 }
 
 fun showCheckInNotification(context: Context) {
-    // Make sure channel exists
     createNotificationChannel(context)
 
     val intent = Intent(context, MainActivity::class.java).apply {
@@ -39,23 +38,14 @@ fun showCheckInNotification(context: Context) {
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
-    val messages = listOf(
-        "How are you feeling right now? 💙" to "Take 2 minutes to check in with yourself.",
-        "Your daily check-in is waiting 🌿" to "Name what you're feeling — it helps.",
-        "Time to pause and reflect 🌿" to "Emotional awareness starts with a single check-in.",
-        "Hey, how's your day going? 😊" to "Your feelings are worth noting.",
-        "A moment for yourself 🌙" to "How are you really doing today?",
-        "Breathe for 3 minutes today 🌬️" to "Open Emova and try a breathing exercise.",
-        "Gratitude time! 🌟" to "What are 10 things you're grateful for today?",
-        "Small check-in, big difference 💜" to "Name one emotion you've felt today.",
-        "Your emotional health matters 🌈" to "A quick check-in can shift your whole day.",
-        "Don't forget your gratitude diary ✨" to "Pause and count your blessings today."
-    ).random()
+    val titles = context.resources.getStringArray(R.array.notif_titles)
+    val bodies  = context.resources.getStringArray(R.array.notif_bodies)
+    val index   = (System.currentTimeMillis() / 86_400_000L % titles.size).toInt()
 
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
         .setSmallIcon(android.R.drawable.ic_dialog_info)
-        .setContentTitle(messages.first)
-        .setContentText(messages.second)
+        .setContentTitle(titles[index])
+        .setContentText(bodies[index])
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setContentIntent(pendingIntent)
         .setAutoCancel(true)
@@ -68,8 +58,7 @@ fun showCheckInNotification(context: Context) {
 class CheckInReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         showCheckInNotification(context)
-        // Reschedule for tomorrow — setExactAndAllowWhileIdle fires only once
-        val prefs = context.getSharedPreferences("emova_prefs", Context.MODE_PRIVATE)
+        val prefs  = context.getSharedPreferences("emova_prefs", Context.MODE_PRIVATE)
         val hour   = prefs.getInt("reminder_hour", 20)
         val minute = prefs.getInt("reminder_minute", 0)
         NotificationScheduler.scheduleDailyReminder(context, hour, minute)
@@ -83,3 +72,4 @@ class BootReceiver : BroadcastReceiver() {
         }
     }
 }
+

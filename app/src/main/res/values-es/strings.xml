@@ -453,6 +453,45 @@
         <item>Algo que sueles dar por sentado…</item>
     </string-array>
 
+    <string name="notif_channel_name">Registro Diario</string>
+    <string name="notif_channel_desc">Te recuerda hacer tu registro emocional diario</string>
+
+    <string-array name="notif_titles">
+        <item>¿Cómo te sientes ahora mismo? 💙</item>
+        <item>Tu registro diario te espera 🌿</item>
+        <item>Pausa y reflexiona 🌿</item>
+        <item>¿Cómo va tu día? 😊</item>
+        <item>Un momento para ti 🌙</item>
+        <item>Respira 3 minutos hoy 🌬️</item>
+        <item>¡Momento de gratitud! 🌟</item>
+        <item>Pequeño registro, gran diferencia 💜</item>
+        <item>Tu salud emocional importa 🌈</item>
+        <item>No olvides tu diario de gratitud ✨</item>
+    </string-array>
+
+    <string-array name="notif_bodies">
+        <item>Tómate 2 minutos para hacer tu registro.</item>
+        <item>Nombra lo que sientes — ayuda.</item>
+        <item>La conciencia emocional empieza con un registro.</item>
+        <item>Tus sentimientos merecen atención.</item>
+        <item>¿Cómo estás realmente hoy?</item>
+        <item>Abre Emova y prueba un ejercicio de respiración.</item>
+        <item>¿Por qué 3 cosas estás agradecido/a hoy?</item>
+        <item>Nombra una emoción que hayas sentido hoy.</item>
+        <item>Un breve registro puede cambiar tu día.</item>
+        <item>Haz una pausa y cuenta tus bendiciones hoy.</item>
+    </string-array>
+
+    <string name="insights_discovery_label">✨ Descubrimiento</string>
+    <string name="insights_first_checkin_cta">Haz tu primer registro</string>
+    <string name="insights_positive_label">Positivo</string>
+    <string name="insights_checkins_label">Registros</string>
+
+    <string name="pattern_shield_title">Tu escudo protector</string>
+    <string name="pattern_shield_desc">Los días de \'Calma Analógica\', tus picos de estrés desaparecen. Es tu ancla emocional.</string>
+    <string name="pattern_gratitude_title">El efecto gratitud</string>
+    <string name="pattern_gratitude_desc">Tu práctica de aprecio funciona: esos días suelen terminar en positivo.</string>
+
     <string name="tip_title_default">Tip de bienestar</string>
     <string name="tip_body_default">Ponerle nombre a una emoción reduce su poder sobre ti y ayuda a tu cerebro a procesarla.</string>
     <!-- Gold Habits screen -->

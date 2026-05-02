@@ -101,7 +101,7 @@ class TodayViewModel(application: android.app.Application) : AndroidViewModel(ap
                 greeting = greetingKey,
                 checkInDone = todayCheckIn != null,
                 checkInTime = timeLabel,
-                gratitudeDone = gratitudeItems.size >= 10,
+                gratitudeDone = gratitudeItems.isNotEmpty(),
                 gratitudeCount = gratitudeItems.size,
                 breathingDone = breathingDone,
                 lessonDone = lessonDone,
@@ -138,6 +138,7 @@ fun TodayScreen(
     vm: TodayViewModel = viewModel()
 ) {
     val context = LocalContext.current
+
     val userName = remember {
         context.getSharedPreferences("emova_prefs", Context.MODE_PRIVATE)
             .getString("user_name", "") ?: ""
@@ -145,7 +146,6 @@ fun TodayScreen(
     val state by vm.uiState.collectAsState()
     val habitsChecked by habitsVm.checked.collectAsState()
     val microHabitsDone = habitsChecked.size >= 12
-
     LaunchedEffect(refreshKey) { vm.refresh() }
 
     val allDone = state.checkInDone && state.gratitudeDone &&
@@ -193,75 +193,6 @@ fun TodayScreen(
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
-
-
-
-            // --- INTENCIONES DIARIAS ---
-            Text(
-                text = stringResource(R.string.today_intentions_title), // "Daily Intentions"
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1A1A2E),
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.White)
-                    .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(20.dp))
-                    .padding(vertical = 8.dp)
-            ) {
-                val intentions = listOf(
-                    "appreciation" to stringResource(R.string.intention_appreciation),
-                    "focus" to stringResource(R.string.intention_focus), // Asegúrate de añadir este string!
-                    "reflection" to stringResource(R.string.intention_reflection)
-                )
-
-                intentions.forEach { (id, label) ->
-                    val isDone = id in habitsChecked
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { habitsVm.toggle(id) }
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clip(CircleShape)
-                                .background(if (isDone) Color(0xFF6C63FF) else Color(0xFFF7F6FB))
-                                .border(1.dp, if (isDone) Color(0xFF6C63FF) else Color(0xFFEAE8F5), CircleShape),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            if (isDone) Text("✓", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                        }
-                        Text(
-                            text = label, modifier = Modifier.padding(start = 14.dp),
-                            fontSize = 15.sp, color = if (isDone) Color(0xFFAAAAAC) else Color(0xFF1A1A2E),
-                            textDecoration = if (isDone) androidx.compose.ui.text.style.TextDecoration.LineThrough else null
-                        )
-                    }
-                }
-
-                Divider(color = Color(0xFFF0F0F8), thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(onClick = onNavigateToHabits)
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(stringResource(R.string.view_all_habits), fontSize = 14.sp, color = Color(0xFF6B6B8A), fontWeight = FontWeight.Medium)
-                    Text("→", fontSize = 18.sp, color = Color(0xFFE8A020), fontWeight = FontWeight.Bold)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
 
             // --- HÁBITOS PRINCIPALES ---
             Text(
@@ -331,12 +262,77 @@ fun TodayScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // --- INTENCIONES DIARIAS ---
+            Text(
+                text = stringResource(R.string.today_intentions_title), // "Daily Intentions"
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1A1A2E),
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(20.dp))
+                    .padding(vertical = 8.dp)
+            ) {
+                val intentions = listOf(
+                    "appreciation" to stringResource(R.string.intention_appreciation),
+                    "focus" to stringResource(R.string.intention_focus), // Asegúrate de añadir este string!
+                    "reflection" to stringResource(R.string.intention_reflection)
+                )
+
+                intentions.forEach { (id, label) ->
+                    val isDone = id in habitsChecked
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { habitsVm.toggle(id) }
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(CircleShape)
+                                .background(if (isDone) Color(0xFF6C63FF) else Color(0xFFF7F6FB))
+                                .border(1.dp, if (isDone) Color(0xFF6C63FF) else Color(0xFFEAE8F5), CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (isDone) Text("✓", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        }
+                        Text(
+                            text = label, modifier = Modifier.padding(start = 14.dp),
+                            fontSize = 15.sp, color = if (isDone) Color(0xFFAAAAAC) else Color(0xFF1A1A2E),
+                            textDecoration = if (isDone) androidx.compose.ui.text.style.TextDecoration.LineThrough else null
+                        )
+                    }
+                }
+
+                Divider(color = Color(0xFFF0F0F8), thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onNavigateToHabits)
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(stringResource(R.string.view_all_habits), fontSize = 14.sp, color = Color(0xFF6B6B8A), fontWeight = FontWeight.Medium)
+                    Text("→", fontSize = 18.sp, color = Color(0xFFE8A020), fontWeight = FontWeight.Bold)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             // 🎯 EL TIP DEL DÍA: El protagonista sutil antes de las tareas
             WellnessTipOfTheDayToday()
-
-
 
             Spacer(modifier = Modifier.height(80.dp)) // Espacio final para que no tape el menú inferior
         }

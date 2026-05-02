@@ -23,11 +23,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.emotionalintelligence.emova.R
-import com.emotionalintelligence.emova.viewmodel.* // Asegúrate de importar tus clases de modelo correctamente
+import com.emotionalintelligence.emova.viewmodel.*
 
 @Composable
 fun InsightsScreen(
-    onNavigateToCheckIn: () -> Unit = {}, // 🎯 Call to Action para el Empty State
+    onNavigateToCheckIn: () -> Unit = {},
     vm: InsightsViewModel = viewModel()
 ) {
     val state by vm.uiState.collectAsStateWithLifecycle()
@@ -37,11 +37,11 @@ fun InsightsScreen(
             .fillMaxSize()
             .background(Color(0xFFF7F6FB))
             .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp), // 🎯 Más espacio para respirar
+        verticalArrangement = Arrangement.spacedBy(20.dp),
         contentPadding = PaddingValues(top = 32.dp, bottom = 100.dp)
     ) {
 
-        // --- HEADER & CONTROLES ---
+        // ── Header ────────────────────────────────────────────────────────────
         item {
             Text(
                 stringResource(R.string.insights_title),
@@ -52,8 +52,10 @@ fun InsightsScreen(
             )
         }
 
+        // ── Period toggle ─────────────────────────────────────────────────────
         item { PeriodToggle(period = state.period, onSelect = vm::setPeriod) }
 
+        // ── Period navigator ──────────────────────────────────────────────────
         item {
             PeriodNavigator(
                 label = state.periodLabel,
@@ -63,11 +65,11 @@ fun InsightsScreen(
             )
         }
 
-        // --- 🌟 EL MOMENTO AHA! (TARJETA HÉROE) ---
+        // ── Hero discovery card ───────────────────────────────────────────────
         if (state.patterns.isNotEmpty()) {
             item {
                 Text(
-                    "✨ Descubrimiento",
+                    stringResource(R.string.insights_discovery_label),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF6C63FF),
@@ -77,13 +79,12 @@ fun InsightsScreen(
             }
         }
 
-        // --- TARJETAS DE TENDENCIA (StatCards) ---
+        // ── Stat cards row ────────────────────────────────────────────────────
         item {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                // Emoción Principal
                 state.topEmotion?.let {
                     StatCard(
                         modifier = Modifier.weight(1f),
@@ -91,43 +92,45 @@ fun InsightsScreen(
                         value = it.name,
                         label = stringResource(R.string.insights_top_feeling)
                     )
-                } ?: StatCard(modifier = Modifier.weight(1f), emoji = "—", value = "—", label = "Top feeling")
+                } ?: StatCard(
+                    modifier = Modifier.weight(1f),
+                    emoji = "—",
+                    value = "—",
+                    label = stringResource(R.string.insights_top_feeling)
+                )
 
-                // Equilibrio Positivo
                 StatCard(
                     modifier = Modifier.weight(1f),
                     emoji = "⚖️",
                     value = "${state.positiveBalancePercentage}%",
-                    label = "Positive" // Te recomiendo añadir R.string.insights_balance
+                    label = stringResource(R.string.insights_positive_label)
                 )
 
-                // Total de Registros
                 StatCard(
                     modifier = Modifier.weight(1f),
                     emoji = "📝",
                     value = "${state.totalCheckIns}",
-                    label = "Check-ins" // Te recomiendo añadir R.string.insights_total_records
+                    label = stringResource(R.string.insights_checkins_label)
                 )
             }
         }
 
-        // --- GRÁFICOS Y DESGLOSE ---
+        // ── Charts & breakdown ────────────────────────────────────────────────
         if (state.weekData.isEmpty() && state.familyBreakdown.isEmpty()) {
             item { EmptyState(onNavigateToCheckIn = onNavigateToCheckIn) }
         } else {
             if (state.weekData.isNotEmpty()) {
                 item { EmotionBarChart(data = state.weekData) }
             }
-
             if (state.familyBreakdown.isNotEmpty()) {
                 item { FamilyBreakdownCard(breakdown = state.familyBreakdown) }
             }
 
-            // --- PATRONES SECUNDARIOS ---
+            // ── Secondary patterns ────────────────────────────────────────────
             if (state.patterns.size > 1) {
                 item {
                     Text(
-                        "Otras observaciones", // Te recomiendo añadir R.string.insights_other_patterns
+                        stringResource(R.string.insights_other_patterns),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF1A1A2E),
@@ -142,7 +145,7 @@ fun InsightsScreen(
     }
 }
 
-// ─── Componentes ──────────────────────────────────────────────────────────────
+// ─── Period Toggle ────────────────────────────────────────────────────────────
 
 @Composable
 fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
@@ -180,11 +183,19 @@ fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
     }
 }
 
+// ─── Period Navigator ─────────────────────────────────────────────────────────
+
 @Composable
-fun PeriodNavigator(label: String, canGoForward: Boolean, onBack: () -> Unit, onForward: () -> Unit) {
-    Column(
+fun PeriodNavigator(
+    label: String,
+    canGoForward: Boolean,
+    onBack: () -> Unit,
+    onForward: () -> Unit
+) {
+    Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -192,8 +203,8 @@ fun PeriodNavigator(label: String, canGoForward: Boolean, onBack: () -> Unit, on
             modifier = Modifier
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color.White)
-                .padding(horizontal = 8.dp, vertical = 4.dp)
                 .shadow(elevation = 2.dp, shape = RoundedCornerShape(20.dp), spotColor = Color(0x1A000000))
+                .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
             IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
                 Text("←", fontSize = 18.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)
@@ -216,6 +227,8 @@ fun PeriodNavigator(label: String, canGoForward: Boolean, onBack: () -> Unit, on
         }
     }
 }
+
+// ─── Hero Pattern Card ────────────────────────────────────────────────────────
 
 @Composable
 fun HeroPatternCard(pattern: PatternInsight) {
@@ -259,6 +272,8 @@ fun HeroPatternCard(pattern: PatternInsight) {
     }
 }
 
+// ─── Stat Card ────────────────────────────────────────────────────────────────
+
 @Composable
 fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label: String) {
     Column(
@@ -274,7 +289,7 @@ fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label:
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             value,
-            fontSize = 18.sp, // Ajustado para que no se rompa
+            fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1A1A2E),
             textAlign = TextAlign.Center,
@@ -289,6 +304,8 @@ fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label:
         )
     }
 }
+
+// ─── Emotion Bar Chart ────────────────────────────────────────────────────────
 
 @Composable
 fun EmotionBarChart(data: List<DayData>) {
@@ -313,14 +330,12 @@ fun EmotionBarChart(data: List<DayData>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(140.dp), // Altura fija del contenedor general
+                .height(140.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.Bottom
         ) {
             data.forEach { day ->
-                // 🎯 2% de barra base para los días en cero
                 val targetFraction = if (day.count > 0) day.count.toFloat() / maxCount else 0.02f
-
                 val animFraction by animateFloatAsState(
                     targetValue = targetFraction,
                     animationSpec = tween(500, easing = EaseOutQuart),
@@ -331,34 +346,30 @@ fun EmotionBarChart(data: List<DayData>) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxHeight() // La columna ocupa el 100% de los 140dp
+                        .fillMaxHeight()
                 ) {
-                    // 1. El número arriba (fijo)
                     if (day.count > 0) {
                         Text("${day.count}", fontSize = 10.sp, color = Color(0xFF6B6B8A))
                         Spacer(modifier = Modifier.height(4.dp))
                     } else {
-                        Spacer(modifier = Modifier.height(18.dp)) // Espacio equivalente si no hay número
+                        Spacer(modifier = Modifier.height(18.dp))
                     }
 
-                    // 2. 🎯 EL CARRIL DE LA BARRA (Flexible)
-                    // Este Box toma todo el espacio restante entre el número y el día
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.BottomCenter // Ancla la barra abajo
+                        contentAlignment = Alignment.BottomCenter
                     ) {
                         Box(
                             modifier = Modifier
                                 .width(24.dp)
-                                .fillMaxHeight(animFraction) // Crece solo dentro de este carril
+                                .fillMaxHeight(animFraction)
                                 .clip(RoundedCornerShape(topStart = 6.dp, topEnd = 6.dp))
                                 .background(if (day.count > 0) day.color else Color(0xFFEAE8F5))
                         )
                     }
 
-                    // 3. El texto del día abajo (fijo)
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(day.label, fontSize = 11.sp, color = Color(0xFF6B6B8A))
                 }
@@ -366,6 +377,8 @@ fun EmotionBarChart(data: List<DayData>) {
         }
     }
 }
+
+// ─── Family Breakdown Card ────────────────────────────────────────────────────
 
 @Composable
 fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
@@ -380,7 +393,12 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
             .padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text(stringResource(R.string.insights_emotion_mix), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+        Text(
+            stringResource(R.string.insights_emotion_mix),
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF1A1A2E)
+        )
 
         Row(modifier = Modifier.fillMaxWidth().height(10.dp).clip(RoundedCornerShape(5.dp))) {
             breakdown.forEach { (_, color, count) ->
@@ -389,7 +407,12 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
                     animationSpec = tween(500),
                     label = "frac"
                 )
-                Box(modifier = Modifier.fillMaxHeight().weight(fraction.coerceAtLeast(0.01f)).background(color))
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(fraction.coerceAtLeast(0.01f))
+                        .background(color)
+                )
             }
         }
 
@@ -400,7 +423,10 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(color))
                     Text(name, fontSize = 14.sp, color = Color(0xFF1A1A2E))
                 }
@@ -410,6 +436,8 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
     }
 }
 
+// ─── Pattern Card (secondary) ─────────────────────────────────────────────────
+
 @Composable
 fun PatternCard(pattern: PatternInsight) {
     Row(
@@ -417,46 +445,74 @@ fun PatternCard(pattern: PatternInsight) {
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(pattern.color.copy(alpha = 0.08f))
-            .padding(16.dp), // Eliminado el border para un look más limpio
+            .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(14.dp),
         verticalAlignment = Alignment.Top
     ) {
         Box(
-            modifier = Modifier.size(40.dp).clip(CircleShape)
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
                 .background(pattern.color.copy(alpha = 0.15f)),
             contentAlignment = Alignment.Center
-        ) { Text(pattern.emoji, fontSize = 20.sp) }
+        ) {
+            Text(pattern.emoji, fontSize = 20.sp)
+        }
         Column(modifier = Modifier.weight(1f)) {
-            Text(pattern.title, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+            Text(
+                pattern.title,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1A1A2E)
+            )
             Spacer(modifier = Modifier.height(3.dp))
-            Text(pattern.description, fontSize = 13.sp, color = Color(0xFF6B6B8A), lineHeight = 19.sp)
+            Text(
+                pattern.description,
+                fontSize = 13.sp,
+                color = Color(0xFF6B6B8A),
+                lineHeight = 19.sp
+            )
         }
     }
 }
 
+// ─── Empty State ──────────────────────────────────────────────────────────────
+
 @Composable
 fun EmptyState(onNavigateToCheckIn: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 48.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("📊", fontSize = 48.sp)
         Spacer(modifier = Modifier.height(12.dp))
-        Text(stringResource(R.string.insights_empty_title), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+        Text(
+            stringResource(R.string.insights_empty_title),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF1A1A2E)
+        )
         Text(
             stringResource(R.string.insights_empty_subtitle),
-            fontSize = 14.sp, color = Color(0xFF6B6B8A), textAlign = TextAlign.Center,
+            fontSize = 14.sp,
+            color = Color(0xFF6B6B8A),
+            textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp)
         )
         Spacer(modifier = Modifier.height(24.dp))
-
         Button(
             onClick = onNavigateToCheckIn,
             shape = RoundedCornerShape(14.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
         ) {
-            Text("Haz tu primer registro", fontSize = 15.sp, fontWeight = FontWeight.Bold) // Te sugiero usar un R.string aquí
+            Text(
+                stringResource(R.string.insights_first_checkin_cta),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

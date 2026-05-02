@@ -30,6 +30,7 @@ import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.model.Emotion
 import com.emotionalintelligence.emova.model.EmotionFamily
 import com.emotionalintelligence.emova.viewmodel.CheckInViewModel
+import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 
 @Composable
 fun CheckInScreen(
@@ -412,26 +413,5 @@ fun IntensitySlider(
             Text(stringResource(R.string.checkin_mild), fontSize = 11.sp, color = Color(0xFFBBBBCC))
             Text(stringResource(R.string.checkin_intense), fontSize = 11.sp, color = Color(0xFFBBBBCC))
         }
-    }
-}
-
-@Composable
-fun WhyItWorksCard(message: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFF6C63FF).copy(alpha = 0.08f))
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("💡", fontSize = 20.sp)
-        Spacer(modifier = Modifier.width(12.dp))
-        Text(
-            text = message,
-            fontSize = 13.sp,
-            color = Color(0xFF1A1A2E),
-            lineHeight = 18.sp
-        )
     }
 }
