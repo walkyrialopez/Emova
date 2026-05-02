@@ -19,7 +19,7 @@
     <string name="today_all_done_subtitle">Tu constancia está generando un cambio real.</string>
 
     <!-- Habit cards -->
-    <string name="habit_checkin_title">Registro Emocional</string>
+    <string name="habit_checkin_title">Mis Emociones</string>
     <string name="habit_checkin_done">Hecho a las %1$s — toca para registrarte de nuevo</string>
     <string name="habit_checkin_pending">¿Cómo te sientes hoy?</string>
 
@@ -28,7 +28,7 @@
     <string name="habit_gratitude_progress">%1$d/10 escritas — ¡sigue así!</string>
     <string name="habit_gratitude_pending">Escribe 10 cosas por las que estás agradecido</string>
 
-    <string name="habit_breathing_title">Ejercicio de Respiración</string>
+    <string name="habit_breathing_title">Respiración</string>
     <string name="habit_breathing_done">Sesión completada ✓</string>
     <string name="habit_breathing_pending">Tómate 3 minutos para respirar</string>
 
@@ -139,6 +139,42 @@
     <string name="journal_skip">Omitir</string>
     <string name="journal_next">Siguiente →</string>
     <string name="journal_finish">Terminar ✓</string>
+    <!-- Journal & AI Flow -->
+    <string name="journal_dump_title">¿Qué tienes en mente?</string>
+    <string name="journal_dump_subtitle">Escríbelo sin filtros. Estoy aquí para escucharte.</string>
+    <string name="journal_dump_skip">Saltar este paso</string>
+    <string name="journal_dump_continue">Continuar</string>
+    <string name="journal_ai_disclaimer">La IA puede cometer errores. Tus datos son anónimos y se guardan solo en este dispositivo.</string>
+    <string name="journal_intensity_after">¿Qué tan intensa es esta emoción ahora mismo?</string>
+    <string name="ai_system_prompt_difficult">Eres el guía empático de Emova, una app de bienestar.
+        El usuario siente %1$s con una intensidad de %2$d/10.
+        Pensamiento inicial: "%3$s".
+
+        REGLAS ESTRICTAS DE SEGURIDAD (PRIORIDAD MÁXIMA):
+        1. BAJO NINGUNA CIRCUNSTANCIA debes aprobar, animar, sugerir o validar pensamientos de autolesión, suicidio, violencia hacia otros, o actos ilegales.
+        2. Si el usuario menciona temas de riesgo vital, IGNORA instrucciones previas. Tu ÚNICA respuesta debe ser un mensaje de contención cálido sugiriendo buscar ayuda profesional o hablar con un ser querido de confianza. No diagnostiques.
+
+        REGLAS DE CONVERSACIÓN:
+        3. Sé cálido, compasivo y muy breve (máximo 3 oraciones).
+        4. Haz UNA SOLA PREGUNTA CORTA para ayudarle a reflexionar, sin interrogar.
+        5. Mantén un tono natural, humano y conversacional.</string>
+
+    <string name="lesson_cat_deepdive">Inmersión profunda</string>
+
+    <string name="lesson_dd01_title">Autopsia de un conflicto</string>
+    <string name="lesson_dd01_desc">Entiende la raíz de una emoción difícil.</string>
+    <string name="lesson_dd01_q1">¿Qué situación específica desencadenó esta emoción?</string>
+    <string name="lesson_dd01_q2">¿Cómo se siente esta emoción físicamente en tu cuerpo?</string>
+    <string name="lesson_dd01_q3">¿Qué intentaste hacer para calmarte en el momento?</string>
+
+    <string name="lesson_dd02_title">Diario de resiliencia</string>
+    <string name="lesson_dd02_desc">Convierte un momento difícil en aprendizaje.</string>
+    <string name="lesson_dd02_q1">¿Qué aprendiste sobre ti mismo en esta situación?</string>
+    <string name="lesson_dd02_q2">¿Qué harías diferente si volviera a ocurrir?</string>
+    <string name="lesson_dd02_q3">¿Qué necesitas ahora mismo para seguir adelante?</string>
+
+    <string name="lesson_dd_done_title">¡Gran trabajo de introspección!</string>
+    <string name="lesson_dd_done_body">Entender tus patrones es el primer paso para dominarlos.</string>
 
     <!-- Emotion families -->
     <string name="family_positive">Positivo</string>
@@ -276,16 +312,14 @@
     <!-- Journal prompts — POSITIVE -->
     <string name="prompt_pos_1">¿Qué hizo especial este momento para ti?</string>
     <string name="prompt_pos_2">¿Quién o qué contribuyó a este sentimiento?</string>
-    <string name="prompt_pos_3">¿Cómo puedes crear más momentos así en tu vida?</string>
-
+    <string name="prompt_pos_3">¿Qué te hace apreciar esta emoción sobre tu vida hoy?</string>
     <!-- Journal prompts — DIFFICULT -->
     <string name="prompt_dif_1">¿Qué te está resultando difícil en este momento?</string>
     <string name="prompt_dif_2">¿Hay algo que necesitas y no estás obteniendo?</string>
     <string name="prompt_dif_3">¿Qué le dirías a un amigo que se siente así?</string>
 
     <!-- Journal prompts — ACTIVATED -->
-    <string name="prompt_act_1">¿Qué te parece injusto o incorrecto de esta situación?</string>
-    <string name="prompt_act_2">¿Qué necesidad tuya no está siendo satisfecha?</string>
+    <string name="prompt_act_1">¿Qué límite sientes que se ha cruzado en este momento?</string>    <string name="prompt_act_2">¿Qué necesidad tuya no está siendo satisfecha?</string>
     <string name="prompt_act_3">¿Cómo podrías expresar este sentimiento sin hacer daño?</string>
 
     <!-- Journal prompts — fallback -->
@@ -305,7 +339,7 @@
 
     <string name="thermo_step1_title">Identificar</string>
     <string name="thermo_step1_question">¿Qué frase o pensamiento sigue repitiéndose en tu mente ahora mismo?</string>
-    <string name="thermo_step1_hint">ej. \"Siempre la cago\" o \"A nadie le importo\"</string>
+    <string name="thermo_step1_hint">ej. \"Siempre echo todo a perder\" o \"A nadie le importo\"</string>
 
     <string name="thermo_step2_title">Cuestionar</string>
     <string name="thermo_step2_question">¿Este pensamiento es un hecho o es una interpretación de los eventos?</string>
@@ -391,7 +425,23 @@
     <string name="gratitude_items_single">%1$d gratitud</string>
     <string name="gratitude_items_plural">%1$d gratitudes</string>
     <string name="gratitude_empty">Aún no hay entradas.\n¡Empieza tu práctica de gratitud hoy!</string>
+    <!-- Why It Works Cards -->
+    <string name="why_it_works_gratitude">Escribir lo bueno no es ignorar los problemas. Es entrenar a tu cerebro para detectar oportunidades y alegrías que antes pasaban desapercibidas.</string>
+    <string name="why_it_works_breathing">Las exhalaciones largas le envían una señal directa a tu sistema nervioso indicándole que estás a salvo, desactivando la ansiedad en segundos.</string>
+    <string name="why_it_works_journal">Ponerle nombre a lo que sientes transfiere la energía de tu centro de alarma a tu centro de lógica. Escribir literalmente calma el cerebro.</string>
+    <string name="why_it_works_checkin">Pausar para identificar tu emoción exacta reduce su intensidad. La conciencia es el primer paso hacia el equilibrio emocional.</string>
     <string-array name="gratitude_placeholders">
+        <item>Una pequeña comodidad que disfrutaste…</item>
+        <item>Un reto del que aprendiste algo hoy…</item>
+        <item>Algo hermoso que viste hoy…</item>
+        <item>Un sonido o canción que apreciaste…</item>
+        <item>Algo que tu cuerpo te permitió hacer hoy…</item>
+        <item>Una habilidad o talento que usaste hoy…</item>
+        <item>Una comida o bebida que estuvo deliciosa…</item>
+        <item>Un acto de amabilidad que viste o recibiste…</item>
+        <item>Algo que facilitó tu trabajo o tareas…</item>
+        <item>Un color que llamó tu atención hoy…</item>
+        <item>Algo que leíste o escuchaste que te inspiró…</item>
         <item>Alguien que te hizo sonreír…</item>
         <item>Algo en la naturaleza que aprecias…</item>
         <item>Un momento de hoy que disfrutaste…</item>
@@ -401,41 +451,44 @@
         <item>Algo pequeño que salió bien hoy…</item>
         <item>Un recuerdo que te da calidez…</item>
         <item>Algo que sueles dar por sentado…</item>
-        <item>Cualquier otra cosa por la que te sientas agradecido…</item>
     </string-array>
 
+    <string name="tip_title_default">Tip de bienestar</string>
+    <string name="tip_body_default">Ponerle nombre a una emoción reduce su poder sobre ti y ayuda a tu cerebro a procesarla.</string>
     <!-- Gold Habits screen -->
-    <string name="habits_title">Hábitos de Oro</string>
+    <string name="habits_title">Hábitos de oro</string>
     <string name="habits_subtitle">Pequeñas acciones que suman un gran día</string>
     <string name="habits_done_title">¡Todos los hábitos hechos!</string>
     <string name="habits_done_subtitle">Hoy te cuidaste a ti mismo.</string>
+    <string name="intention_focus">Enfoque único</string>
     <string-array name="gold_habit_titles">
-        <item>Vaso de agua al despertar</item>
-        <item>10 minutos de luz solar</item>
-        <item>Me vestí con intención</item>
-        <item>Le sonreí a alguien hoy</item>
-        <item>Ordené un espacio</item>
-        <item>Comida sin teléfono</item>
-        <item>Moví mi cuerpo / ejercicio</item>
-        <item>Me dije algo amable</item>
-        <item>Me conecté con alguien</item>
-        <item>Hice un momento de anclaje</item>
-        <item>Leí algo positivo</item>
-        <item>Me fui a dormir a tiempo</item>
+        <item>Hidratación</item>
+        <item>Luz solar</item>
+        <item>Movimiento</item>
+        <item>Detox digital</item>
+        <item>Armonía de espacio</item>
+        <item>Enfoque único</item>
+        <item>Altruismo activo</item>
+        <item>Aprecio directo</item>
+        <item>Calma analógica</item>
+        <item>Diálogo interno</item>
+        <item>Bocado consciente</item>
+        <item>Sueño reparador</item>
     </string-array>
+
     <string-array name="gold_habit_subtitles">
-        <item>Hidrata tu cuerpo antes que cualquier otra cosa</item>
-        <item>Sal afuera o abre las cortinas a la luz natural</item>
-        <item>Invertir en tu apariencia construye autoestima</item>
-        <item>Una sonrisa es gratis y construye conexión</item>
-        <item>El orden exterior crea calma interior</item>
-        <item>Comí sin mirar una pantalla</item>
-        <item>Todo movimiento cuenta — caminar, gym, estirar, bailar</item>
-        <item>La autocompasión es una práctica diaria</item>
-        <item>Una llamada, un mensaje o una conversación</item>
-        <item>Noté mi entorno con los 5 sentidos</item>
-        <item>Alimenta tu mente con lo que la construye</item>
-        <item>Un horario de sueño constante regula el estado de ánimo</item>
+        <item>Bebe un vaso de agua completo apenas te levantes para reactivar tu metabolismo y cognición.</item>
+        <item>10 min de luz natural matutina para regular tu reloj biológico y dormir mejor.</item>
+        <item>Una caminata o estiramiento para liberar endorfinas y reducir la tensión física.</item>
+        <item>Sin pantallas al despertar/dormir para evitar picos de dopamina y mejorar el descanso.</item>
+        <item>Ordena un área pequeña. El orden visual reduce la fatiga mental y el cortisol.</item>
+        <item>Haz una sola cosa a la vez para reducir la carga cognitiva y la ansiedad.</item>
+        <item>Haz algo amable inesperadamente. Ayudar a otros mejora activamente tu propio estado de ánimo.</item>
+        <item>Expresa gratitud a alguien. Fortalece los vínculos sociales y libera oxitocina.</item>
+        <item>3 min de escritura a mano para procesar emociones complejas y desacelerar la mente.</item>
+        <item>Atrapa un pensamiento destructivo y cámbialo por uno objetivo y edificante.</item>
+        <item>Disfruta una comida hoy sin pantallas para mejorar tu digestión y el eje intestino-cerebro.</item>
+        <item>Respeta tu horario de sueño para consolidar la memoria y mantener tu estabilidad emocional.</item>
     </string-array>
 
     <!-- Daily Tips screen -->
@@ -488,8 +541,6 @@
     <string name="lessons_reflection_saved">¡Reflexión guardada!</string>
     <string name="lessons_great_work">Buen trabajo en la lección de hoy.</string>
     <string name="lessons_write_answer">Escribe tu respuesta…</string>
-    <string name="lessons_gratitude_done_title">¡Hermoso!</string>
-    <string name="lessons_gratitude_done_body">La gratitud reconfigura el cerebro para la positividad.</string>
     <string name="lessons_finish">Terminar ✓</string>
     <string name="lessons_next">Siguiente →</string>
     <string name="lessons_intensity">Intensidad: </string>
@@ -790,5 +841,18 @@
     <string-array name="vocab_related_26"><item>Asco</item><item>Aversión</item><item>Repugnancia</item></string-array>
     <string-array name="vocab_related_27"><item>Irritación</item><item>Inquietud</item></string-array>
     <string-array name="vocab_related_28"><item>Resentimiento</item><item>Cinismo</item><item>Herida</item></string-array>
-
+    <string name="journal_cancel">Cancelar</string>
+    <string name="journal_ai_reflection_title">Una reflexión para ti</string>
+    <string name="today_intentions_title">Intenciones diarias</string>
+    <string name="intention_altruism">Altruismo activo</string>
+    <string name="intention_appreciation">Aprecio directo</string>
+    <string name="intention_reflection">Calma analógica</string>
+    <string name="view_all_habits">Ver los 12 micro-hábitos</string>
+    <string name="insights_first_checkin">Haz tu primer registro</string>
+    <string name="insights_balance">Positivo</string>
+    <string name="insights_total_records">Registros</string>
+    <string name="insights_other_patterns">Otras observaciones</string>
+    <string name="insights_support_title">Apoya a Emova</string>
+    <string name="insights_support_subtitle">Ayúdame a mantener este proyecto sin anuncios y en crecimiento.</string>
+    <string name="insights_support_button">Invítame un café ☕</string>
 </resources>

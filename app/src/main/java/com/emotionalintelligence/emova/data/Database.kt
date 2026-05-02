@@ -5,6 +5,7 @@ import androidx.room.*
 import com.emotionalintelligence.emova.model.CheckIn
 import com.emotionalintelligence.emova.model.JournalEntry
 import com.emotionalintelligence.emova.model.GratitudeEntry
+import com.emotionalintelligence.emova.model.HabitRecord
 import kotlinx.coroutines.flow.Flow
 
 // ─── CheckIn DAO ──────────────────────────────────────────────────────────────
@@ -41,6 +42,7 @@ interface JournalEntryDao {
 interface GratitudeEntryDao {
     @Query("SELECT * FROM gratitude_entries ORDER BY date DESC")
     fun getAll(): kotlinx.coroutines.flow.Flow<List<GratitudeEntry>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entry: GratitudeEntry)
 
@@ -51,17 +53,30 @@ interface GratitudeEntryDao {
     suspend fun getByDate(date: String): GratitudeEntry?
 }
 
+// ─── HabitRecord DAO ──────────────────────────────────────────────────────────
+// 🎯 2. BLOQUE DAO FALTANTE
+@Dao
+interface HabitRecordDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(record: HabitRecord)
+
+    @Query("SELECT * FROM habit_records ORDER BY timestamp DESC")
+    fun getAllFlow(): Flow<List<HabitRecord>>
+}
+
 // ─── Database ─────────────────────────────────────────────────────────────────
 
 @Database(
-    entities = [CheckIn::class, JournalEntry::class, GratitudeEntry::class],
-    version = 3,
+    // 🎯 3. AGREGADO HabitRecord::class Y VERSIÓN SUBIDA A 4
+    entities = [CheckIn::class, JournalEntry::class, GratitudeEntry::class, HabitRecord::class],
+    version = 4,
     exportSchema = false
 )
 abstract class EmováDatabase : RoomDatabase() {
     abstract fun checkInDao(): CheckInDao
     abstract fun journalEntryDao(): JournalEntryDao
     abstract fun gratitudeEntryDao(): GratitudeEntryDao
+    abstract fun habitRecordDao(): HabitRecordDao
 
     companion object {
         @Volatile private var INSTANCE: EmováDatabase? = null

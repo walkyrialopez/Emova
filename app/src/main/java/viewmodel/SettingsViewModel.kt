@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.emotionalintelligence.emova.data.EmováDatabase
-import com.emotionalintelligence.emova.data.ExportHelper
 import com.emotionalintelligence.emova.util.AppLanguage
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -53,11 +52,5 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         _uiState.value = _uiState.value.copy(language = language)
     }
 
-    fun exportData(context: Context) {
-        viewModelScope.launch {
-            val checkIns = db.checkInDao().getAllFlow().first()
-            val journal = db.journalEntryDao().getAllFlow().first()
-            ExportHelper.exportToCsv(context, checkIns, journal)
-        }
-    }
+
 }

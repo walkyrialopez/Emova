@@ -38,7 +38,7 @@ import java.util.*
 // ─── State ────────────────────────────────────────────────────────────────────
 
 data class GratitudeUiState(
-    val entries: List<String> = List(10) { "" },
+    val entries: List<String> = List(3) { "" }, // 🎯 Reducido a 3
     val isSaved: Boolean = false,
     val currentFocus: Int = 0,
     val alreadyDoneToday: Boolean = false
@@ -58,7 +58,7 @@ class GratitudeViewModel(application: android.app.Application) : AndroidViewMode
             val existing = db.gratitudeEntryDao().getByDate(today)
             if (existing != null) {
                 val loaded = existing.items.split("||").filter { it.isNotBlank() }
-                val padded = loaded + List((10 - loaded.size).coerceAtLeast(0)) { "" }
+                val padded = loaded + List((3 - loaded.size).coerceAtLeast(0)) { "" } // 🎯 Reducido a 3
                 _uiState.value = _uiState.value.copy(entries = padded, isSaved = true, alreadyDoneToday = true)
             }
         }
@@ -104,8 +104,18 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
         return
     }
 
-    val placeholders = stringArrayResource(R.array.gratitude_placeholders)
-    val progress = vm.filledCount / 10f
+    val allPlaceholders = stringArrayResource(R.array.gratitude_placeholders)
+
+    // 🎯 MAGIA: Rotación de placeholders anclada al día actual.
+    // Garantiza que sean aleatorias, pero constantes durante las 24 horas del mismo día.
+    val dailyPlaceholders = remember(allPlaceholders) {
+        val calendar = Calendar.getInstance()
+        val seed = calendar.get(Calendar.DAY_OF_YEAR).toLong() + calendar.get(Calendar.YEAR)
+        val random = java.util.Random(seed)
+        allPlaceholders.toList().shuffled(random).take(3)
+    }
+
+    val progress = vm.filledCount / 3f // 🎯 Reducido a 3f
     val animatedProgress by animateFloatAsState(targetValue = progress, animationSpec = tween(400), label = "progress")
     val canSave = vm.filledCount >= 1
 
@@ -133,9 +143,11 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                     Box(modifier = Modifier.fillMaxHeight().fillMaxWidth(animatedProgress)
                         .clip(RoundedCornerShape(3.dp)).background(accent))
                 }
-                Text("${vm.filledCount}/10", fontSize = 13.sp,
+                Text("${vm.filledCount}/3", fontSize = 13.sp, // 🎯 Reducido a /3
                     color = if (canSave) accent else Color(0xFF6B6B8A), fontWeight = FontWeight.Medium)
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            WhyItWorksCard(message = stringResource(R.string.why_it_works_gratitude))
             Spacer(modifier = Modifier.height(8.dp))
         }
 
@@ -143,7 +155,7 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
             GratitudeEntryRow(
                 index = index, value = state.entries[index],
                 isFocused = state.currentFocus == index, accent = accent,
-                placeholder = placeholders.getOrElse(index) { "" },
+                placeholder = dailyPlaceholders.getOrElse(index) { "" }, // 🎯 Usando las diarias
                 onValueChange = { vm.updateEntry(index, it) },
                 onFocus = { vm.setFocus(index) }
             )
@@ -305,5 +317,26 @@ fun GratitudeHistoryScreen(onBack: () -> Unit, vm: GratitudeViewModel = viewMode
                 item { Spacer(modifier = Modifier.height(16.dp)) }
             }
         }
+    }
+}
+
+@Composable
+fun WhyItWorksCard(message: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xFF6C63FF).copy(alpha = 0.08f))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("💡", fontSize = 20.sp)
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = message,
+            fontSize = 13.sp,
+            color = Color(0xFF1A1A2E),
+            lineHeight = 18.sp
+        )
     }
 }

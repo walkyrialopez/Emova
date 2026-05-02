@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,6 +35,7 @@ import com.emotionalintelligence.emova.viewmodel.SettingsViewModel
 fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current // 🎯 Herramienta pro para abrir links
 
     val notifPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -108,6 +111,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         // ── Notifications ─────────────────────────────────────────────────────
         SectionHeader("🔔 Notifications")
         SettingsCard {
+            // ... (El código de notificaciones queda exactamente igual) ...
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -181,23 +185,51 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // ── Data ──────────────────────────────────────────────────────────────
-        SectionHeader("💾 Data")
-        SettingsCard {
-            Column {
-                Text(stringResource(R.string.settings_export_title), fontSize = 15.sp, fontWeight = FontWeight.Medium, color = Color(0xFF111130))
-                Text(
-                    stringResource(R.string.settings_export_subtitle),
-                    fontSize = 12.sp,
-                    color = Color(0xFF666688)
-                )
-                Spacer(modifier = Modifier.height(14.dp))
+        // ── 🌟 Apoya el Proyecto (Reemplaza a Export Data) ───────────────────
+        SectionHeader("💖 " + stringResource(R.string.insights_support_title))
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            border = BorderStroke(1.dp, Color(0xFFEEEEF5)),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFFFF4E5)), // Un fondo cálido para el emoji
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("☕", fontSize = 18.sp)
+                    }
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column {
+                        Text(
+                            stringResource(R.string.insights_support_title),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color(0xFF111130)
+                        )
+                        Text(
+                            stringResource(R.string.insights_support_subtitle),
+                            fontSize = 12.sp,
+                            color = Color(0xFF666688)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Button(
-                    onClick = { viewModel.exportData(context) },
+                    // 🎯 Aquí colocas tu link real de Ko-fi más adelante
+                    onClick = { uriHandler.openUri("https://ko-fi.com/brunildalopez") },
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
                 ) {
-                    Text(stringResource(R.string.settings_export_button), color = Color.White, fontSize = 14.sp)
+                    Text(stringResource(R.string.insights_support_button), color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -207,7 +239,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         // ── About ─────────────────────────────────────────────────────────────
         SectionHeader(stringResource(R.string.settings_about_section))
         SettingsCard {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) { // Aumenté un poco el espaciado para que respire
                 AboutRow(stringResource(R.string.settings_about_app), stringResource(R.string.settings_about_app_value))
                 AboutRow(stringResource(R.string.settings_about_version), "1.0.0")
                 AboutRow(stringResource(R.string.settings_about_built), "Jetpack Compose + Room")
@@ -216,6 +248,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     }
 }
 
+// ... (SectionHeader, SettingsCard y AboutRow se mantienen exactamente igual)
 @Composable
 fun SectionHeader(title: String) {
     Text(

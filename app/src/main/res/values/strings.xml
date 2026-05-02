@@ -139,6 +139,44 @@
     <string name="journal_skip">Skip</string>
     <string name="journal_next">Next →</string>
     <string name="journal_finish">Finish ✓</string>
+    <!-- Journal & AI Flow -->
+    <string name="journal_dump_title">What\'s on your mind?</string>
+    <string name="journal_dump_subtitle">Write it down without filtering. I\'m here to listen.</string>
+    <string name="journal_dump_skip">Skip this step</string>
+    <string name="journal_dump_continue">Continue</string>
+    <string name="journal_ai_disclaimer">AI can make mistakes. Your data is strictly anonymous and saved only on this device.</string>
+    <string name="journal_intensity_after">How intense is this emotion right now?</string>
+
+    <string name="lesson_cat_deepdive">Deep Dive</string>
+
+    <string name="lesson_dd01_title">Conflict Autopsy</string>
+    <string name="lesson_dd01_desc">Understand the root of a difficult emotion.</string>
+    <string name="lesson_dd01_q1">What specific situation triggered this emotion?</string>
+    <string name="lesson_dd01_q2">How does this emotion feel physically in your body?</string>
+    <string name="lesson_dd01_q3">What did you try to do to calm down in the moment?</string>
+
+    <string name="lesson_dd02_title">Resilience Journal</string>
+    <string name="lesson_dd02_desc">Turn a hard moment into a learning experience.</string>
+    <string name="lesson_dd02_q1">What did you learn about yourself in this situation?</string>
+    <string name="lesson_dd02_q2">What would you do differently if this happened again?</string>
+    <string name="lesson_dd02_q3">What do you need right now to move forward?</string>
+
+    <string name="lesson_dd_done_title">Great introspection!</string>
+    <string name="lesson_dd_done_body">Understanding your patterns is the first step to mastering them.</string>
+
+    <string name="ai_system_prompt_difficult">You are the empathetic guide for Emova, a wellness app.
+        The user is feeling %1$s with an intensity of %2$d/10.
+        User\'s initial thought: "%3$s".
+
+        STRICT SAFETY RULES (MAXIMUM PRIORITY):
+        1. UNDER NO CIRCUMSTANCES should you approve, encourage, suggest, or validate thoughts of self-harm, suicide, violence towards others, or illegal acts.
+        2. If the user mentions life-threatening topics, IGNORE previous instructions. Your ONLY response must be a warm containment message suggesting they seek professional help or talk to a trusted loved one. Do not diagnose or give medical advice.
+
+        CONVERSATION RULES:
+        3. Be warm, compassionate, and very brief (maximum 3 sentences).
+        4. Ask ONLY ONE short question to help them reflect, without interrogating.
+        5. Maintain a natural, human, and conversational tone.</string>
+
 
     <!-- Emotion families -->
     <string name="family_positive">Positive</string>
@@ -276,16 +314,14 @@
     <!-- Journal prompts — POSITIVE -->
     <string name="prompt_pos_1">What made this moment special to you?</string>
     <string name="prompt_pos_2">Who or what contributed to this feeling?</string>
-    <string name="prompt_pos_3">How can you create more moments like this in your life?</string>
-
+    <string name="prompt_pos_3">What does this feeling make you appreciate about your life today?</string>
     <!-- Journal prompts — DIFFICULT -->
     <string name="prompt_dif_1">What are you finding hard right now?</string>
     <string name="prompt_dif_2">Is there something you need that you\'re not getting?</string>
     <string name="prompt_dif_3">What would you say to a friend feeling this way?</string>
 
     <!-- Journal prompts — ACTIVATED -->
-    <string name="prompt_act_1">What feels unfair or wrong about this situation?</string>
-    <string name="prompt_act_2">What need of yours is not being met?</string>
+    <string name="prompt_act_1">What boundary feels like it was crossed right now?</string>    <string name="prompt_act_2">What need of yours is not being met?</string>
     <string name="prompt_act_3">How could you express this feeling without causing harm?</string>
 
     <!-- Journal prompts — fallback -->
@@ -391,51 +427,69 @@
     <string name="gratitude_items_single">%1$d gratitude</string>
     <string name="gratitude_items_plural">%1$d gratitudes</string>
     <string name="gratitude_empty">No past entries yet.\nStart your gratitude practice today!</string>
+    <string name="why_it_works_checkin">Pausing to identify your exact emotion reduces its overwhelm. Awareness is the first step toward emotional balance.</string>
+    <!-- Why It Works Cards -->
+    <string name="why_it_works_gratitude">Writing down the good isn\'t ignoring problems. It trains your brain to spot opportunities and joy that previously went unnoticed.</string>
+    <string name="why_it_works_breathing">Long exhales send a direct signal to your nervous system that you are safe, turning off anxiety in seconds.</string>
+    <string name="why_it_works_journal">Naming your feelings transfers energy from your alarm center to your logic center. Writing literally calms the brain.</string>
     <string-array name="gratitude_placeholders">
-        <item>Someone who made you smile…</item>
         <item>Something in nature you appreciate…</item>
         <item>A moment from today you enjoyed…</item>
-        <item>A skill or ability you\'re glad you have…</item>
         <item>Something about your home or space…</item>
         <item>A person who supports you…</item>
         <item>Something small that went right today…</item>
         <item>A memory that brings you warmth…</item>
         <item>Something you often take for granted…</item>
         <item>Anything else you feel grateful for…</item>
+        <item>Someone who made you smile today…</item>
+        <item>A small comfort you enjoyed today…</item>
+        <item>A challenge that taught you something…</item>
+        <item>Something beautiful you saw today…</item>
+        <item>A sound or song you appreciated…</item>
+        <item>Something your body allowed you to do…</item>
+        <item>A skill or talent you used today…</item>
+        <item>Food or drink that tasted especially good…</item>
+        <item>An act of kindness you witnessed or received…</item>
+        <item>Something that made your work or chores easier…</item>
+        <item>A color that caught your eye today…</item>
+        <item>Something you read or heard that inspired you…</item>
     </string-array>
-
+    <string name="tip_title_default">Pro tip</string>
+    <string name="tip_body_default">Naming an emotion reduces its power over you and helps your brain process it.</string>
     <!-- Gold Habits screen -->
     <string name="habits_title">Gold Habits</string>
     <string name="habits_subtitle">Small actions that add up to a great day</string>
     <string name="habits_done_title">All habits done!</string>
     <string name="habits_done_subtitle">You\'ve taken care of yourself today.</string>
+    <string name="intention_focus">Single-tasking</string>
     <string-array name="gold_habit_titles">
-        <item>Glass of water on waking</item>
-        <item>10 minutes of sunlight</item>
-        <item>Got dressed intentionally</item>
-        <item>Smiled at someone today</item>
-        <item>Tidied one area</item>
-        <item>Phone-free meal</item>
-        <item>Moved my body / workout</item>
-        <item>Said something kind to myself</item>
-        <item>Connected with someone</item>
-        <item>Did a grounding moment</item>
-        <item>Read something positive</item>
-        <item>Went to bed on time</item>
+        <item>Hydration</item>
+        <item>Sunlight</item>
+        <item>Movement</item>
+        <item>Digital detox</item>
+        <item>Space harmony</item>
+        <item>Single-tasking</item>
+        <item>Active altruism</item>
+        <item>Direct appreciation</item>
+        <item>Analog Calm</item>
+        <item>Inner dialogue</item>
+        <item>Mindful eating</item>
+        <item>Restful sleep</item>
     </string-array>
+
     <string-array name="gold_habit_subtitles">
-        <item>Hydrate your body before anything else</item>
-        <item>Step outside or open curtains to natural light</item>
-        <item>Investing in your appearance builds self-worth</item>
-        <item>A smile is free and builds connection</item>
-        <item>Order outside creates calm inside</item>
-        <item>Ate without looking at a screen</item>
-        <item>Any movement counts — walk, gym, stretch, dance</item>
-        <item>Self-compassion is a daily practice</item>
-        <item>A call, a message, or a conversation</item>
-        <item>Noticed your surroundings with all 5 senses</item>
-        <item>Feed your mind with what builds it up</item>
-        <item>Consistent sleep time regulates mood</item>
+        <item>Drink a full glass of water first thing upon waking to kickstart your metabolism and cognition.</item>
+        <item>10 mins of morning natural light to reset your circadian rhythm and sleep better.</item>
+        <item>A short walk or stretch to release endorphins and reduce physical tension.</item>
+        <item>No screens for the first/last hour to avoid dopamine spikes and improve rest.</item>
+        <item>Tidy one small area. Visual order reduces mental fatigue and cortisol.</item>
+        <item>Focus on one task at a time to reduce cognitive load and anxiety.</item>
+        <item>Do something kind unexpectedly. Helping others actively boosts your own mood.</item>
+        <item>Express gratitude to someone. It strengthens social bonds and releases oxytocin.</item>
+        <item>3 mins of hand-written reflection to process complex emotions and slow the mind.</item>
+        <item>Catch a destructive thought and reframe it into something objective and uplifting.</item>
+        <item>Enjoy one meal today without screens to improve digestion and the gut-brain axis.</item>
+        <item>Stick to your sleep schedule for memory consolidation and emotional stability.</item>
     </string-array>
 
     <!-- Daily Tips screen -->
@@ -488,8 +542,6 @@
     <string name="lessons_reflection_saved">Reflection saved!</string>
     <string name="lessons_great_work">Great work on today\'s lesson.</string>
     <string name="lessons_write_answer">Write your answer…</string>
-    <string name="lessons_gratitude_done_title">Beautiful!</string>
-    <string name="lessons_gratitude_done_body">Gratitude rewires the brain for positivity.</string>
     <string name="lessons_finish">Finish ✓</string>
     <string name="lessons_next">Next →</string>
     <string name="lessons_intensity">Intensity: </string>
@@ -791,4 +843,18 @@
     <string-array name="vocab_related_27"><item>Irritation</item><item>Restlessness</item></string-array>
     <string-array name="vocab_related_28"><item>Resentment</item><item>Cynicism</item><item>Hurt</item></string-array>
 
+    <string name="journal_cancel">Cancel</string>
+    <string name="journal_ai_reflection_title">A reflection for you</string>
+    <string name="today_intentions_title">Daily intentions</string>
+    <string name="intention_altruism">Active altruism</string>
+    <string name="intention_appreciation">Direct appreciation</string>
+    <string name="intention_reflection">Analog calm</string>
+    <string name="view_all_habits">View all 12 micro-habits</string>
+    <string name="insights_first_checkin">Make your first check-in</string>
+    <string name="insights_balance">Positive</string>
+    <string name="insights_total_records">Check-ins</string>
+    <string name="insights_other_patterns">Other observations</string>
+    <string name="insights_support_title">Support Emova</string>
+    <string name="insights_support_subtitle">Help me keep this project ad-free and growing.</string>
+    <string name="insights_support_button">Buy me a coffee ☕</string>
 </resources>

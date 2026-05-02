@@ -7,11 +7,14 @@ import androidx.room.PrimaryKey
 data class JournalEntry(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val checkInId: Int,           // links to the CheckIn
+    val checkInId: Int,
     val emotionId: String,
     val emotionName: String,
     val emotionFamily: String,
-    val prompt: String,
-    val answer: String,
+
+    // 🎯 NUEVO: Los campos que el ViewModel estaba buscando
+    val conversationHistory: String,
+    val initialBrainDump: String = "",
+
     val timestamp: Long = System.currentTimeMillis()
 )

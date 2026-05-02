@@ -35,16 +35,18 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
     val uiState: StateFlow<LessonUiState> = _uiState.asStateFlow()
 
     init {
-        // Pick today's lesson based on day of year
+        // 🎯 APLICADO: Ahora llamamos directamente a lessonLibrary
+        // (ya no usamos localizedLessonLibrary porque los IDs son universales)
         val dayIndex = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_YEAR)
-        val library = localizedLessonLibrary(getApplication())
-        val todaysLesson = library[dayIndex % library.size]
+        val todaysLesson = lessonLibrary[dayIndex % lessonLibrary.size]
+
         _uiState.value = LessonUiState(
             todaysLesson = todaysLesson,
-            allLessons = library,
+            allLessons = lessonLibrary,
             selectedLesson = todaysLesson,
-            gratitudeAnswers = if (todaysLesson.content is LessonContent.Gratitude)
-                MutableList((todaysLesson.content as LessonContent.Gratitude).prompts.size) { "" }
+            // 🎯 APLICADO: Ajustamos para leer promptResIds en lugar de prompts
+            gratitudeAnswers = if (todaysLesson.content is LessonContent.GuidedJournal)
+                MutableList((todaysLesson.content as LessonContent.GuidedJournal).promptResIds.size) { "" }
             else emptyList()
         )
     }
@@ -60,8 +62,9 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
             breathingActive = false,
             currentGratitudeIndex = 0,
             gratitudeDone = false,
-            gratitudeAnswers = if (lesson.content is LessonContent.Gratitude)
-                MutableList((lesson.content as LessonContent.Gratitude).prompts.size) { "" }
+            // 🎯 APLICADO: Ajustamos para leer promptResIds
+            gratitudeAnswers = if (lesson.content is LessonContent.GuidedJournal)
+                MutableList((lesson.content as LessonContent.GuidedJournal).promptResIds.size) { "" }
             else emptyList()
         )
     }
@@ -126,7 +129,8 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
     fun nextGratitude() {
         val state = _uiState.value
         val lesson = state.selectedLesson ?: return
-        val prompts = (lesson.content as? LessonContent.Gratitude)?.prompts ?: return
+        // 🎯 APLICADO: Ajustamos para leer promptResIds
+        val prompts = (lesson.content as? LessonContent.GuidedJournal)?.promptResIds ?: return
         if (state.currentGratitudeIndex < prompts.size - 1) {
             _uiState.value = state.copy(currentGratitudeIndex = state.currentGratitudeIndex + 1)
         } else {

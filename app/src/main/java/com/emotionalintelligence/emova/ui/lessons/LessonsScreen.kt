@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.model.*
 import com.emotionalintelligence.emova.viewmodel.LessonViewModel
+import androidx.compose.ui.text.style.TextAlign
 
 // ─── Lessons List Screen ──────────────────────────────────────────────────────
 
@@ -99,9 +99,11 @@ fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit) {
                 Text("⏱ ${lesson.duration}", fontSize = 12.sp, color = Color(0xFF6B6B8A))
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Text(lesson.title, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+            // 🎯 APLICADO: stringResource para el título
+            Text(stringResource(lesson.titleResId), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(lesson.description, fontSize = 13.sp, color = Color(0xFF6B6B8A))
+            // 🎯 APLICADO: stringResource para la descripción
+            Text(stringResource(lesson.descriptionResId), fontSize = 13.sp, color = Color(0xFF6B6B8A))
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = onClick,
@@ -130,19 +132,20 @@ fun LessonCard(lesson: Lesson, onClick: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = when (lesson.content) {
+                text = when (val c = lesson.content) {
                     is LessonContent.Reflection -> "💭"
                     is LessonContent.Scenario   -> "🎭"
                     is LessonContent.Breathing  -> "🌬️"
-                    is LessonContent.Gratitude  -> "🙏"
+                    is LessonContent.GuidedJournal -> c.finishEmoji // Usamos el emoji del modelo (🙏 o 🧠 o 🌱)
                 },
                 fontSize = 20.sp
             )
         }
         Spacer(modifier = Modifier.width(14.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(lesson.title, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF1A1A2E))
-            Text(lesson.description, fontSize = 12.sp, color = Color(0xFF6B6B8A), maxLines = 1)
+            // 🎯 APLICADO
+            Text(stringResource(lesson.titleResId), fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF1A1A2E))
+            Text(stringResource(lesson.descriptionResId), fontSize = 12.sp, color = Color(0xFF6B6B8A), maxLines = 1)
         }
         Text("⏱ ${lesson.duration}", fontSize = 11.sp, color = Color(0xFFAAAAAC))
     }
@@ -167,9 +170,10 @@ fun LessonDetailScreen(viewModel: LessonViewModel, onBack: () -> Unit) {
         Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp)) {
             Text(lesson.category.emoji, fontSize = 36.sp)
             Spacer(modifier = Modifier.height(8.dp))
-            Text(lesson.title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+            // 🎯 APLICADO
+            Text(stringResource(lesson.titleResId), fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(lesson.description, fontSize = 14.sp, color = Color(0xFF6B6B8A))
+            Text(stringResource(lesson.descriptionResId), fontSize = 14.sp, color = Color(0xFF6B6B8A))
             Spacer(modifier = Modifier.height(28.dp))
 
             when (val content = lesson.content) {
@@ -193,9 +197,9 @@ fun LessonDetailScreen(viewModel: LessonViewModel, onBack: () -> Unit) {
                     active = uiState.breathingActive,
                     onStart = viewModel::startBreathing
                 )
-                is LessonContent.Gratitude -> GratitudeContent(
+                is LessonContent.GuidedJournal -> GuidedJournalContent(
                     content = content,
-                    answers = uiState.gratitudeAnswers,
+                    answers = uiState.gratitudeAnswers, // Reusamos la memoria del ViewModel
                     currentIndex = uiState.currentGratitudeIndex,
                     done = uiState.gratitudeDone,
                     onAnswerChange = viewModel::setGratitudeAnswer,
@@ -221,14 +225,18 @@ fun ReflectionContent(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFFFFFFF))
             .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(16.dp)).padding(20.dp)
-    ) { Text(content.prompt, fontSize = 16.sp, color = Color(0xFF1A1A2E), lineHeight = 24.sp) }
+    ) {
+        // 🎯 APLICADO
+        Text(stringResource(content.promptResId), fontSize = 16.sp, color = Color(0xFF1A1A2E), lineHeight = 24.sp)
+    }
     Spacer(modifier = Modifier.height(16.dp))
 
-    content.hints.forEach { hint ->
+    content.hintResIds.forEach { hintResId ->
         Row(modifier = Modifier.padding(vertical = 4.dp)) {
             Text("•", color = Color(0xFF6C63FF), fontSize = 14.sp)
             Spacer(modifier = Modifier.width(8.dp))
-            Text(hint, fontSize = 13.sp, color = Color(0xFF6B6B8A))
+            // 🎯 APLICADO
+            Text(stringResource(hintResId), fontSize = 13.sp, color = Color(0xFF6B6B8A))
         }
     }
     Spacer(modifier = Modifier.height(20.dp))
@@ -286,7 +294,10 @@ fun ScenarioContent(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFFFFFFF))
             .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(16.dp)).padding(20.dp)
-    ) { Text(content.situation, fontSize = 15.sp, color = Color(0xFF1A1A2E), lineHeight = 22.sp) }
+    ) {
+        // 🎯 APLICADO
+        Text(stringResource(content.situationResId), fontSize = 15.sp, color = Color(0xFF1A1A2E), lineHeight = 22.sp)
+    }
     Spacer(modifier = Modifier.height(20.dp))
     Text(stringResource(R.string.lessons_how_respond), fontSize = 14.sp, color = Color(0xFF6B6B8A))
     Spacer(modifier = Modifier.height(12.dp))
@@ -304,7 +315,10 @@ fun ScenarioContent(
                 .background(if (isSelected) borderColor.copy(alpha = 0.1f) else Color(0xFFFFFFFF))
                 .border(1.5.dp, borderColor, RoundedCornerShape(14.dp))
                 .clickable(enabled = !showFeedback) { onOptionSelected(index) }.padding(16.dp)
-        ) { Text(option.text, fontSize = 14.sp, color = Color(0xFF1A1A2E)) }
+        ) {
+            // 🎯 APLICADO
+            Text(stringResource(option.textResId), fontSize = 14.sp, color = Color(0xFF1A1A2E))
+        }
         Spacer(modifier = Modifier.height(10.dp))
     }
 
@@ -325,7 +339,8 @@ fun ScenarioContent(
                         color = if (it.isIdeal) Color(0xFF06D6A0) else Color(0xFFFFD166)
                     )
                     Spacer(modifier = Modifier.height(6.dp))
-                    Text(it.feedback, fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 20.sp)
+                    // 🎯 APLICADO
+                    Text(stringResource(it.feedbackResId), fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 20.sp)
                 }
             }
         }
@@ -361,7 +376,8 @@ fun BreathingContent(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(currentStep.emoji, fontSize = 36.sp)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(currentStep.instruction, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    // 🎯 APLICADO
+                    Text(stringResource(currentStep.instructionResId), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     Text("$secondsLeft", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color(0xFF6C63FF))
                 }
             } else { Text("🌬️", fontSize = 48.sp) }
@@ -376,7 +392,8 @@ fun BreathingContent(
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                     Text(s.emoji, fontSize = 16.sp)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("${s.instruction} — ${s.durationSeconds}s", fontSize = 14.sp, color = Color(0xFF1A1A2E))
+                    // 🎯 APLICADO
+                    Text("${stringResource(s.instructionResId)} — ${s.durationSeconds}s", fontSize = 14.sp, color = Color(0xFF1A1A2E))
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
@@ -395,8 +412,8 @@ fun BreathingContent(
 // ─── Gratitude Content ────────────────────────────────────────────────────────
 
 @Composable
-fun GratitudeContent(
-    content: LessonContent.Gratitude,
+fun GuidedJournalContent(
+    content: LessonContent.GuidedJournal, // <-- Cambiado
     answers: List<String>,
     currentIndex: Int,
     done: Boolean,
@@ -411,17 +428,18 @@ fun GratitudeContent(
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("🙏", fontSize = 40.sp)
+                // 🎯 Leemos el emoji y los textos desde el modelo
+                Text(content.finishEmoji, fontSize = 40.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(stringResource(R.string.lessons_gratitude_done_title), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
-                Text(stringResource(R.string.lessons_gratitude_done_body), fontSize = 13.sp, color = Color(0xFF6B6B8A))
+                Text(stringResource(content.finishTitleResId), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E), textAlign = TextAlign.Center)
+                Text(stringResource(content.finishBodyResId), fontSize = 13.sp, color = Color(0xFF6B6B8A), textAlign = TextAlign.Center)
             }
         }
         return
     }
 
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        content.prompts.indices.forEach { i ->
+        content.promptResIds.indices.forEach { i ->
             Box(modifier = Modifier.size(8.dp).clip(CircleShape)
                 .background(if (i <= currentIndex) Color(0xFFFFD166) else Color(0xFFEAE8F5)))
         }
@@ -432,7 +450,10 @@ fun GratitudeContent(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFFFFFFF))
             .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(16.dp)).padding(20.dp)
-    ) { Text(content.prompts[currentIndex], fontSize = 16.sp, color = Color(0xFF1A1A2E), lineHeight = 24.sp) }
+    ) {
+        // 🎯 APLICADO
+        Text(stringResource(content.promptResIds[currentIndex]), fontSize = 16.sp, color = Color(0xFF1A1A2E), lineHeight = 24.sp)
+    }
     Spacer(modifier = Modifier.height(16.dp))
 
     OutlinedTextField(
@@ -454,7 +475,7 @@ fun GratitudeContent(
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFD166))
     ) {
         Text(
-            if (currentIndex == content.prompts.size - 1) stringResource(R.string.lessons_finish) else stringResource(R.string.lessons_next),
+            if (currentIndex == content.promptResIds.size - 1) stringResource(R.string.lessons_finish) else stringResource(R.string.lessons_next),
             fontWeight = FontWeight.Bold, color = Color(0xFFF7F6FB)
         )
     }

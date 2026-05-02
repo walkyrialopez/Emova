@@ -71,7 +71,11 @@ fun BreathingMenu(onSelect: (BreathingPattern) -> Unit, onBack: (() -> Unit)? = 
             Spacer(modifier = Modifier.height(8.dp))
             Text(stringResource(R.string.breathe_title), fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
             Text(stringResource(R.string.breathe_subtitle), fontSize = 14.sp, color = Color(0xFF6B6B8A))
+
+            // 🎯 NUEVO: La tarjeta educativa justo después del título
             Spacer(modifier = Modifier.height(16.dp))
+            WhyItWorksCard(message = stringResource(R.string.why_it_works_breathing))
+            Spacer(modifier = Modifier.height(8.dp))
         }
         item {
             SOSPanel()
@@ -86,19 +90,7 @@ fun BreathingMenu(onSelect: (BreathingPattern) -> Unit, onBack: (() -> Unit)? = 
                 onClick = { onSelect(pattern) }
             )
         }
-        item {
-            Spacer(modifier = Modifier.height(12.dp))
-            Column(
-                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xFFEDECFF)).padding(16.dp)
-            ) {
-                Text(stringResource(R.string.breathe_tip_label), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color(0xFF6C63FF))
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(stringResource(R.string.breathe_tip_body),
-                    fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 20.sp)
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-        }
+        // He eliminado el "item" de la propina vieja para no repetir información
     }
 }
 
@@ -228,5 +220,26 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
             }
         }
         Spacer(modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun WhyItWorksCard(message: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xFF6C63FF).copy(alpha = 0.08f))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("💡", fontSize = 20.sp)
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = message,
+            fontSize = 13.sp,
+            color = Color(0xFF1A1A2E),
+            lineHeight = 18.sp
+        )
     }
 }

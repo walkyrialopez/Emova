@@ -1,82 +1,60 @@
 package com.emotionalintelligence.emova.ui.checkin
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.emotionalintelligence.emova.R
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.model.Emotion
 import com.emotionalintelligence.emova.model.EmotionFamily
 import com.emotionalintelligence.emova.viewmodel.CheckInViewModel
 
 @Composable
 fun CheckInScreen(
-    onCheckInSaved: (checkInId: Int, emotionName: String, emotionEmoji: String, emotionFamily: String) -> Unit = { _, _, _, _ -> },
+    onCheckInSaved: (Int, String, String, String, Int) -> Unit, // <-- Ese ", Int" al final es la clave
     viewModel: CheckInViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val hasSelection = uiState.selectedEmotion != null
+
+    // 🎯 NUEVO: Medición dinámica de la tarjeta inferior
+    val density = LocalDensity.current
+    var bottomSheetHeight by remember { mutableStateOf(0.dp) }
+
+    // 🎯 NUEVO: Elevamos el estado de la pestaña aquí para poder filtrar la cuadrícula
+    var activeFamilyTab by remember { mutableStateOf(EmotionFamily.entries.first()) }
 
     LaunchedEffect(uiState.savedCheckInId) {
         if (uiState.savedCheckInId > -1) {
             val emotion = uiState.selectedEmotion!!
             onCheckInSaved(
                 uiState.savedCheckInId,
-                emotion.name,
+                emotion.name, // Asegúrate de que en tu modelo de datos uses el id o texto correcto.
                 emotion.emoji,
-                emotion.family.name
+                emotion.family.name,
+                uiState.intensity
             )
             viewModel.resetSaved()
         }
@@ -84,39 +62,66 @@ fun CheckInScreen(
 
     Box(modifier = Modifier.fillMaxSize().background(Color(0xFFF5F5FA))) {
 
-        // ── Main scrollable content ──────────────────────────────────────────
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp)
-                // Extra bottom padding when sheet is open so last row stays visible
-                .padding(top = 32.dp, bottom = if (hasSelection) 220.dp else 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.checkin_title),
-                fontSize = 26.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF111130),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = stringResource(R.string.checkin_subtitle),
-                fontSize = 14.sp,
-                color = Color(0xFF111130),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(28.dp))
+        val filteredEmotions = viewModel.emotions.filter { it.family == activeFamilyTab }
 
-            EmotionFamilyTabs(
-                families = EmotionFamily.values().toList(),
-                selectedFamily = uiState.selectedEmotion?.family,
-                selectedEmotion = uiState.selectedEmotion,
-                emotions = viewModel.emotions,
-                onEmotionSelected = viewModel::selectEmotion
-            )
+        // ── Main scrollable grid (La forma élite de hacer listas) ────────────
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            contentPadding = PaddingValues(
+                top = 32.dp,
+                start = 20.dp,
+                end = 20.dp,
+                // Si hay selección, usamos la altura exacta de la tarjeta. Si no, 32dp normales.
+                bottom = if (hasSelection) bottomSheetHeight + 16.dp else 32.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // HEADER (Ocupa todo el ancho)
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(bottom = 28.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.checkin_title),
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF111130),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(R.string.checkin_subtitle),
+                        fontSize = 14.sp,
+                        color = Color(0xFF111130),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    WhyItWorksCard(message = stringResource(R.string.why_it_works_checkin))
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+
+            // TABS DE FAMILIA (Ocupa todo el ancho)
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                FamilyTabsRow(
+                    families = EmotionFamily.entries,
+                    activeFamilyTab = activeFamilyTab,
+                    onTabSelected = { activeFamilyTab = it }
+                )
+            }
+
+            // EMOCIONES (Se distribuyen solas en 3 columnas)
+            items(filteredEmotions) { emotion ->
+                EmotionChip(
+                    emotion = emotion,
+                    isSelected = emotion == uiState.selectedEmotion,
+                    onSelected = viewModel::selectEmotion
+                )
+            }
         }
 
         // ── Bottom fade hint (visible when nothing selected) ─────────────────
@@ -141,7 +146,14 @@ fun CheckInScreen(
         // ── Sticky bottom sheet ──────────────────────────────────────────────
         AnimatedVisibility(
             visible = hasSelection,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                // 🎯 NUEVO: Aquí medimos el alto real de esta tarjeta en la pantalla
+                .onGloballyPositioned { coordinates ->
+                    with(density) {
+                        bottomSheetHeight = coordinates.size.height.toDp()
+                    }
+                },
             enter = slideInVertically(
                 initialOffsetY = { it },
                 animationSpec = spring(
@@ -177,7 +189,6 @@ fun CheckInScreen(
                             .background(Color(0xFFDDDDEE))
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-
                     // Selected emotion summary
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -252,20 +263,19 @@ fun CheckInScreen(
     }
 }
 
-// ─── Emotion Family Tabs + Grid ───────────────────────────────────────────────
+// ─── Emotion Family Tabs ──────────────────────────────────────────────────────
 
 @Composable
-fun EmotionFamilyTabs(
+fun FamilyTabsRow(
     families: List<EmotionFamily>,
-    selectedFamily: EmotionFamily?,
-    selectedEmotion: Emotion?,
-    emotions: List<Emotion>,
-    onEmotionSelected: (Emotion) -> Unit
+    activeFamilyTab: EmotionFamily,
+    onTabSelected: (EmotionFamily) -> Unit
 ) {
-    var activeFamilyTab by remember { mutableStateOf(families.first()) }
-
     val familyRows = families.chunked(4)
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(bottom = 16.dp)
+    ) {
         familyRows.forEach { rowFamilies ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -275,7 +285,7 @@ fun EmotionFamilyTabs(
                     val isActive = activeFamilyTab == family
                     FilterChip(
                         selected = isActive,
-                        onClick = { activeFamilyTab = family },
+                        onClick = { onTabSelected(family) },
                         modifier = Modifier.weight(1f),
                         label = {
                             Text(
@@ -300,32 +310,6 @@ fun EmotionFamilyTabs(
                             selectedBorderColor = Color.Transparent
                         )
                     )
-                }
-            }
-        }
-    }
-
-    Spacer(modifier = Modifier.height(16.dp))
-
-    // Full natural-height grid — parent Column handles scrolling
-    val filteredEmotions = emotions.filter { it.family == activeFamilyTab }
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        filteredEmotions.chunked(3).forEach { rowEmotions ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                rowEmotions.forEach { emotion ->
-                    Box(modifier = Modifier.weight(1f)) {
-                        EmotionChip(
-                            emotion = emotion,
-                            isSelected = emotion == selectedEmotion,
-                            onSelected = onEmotionSelected
-                        )
-                    }
-                }
-                repeat(3 - rowEmotions.size) {
-                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
@@ -360,7 +344,7 @@ fun EmotionChip(
                 shape = RoundedCornerShape(14.dp)
             )
             .clickable { onSelected(emotion) }
-            .padding(vertical = 14.dp, horizontal = 8.dp),
+            .padding(vertical = 14.dp, horizontal = 4.dp), // Ajustado el padding horizontal
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -428,5 +412,26 @@ fun IntensitySlider(
             Text(stringResource(R.string.checkin_mild), fontSize = 11.sp, color = Color(0xFFBBBBCC))
             Text(stringResource(R.string.checkin_intense), fontSize = 11.sp, color = Color(0xFFBBBBCC))
         }
+    }
+}
+
+@Composable
+fun WhyItWorksCard(message: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xFF6C63FF).copy(alpha = 0.08f))
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("💡", fontSize = 20.sp)
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(
+            text = message,
+            fontSize = 13.sp,
+            color = Color(0xFF1A1A2E),
+            lineHeight = 18.sp
+        )
     }
 }

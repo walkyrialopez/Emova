@@ -42,18 +42,18 @@ data class GoldHabit(
 )
 
 val goldHabits = listOf(
-    GoldHabit("water",    "💧", "Body"),
-    GoldHabit("sunlight", "☀️", "Body"),
-    GoldHabit("dressed",  "👔", "Mind"),
-    GoldHabit("smile",    "😊", "Relationships"),
-    GoldHabit("tidy",     "🧹", "Environment"),
-    GoldHabit("screen",   "📵", "Focus"),
-    GoldHabit("move",     "🚶", "Body"),
-    GoldHabit("kind",     "💜", "Mind"),
-    GoldHabit("connect",  "🤝", "Relationships"),
-    GoldHabit("ground",   "🌿", "Mind"),
-    GoldHabit("read",     "📖", "Mind"),
-    GoldHabit("sleep",    "🌙", "Sleep")
+    GoldHabit("water",        "💧", "Body"),
+    GoldHabit("sunlight",     "☀️", "Body"),
+    GoldHabit("move",         "🚶", "Body"),
+    GoldHabit("screen",       "📵", "Focus"),
+    GoldHabit("tidy",         "🧹", "Environment"),
+    GoldHabit("focus",        "🎯", "Focus"),
+    GoldHabit("altruism",     "🎁", "Relationships"),
+    GoldHabit("appreciation", "✨", "Relationships"),
+    GoldHabit("reflection",   "✍️", "Mind"),
+    GoldHabit("dialogue",     "💭", "Mind"),       // NUEVO: Diálogo Interno
+    GoldHabit("eating",       "🥗", "Body"),       // NUEVO: Bocado Consciente
+    GoldHabit("sleep",        "🌙", "Sleep")
 )
 
 // ─── ViewModel ────────────────────────────────────────────────────────────────

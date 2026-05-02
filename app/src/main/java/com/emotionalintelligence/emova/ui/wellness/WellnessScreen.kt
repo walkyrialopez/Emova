@@ -21,6 +21,7 @@ import com.emotionalintelligence.emova.ui.breathing.BreathingPattern
 import com.emotionalintelligence.emova.ui.gratitude.GratitudeScreen
 import com.emotionalintelligence.emova.ui.tips.DailyTipsScreen
 import com.emotionalintelligence.emova.ui.habits.GoldHabitsScreen
+import com.emotionalintelligence.emova.ui.today.WellnessTipOfTheDay // 👈 Importamos el tip aquí
 
 @Composable
 fun WellnessScreen(startTab: Int = 0) {
@@ -39,7 +40,7 @@ fun WellnessScreen(startTab: Int = 0) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
                     .clip(RoundedCornerShape(14.dp))
                     .background(Color(0xFFEAE8F5))
             ) {

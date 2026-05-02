@@ -49,6 +49,8 @@ import com.emotionalintelligence.emova.ui.settings.SettingsScreen
 import com.emotionalintelligence.emova.ui.thermometer.ThoughtThermometerScreen
 import com.emotionalintelligence.emova.ui.today.TodayScreen
 import com.emotionalintelligence.emova.ui.wellness.WellnessScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.emotionalintelligence.emova.viewmodel.JournalViewModel
 
 data class BottomNavItem(
     val labelResId: Int,
@@ -63,7 +65,6 @@ val bottomNavItems = listOf(
     BottomNavItem(R.string.nav_insights, Icons.Filled.DateRange,   Icons.Outlined.DateRange,      "insights"),
     BottomNavItem(R.string.nav_wellness, Icons.Filled.Healing,     Icons.Outlined.Healing,        "wellness/0"),
     BottomNavItem(R.string.nav_growth,   Icons.Filled.AutoStories, Icons.Outlined.AutoStories,    "growth")
-    // Settings removed — accessible via ⚙️ icon in TodayScreen header
 )
 
 object Routes {
@@ -74,13 +75,18 @@ object Routes {
     const val WELLNESS    = "wellness/{startTab}"
     const val GROWTH      = "growth"
     const val SETTINGS    = "settings"
-    const val JOURNAL     = "journal/{checkInId}/{emotionName}/{emotionEmoji}/{emotionFamily}"
+
+    // 🎯 NUEVO: Agregamos /{intensity} a la ruta principal del Journal
+    const val JOURNAL     = "journal/{checkInId}/{emotionName}/{emotionEmoji}/{emotionFamily}/{intensity}"
+
     const val THERMOMETER = "thermometer/{emotionName}"
 
     fun wellnessRoute(startTab: Int = 0) = "wellness/$startTab"
     fun thermometerRoute(emotionName: String) = "thermometer/$emotionName"
-    fun journalRoute(checkInId: Int, emotionName: String, emotionEmoji: String, emotionFamily: String) =
-        "journal/$checkInId/$emotionName/$emotionEmoji/$emotionFamily"
+
+    // 🎯 NUEVO: Agregamos intensity al helper de la ruta
+    fun journalRoute(checkInId: Int, emotionName: String, emotionEmoji: String, emotionFamily: String, intensity: Int) =
+        "journal/$checkInId/$emotionName/$emotionEmoji/$emotionFamily/$intensity"
 }
 
 @Composable
@@ -128,20 +134,8 @@ fun EmováNavGraph() {
                                     }
                                 }
                             },
-                            icon = {
-                                Icon(
-                                    if (selected) item.selectedIcon else item.unselectedIcon,
-                                    contentDescription = label
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = label,
-                                    maxLines = 1,
-                                    fontSize = 10.sp,
-                                    softWrap = false
-                                )
-                            },
+                            icon = { Icon(if (selected) item.selectedIcon else item.unselectedIcon, contentDescription = label) },
+                            label = { Text(text = label, maxLines = 1, fontSize = 10.sp, softWrap = false) },
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor   = Color(0xFF6C63FF),
                                 selectedTextColor   = Color(0xFF6C63FF),
@@ -155,8 +149,7 @@ fun EmováNavGraph() {
             }
         }
     ) { innerPadding ->
-        NavHost(navController = navController, startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding)) {
+        NavHost(navController = navController, startDestination = startDestination, modifier = Modifier.padding(innerPadding)) {
             composable(Routes.ONBOARDING) {
                 OnboardingScreen(onComplete = { name ->
                     prefs.edit().putString("user_name", name).putBoolean("onboarded", true).apply()
@@ -171,48 +164,54 @@ fun EmováNavGraph() {
                     onNavigateToBreathe   = { navController.navigate(Routes.wellnessRoute(0)) { launchSingleTop = true } },
                     onNavigateToLesson    = { navController.navigate(Routes.GROWTH) { launchSingleTop = true } },
                     onNavigateToHabits    = { navController.navigate(Routes.wellnessRoute(2)) { launchSingleTop = true } },
-                    onNavigateToSettings  = { navController.navigate(Routes.SETTINGS) { launchSingleTop = true } }  // 👈 add this
+                    onNavigateToSettings  = { navController.navigate(Routes.SETTINGS) { launchSingleTop = true } }
                 )
             }
             composable(Routes.CHECK_IN) {
-                CheckInScreen(onCheckInSaved = { checkInId, emotionName, emotionEmoji, emotionFamily ->
-                    navController.navigate(Routes.journalRoute(checkInId, emotionName, emotionEmoji, emotionFamily))
+                // 🎯 NUEVO: Agregamos el parámetro 'intensity' que devuelve el CheckInScreen
+                CheckInScreen(onCheckInSaved = { checkInId, emotionName, emotionEmoji, emotionFamily, intensity ->
+                    navController.navigate(Routes.journalRoute(checkInId, emotionName, emotionEmoji, emotionFamily, intensity))
                 })
             }
-            composable(route = Routes.WELLNESS,
-                arguments = listOf(navArgument("startTab") { type = NavType.IntType })
-            ) { backStackEntry ->
+            composable(route = Routes.WELLNESS, arguments = listOf(navArgument("startTab") { type = NavType.IntType })) { backStackEntry ->
                 WellnessScreen(startTab = backStackEntry.arguments?.getInt("startTab") ?: 0)
             }
             composable(Routes.INSIGHTS) { InsightsScreen() }
             composable(Routes.GROWTH)   { GrowthScreen() }
             composable(Routes.SETTINGS) { SettingsScreen() }
+
+            // 🎯 EL BLOQUE DE JOURNAL QUE ESTÁBAMOS BUSCANDO
             composable(route = Routes.JOURNAL,
                 arguments = listOf(
                     navArgument("checkInId")     { type = NavType.IntType },
                     navArgument("emotionName")   { type = NavType.StringType },
                     navArgument("emotionEmoji")  { type = NavType.StringType },
-                    navArgument("emotionFamily") { type = NavType.StringType }
+                    navArgument("emotionFamily") { type = NavType.StringType },
+                    // 🎯 NUEVO: Le decimos a Compose que espere un entero de la URL
+                    navArgument("intensity")     { type = NavType.IntType }
                 )
             ) { backStackEntry ->
+                val journalViewModel: JournalViewModel = viewModel()
+
                 JournalScreen(
                     checkInId     = backStackEntry.arguments?.getInt("checkInId") ?: 0,
                     emotionName   = backStackEntry.arguments?.getString("emotionName") ?: "",
                     emotionEmoji  = backStackEntry.arguments?.getString("emotionEmoji") ?: "",
                     emotionFamily = backStackEntry.arguments?.getString("emotionFamily") ?: "",
-                    onFinished = { showThermometer, emotionName ->
-                        if (showThermometer) {
-                            navController.navigate(Routes.thermometerRoute(emotionName)) { popUpTo(Routes.TODAY) { inclusive = false } }
-                        } else {
-                            navController.navigate(Routes.TODAY) { popUpTo(Routes.TODAY) { inclusive = true } }
-                        }
+
+                    // 🎯 NUEVO: Extraemos la intensidad de los argumentos
+                    initialIntensity = backStackEntry.arguments?.getInt("intensity") ?: 0,
+
+                    viewModel     = journalViewModel,
+
+                    // 🎯 NUEVO: Cambiado a onFinish para el nuevo flujo
+                    onFinish = {
+                        navController.navigate(Routes.TODAY) { popUpTo(Routes.TODAY) { inclusive = true } }
                     },
                     onBack = { navController.popBackStack() }
                 )
             }
-            composable(route = Routes.THERMOMETER,
-                arguments = listOf(navArgument("emotionName") { type = NavType.StringType })
-            ) { backStackEntry ->
+            composable(route = Routes.THERMOMETER, arguments = listOf(navArgument("emotionName") { type = NavType.StringType })) { backStackEntry ->
                 ThoughtThermometerScreen(
                     emotionName = backStackEntry.arguments?.getString("emotionName") ?: "",
                     onFinish = { navController.navigate(Routes.TODAY) { popUpTo(Routes.TODAY) { inclusive = true } } },

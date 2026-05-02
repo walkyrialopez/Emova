@@ -1,39 +1,51 @@
 package com.emotionalintelligence.emova.viewmodel
-import com.emotionalintelligence.emova.util.loadLanguage
-import kotlinx.coroutines.flow.first
+
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.data.EmováDatabase
 import com.emotionalintelligence.emova.model.EmotionFamily
 import com.emotionalintelligence.emova.model.JournalEntry
-import com.emotionalintelligence.emova.model.getPromptResIdsForFamily
+import com.emotionalintelligence.emova.model.HabitRecord
+import com.emotionalintelligence.emova.util.GeminiService
+import com.emotionalintelligence.emova.util.loadLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import com.emotionalintelligence.emova.util.GeminiService
+
+// 🎯 1. Definimos los pasos de la pantalla
+enum class JournalStep {
+    BRAIN_DUMP,      // Pantalla 1: El usuario escribe su pensamiento
+    AI_CHAT,         // Pantalla 2: La IA responde (Muestra loading y luego el texto)
+    INTENSITY_CHECK, // Pantalla 3: El slider final
+    COMPLETE         // Terminado, cerrar pantalla
+}
 
 data class JournalUiState(
+    val checkInId: Int = 0,
     val emotionName: String = "",
     val emotionEmoji: String = "",
     val emotionFamily: String = "",
-    val checkInId: Int = 0,
-    val promptResIds: List<Int> = emptyList(),  // resource IDs — resolved in the UI
-    val prompts: List<String> = emptyList(),     // resolved strings — used for DB saving only
-    val currentPromptIndex: Int = 0,
-    val answers: MutableList<String> = mutableListOf(),
-    val currentAnswer: String = "",
-    val isSaved: Boolean = false,
-    val isComplete: Boolean = false,
+    val initialIntensity: Int = 0, // Necesitamos saber con qué intensidad empezó
+
+    val currentStep: JournalStep = JournalStep.BRAIN_DUMP,
+
+    val brainDump: String = "",
+
     val aiResponse: String = "",
-    val aiError: String = "",          // new
-    val isLoadingAiResponse: Boolean = false
+    val aiError: String = "",
+    val isLoadingAiResponse: Boolean = false,
+
+    val finalIntensity: Int = 0
 )
 
 class JournalViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dao = EmováDatabase.getInstance(application).journalEntryDao()
+    private val db = EmováDatabase.getInstance(application)
+    private val journalDao = db.journalEntryDao()
+    private val habitDao = db.habitRecordDao() // 🎯 Para registrar el hábito
 
     private val _uiState = MutableStateFlow(JournalUiState())
     val uiState: StateFlow<JournalUiState> = _uiState.asStateFlow()
@@ -42,132 +54,64 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
         checkInId: Int,
         emotionName: String,
         emotionEmoji: String,
-        emotionFamilyName: String
+        emotionFamilyName: String,
+        initialIntensity: Int // 🎯 Asegúrate de pasar esto desde la pantalla anterior
     ) {
-        val family = try {
-            EmotionFamily.valueOf(emotionFamilyName)
-        } catch (e: Exception) {
-            EmotionFamily.POSITIVE
-        }
-        val promptResIds = getPromptResIdsForFamily(family)
-        // Resolve once for DB storage — UI will re-resolve via stringResource on each recompose
-        val prompts = promptResIds.map { resId ->
-            getApplication<Application>().getString(resId)
-        }
         _uiState.value = JournalUiState(
             checkInId = checkInId,
             emotionName = emotionName,
             emotionEmoji = emotionEmoji,
             emotionFamily = emotionFamilyName,
-            promptResIds = promptResIds,
-            prompts = prompts,
-            answers = MutableList(promptResIds.size) { "" }
+            initialIntensity = initialIntensity,
+            currentStep = JournalStep.BRAIN_DUMP // Empezamos siempre aquí
         )
     }
 
-    fun setAnswer(text: String) {
-        _uiState.value = _uiState.value.copy(currentAnswer = text)
+    // ─── PASO 1: EL USUARIO ENVÍA SU BRAIN DUMP ─────────────────────────────
+    fun submitBrainDump(text: String) {
+        _uiState.value = _uiState.value.copy(
+            brainDump = text,
+            currentStep = JournalStep.AI_CHAT, // Pasamos a la pantalla de chat
+            isLoadingAiResponse = true
+        )
+        fetchAiResponse(text)
     }
 
-    fun nextPrompt() {
-        val state = _uiState.value
-        val updatedAnswers = state.answers.toMutableList()
-        updatedAnswers[state.currentPromptIndex] = state.currentAnswer
-
-        if (state.currentPromptIndex < state.prompts.size - 1) {
-            _uiState.value = state.copy(
-                currentPromptIndex = state.currentPromptIndex + 1,
-                currentAnswer = updatedAnswers[state.currentPromptIndex + 1],
-                answers = updatedAnswers
-            )
-        } else {
-            _uiState.value = state.copy(answers = updatedAnswers, isComplete = true)
-            saveAll(updatedAnswers)
-        }
-    }
-
-    fun prevPrompt() {
-        val state = _uiState.value
-        if (state.currentPromptIndex > 0) {
-            val updatedAnswers = state.answers.toMutableList()
-            updatedAnswers[state.currentPromptIndex] = state.currentAnswer
-            _uiState.value = state.copy(
-                currentPromptIndex = state.currentPromptIndex - 1,
-                currentAnswer = updatedAnswers[state.currentPromptIndex - 1],
-                answers = updatedAnswers
-            )
-        }
-    }
-
-    private fun saveAll(answers: List<String>) {
+    // ─── PASO 2: LLAMADA A LA IA CON EL PROMPT BLINDADO Y BILINGÜE ─────────
+    private fun fetchAiResponse(brainDumpText: String) {
         val state = _uiState.value
         viewModelScope.launch {
-            state.prompts.forEachIndexed { index, prompt ->
-                val answer = answers.getOrElse(index) { "" }
-                if (answer.isNotBlank()) {
-                    dao.insert(
-                        JournalEntry(
-                            checkInId = state.checkInId,
-                            emotionId = state.emotionFamily.lowercase(),
-                            emotionName = state.emotionName,
-                            emotionFamily = state.emotionFamily,
-                            prompt = prompt,
-                            answer = answer
-                        )
-                    )
-                }
-            }
-            _uiState.value = _uiState.value.copy(isSaved = true, isLoadingAiResponse = true)
-            fetchAiResponse(answers)
-        }
-    }
+            val language = loadLanguage(getApplication()).code
 
-    // Add this new function:
-    private fun fetchAiResponse(answers: List<String>) {
-        val state = _uiState.value
-        viewModelScope.launch {
-
-            // Get recent emotions for pattern context
-            val recentCheckIns = dao.getAllFlow().first()
-            val sevenDaysAgo = System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000L
-            val recentEmotions = recentCheckIns
-                .filter { it.timestamp >= sevenDaysAgo }
-                .map { it.emotionName }
-
-            // Get current language
-            val language = loadLanguage(getApplication()).code  // "en" or "es"
+            // 🎯 Construimos el Prompt usando el archivo strings.xml (Bilingüe)
+            val systemPrompt = getApplication<Application>().getString(
+                R.string.ai_system_prompt_difficult,
+                state.emotionName,
+                state.initialIntensity,
+                if (brainDumpText.isBlank()) "No quiso escribir nada inicial." else brainDumpText
+            )
 
             val result = GeminiService.getJournalResponse(
-                emotionName    = state.emotionName,
-                emotionFamily  = state.emotionFamily,
-                prompts        = state.prompts,
-                answers        = answers,
-                recentEmotions = recentEmotions,
-                language       = language
+                systemPrompt = systemPrompt,
+                language = language
             )
 
             result.fold(
                 onSuccess = { text ->
                     _uiState.value = _uiState.value.copy(
-                        aiResponse          = text,
-                        aiError             = "",
+                        aiResponse = text,
+                        aiError = "",
                         isLoadingAiResponse = false
                     )
                 },
                 onFailure = { error ->
-                    val errorMsg = when (error.message) {
-                        "NO_CONNECTION" -> if (language == "es")
-                            "Sin conexión. Conéctate a internet para recibir tu reflexión."
-                        else "No connection. Connect to the internet to receive your reflection."
-                        "TIMEOUT" -> if (language == "es")
-                            "La respuesta tardó demasiado. Intenta de nuevo."
-                        else "Response timed out. Please try again."
-                        else -> if (language == "es")
-                            "No se pudo obtener una reflexión ahora."
-                        else "Couldn't get a reflection right now."
+                    val errorMsg = if (language == "es") {
+                        "No pudimos conectar con el guía en este momento. Intenta revisar tu conexión."
+                    } else {
+                        "We couldn't connect with the guide right now. Please check your connection."
                     }
                     _uiState.value = _uiState.value.copy(
-                        aiError             = errorMsg,
+                        aiError = errorMsg,
                         isLoadingAiResponse = false
                     )
                 }
@@ -175,7 +119,40 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun skip() {
-        nextPrompt()
+    // ─── TRANSICIÓN AL PASO 3 ──────────────────────────────────────────────
+    fun proceedToIntensityCheck() {
+        _uiState.value = _uiState.value.copy(currentStep = JournalStep.INTENSITY_CHECK)
+    }
+
+    // ─── PASO 3: GUARDAR TODO Y FINALIZAR ──────────────────────────────────
+    fun finishAndSave(finalIntensity: Int) {
+        val state = _uiState.value
+        _uiState.value = state.copy(finalIntensity = finalIntensity, currentStep = JournalStep.COMPLETE)
+
+        viewModelScope.launch {
+            // 1. Guardamos la conversación entera (formateada en texto simple)
+            val conversationRecord = """
+                Usuario: ${state.brainDump.ifBlank { "[Sin registro inicial]" }}
+                Guía IA: ${state.aiResponse}
+            """.trimIndent()
+
+            journalDao.insert(
+                JournalEntry(
+                    checkInId = state.checkInId,
+                    emotionId = state.emotionFamily.lowercase(),
+                    emotionName = state.emotionName,
+                    emotionFamily = state.emotionFamily,
+                    initialBrainDump = state.brainDump,
+                    conversationHistory = conversationRecord
+                )
+            )
+
+            // 2. 🌟 MAGIA: Si la intensidad bajó, registramos el hábito de "Reflexión"
+            if (finalIntensity < state.initialIntensity) {
+                habitDao.insert(
+                    HabitRecord(habitId = "reflection") // Esto alimentará la tarjeta héroe
+                )
+            }
+        }
     }
 }
