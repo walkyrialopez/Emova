@@ -78,44 +78,62 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     }
 
     // ─── PASO 2: LLAMADA A LA IA CON EL PROMPT BLINDADO Y BILINGÜE ─────────
+    // ─── PASO 2: LLAMADA A LA IA CON EL PROMPT BLINDADO Y BILINGÜE ─────────
     private fun fetchAiResponse(brainDumpText: String) {
         val state = _uiState.value
+
+        // 1. Nos aseguramos de que el estado de carga esté encendido y sin errores previos
+        _uiState.value = _uiState.value.copy(
+            isLoadingAiResponse = true,
+            aiError = ""
+        )
+
         viewModelScope.launch {
-            val language = loadLanguage(getApplication()).code
+            try {
+                val language = loadLanguage(getApplication()).code
 
-            // 🎯 Construimos el Prompt usando el archivo strings.xml (Bilingüe)
-            val systemPrompt = getApplication<Application>().getString(
-                R.string.ai_system_prompt_difficult,
-                state.emotionName,
-                state.initialIntensity,
-                if (brainDumpText.isBlank()) "No quiso escribir nada inicial." else brainDumpText
-            )
+                // 🎯 Construimos el Prompt usando el archivo strings.xml (Bilingüe)
+                val systemPrompt = getApplication<Application>().getString(
+                    R.string.ai_system_prompt_difficult,
+                    state.emotionName,
+                    state.initialIntensity,
+                    if (brainDumpText.isBlank()) "No quiso escribir nada inicial." else brainDumpText
+                )
 
-            val result = GeminiService.getJournalResponse(
-                systemPrompt = systemPrompt,
-                language = language
-            )
+                val result = GeminiService.getJournalResponse(
+                    systemPrompt = systemPrompt,
+                    language = language
+                )
 
-            result.fold(
-                onSuccess = { text ->
+                // Evaluamos el resultado
+                if (result.isSuccess) {
                     _uiState.value = _uiState.value.copy(
-                        aiResponse = text,
-                        aiError = "",
-                        isLoadingAiResponse = false
+                        aiResponse = result.getOrNull() ?: ""
                     )
-                },
-                onFailure = { error ->
+                } else {
                     val errorMsg = if (language == "es") {
                         "No pudimos conectar con el guía en este momento. Intenta revisar tu conexión."
                     } else {
                         "We couldn't connect with the guide right now. Please check your connection."
                     }
                     _uiState.value = _uiState.value.copy(
-                        aiError = errorMsg,
-                        isLoadingAiResponse = false
+                        aiError = errorMsg
                     )
+                    // Log técnico para que tú sepas qué falló realmente bajo el capó
+                    android.util.Log.e("EMOVA_IA", "Fallo silencioso Groq: ${result.exceptionOrNull()?.message}")
                 }
-            )
+            } catch (e: Exception) {
+                // Atrapamos cualquier error inesperado de la corrutina (ej. cancelación)
+                android.util.Log.e("EMOVA_IA", "Excepción no manejada en corrutina: ${e.message}")
+                _uiState.value = _uiState.value.copy(
+                    aiError = "Error inesperado al procesar la solicitud."
+                )
+            } finally {
+                // 2. 🌟 EL BLINDAJE: Esto se ejecuta SIEMPRE, garantizando que el spinner se apague
+                _uiState.value = _uiState.value.copy(
+                    isLoadingAiResponse = false
+                )
+            }
         }
     }
 

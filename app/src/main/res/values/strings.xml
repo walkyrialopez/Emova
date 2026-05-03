@@ -20,20 +20,16 @@
 
     <!-- Habit cards -->
     <string name="habit_checkin_title">Emotional Check-In</string>
-    <string name="habit_checkin_done">Done at %1$s — tap to check in again</string>
     <string name="habit_checkin_pending">How are you feeling today?</string>
 
     <string name="habit_gratitude_title">Gratitude Diary</string>
-    <string name="habit_gratitude_done">10 things written ✓</string>
     <string name="habit_gratitude_progress">%1$d/10 written — keep going!</string>
     <string name="habit_gratitude_pending">Write 10 things you\'re grateful for</string>
 
     <string name="habit_breathing_title">Breathing Exercise</string>
-    <string name="habit_breathing_done">Session completed ✓</string>
     <string name="habit_breathing_pending">Take 3 minutes to breathe</string>
 
     <string name="habit_lesson_title">Daily Lesson</string>
-    <string name="habit_lesson_done">Lesson completed ✓</string>
     <string name="habit_lesson_pending">Learn something new about your emotions</string>
 
     <!-- Micro habits card -->
@@ -460,7 +456,7 @@
     <string name="gratitude_write_prompt">Write at least one thing…</string>
     <string name="gratitude_beautiful">Beautiful!</string>
     <string name="gratitude_done_body">You found %1$d things to be grateful for today.\nThat\'s a powerful practice.</string>
-    <string name="gratitude_start_fresh">Start Fresh Tomorrow</string>
+    <string name="gratitude_start_fresh">Start fresh tomorrow</string>
     <string name="gratitude_back">← Back</string>
     <string name="gratitude_past_entries">Past Entries</string>
     <string name="gratitude_days_count">%1$d days</string>
@@ -494,6 +490,7 @@
         <item>A color that caught your eye today…</item>
         <item>Something you read or heard that inspired you…</item>
     </string-array>
+    <string name="gratitude_free_space">Anything else you feel grateful for...</string>
     <string name="tip_title_default">Pro tip</string>
     <string name="tip_body_default">Naming an emotion reduces its power over you and helps your brain process it.</string>
     <!-- Gold Habits screen -->
@@ -897,4 +894,33 @@
     <string name="insights_support_title">Support Emova</string>
     <string name="insights_support_subtitle">Help me keep this project ad-free and growing.</string>
     <string name="insights_support_button">Buy me a coffee ☕</string>
+
+    <!-- Streak pill -->
+    <string name="today_streak_days">%d days</string>
+
+    <!-- Progress bar -->
+    <string name="today_progress_title">Today\'s progress</string>
+    <string name="today_progress_count">%1$d / %2$d done</string>
+
+    <!-- Check-in CTA card (shown when no check-in yet today) -->
+    <string name="today_checkin_cta_title">How are you feeling?</string>
+    <string name="today_checkin_cta_subtitle">Tap to do your daily check-in</string>
+
+    <!-- Habit action rows: subtitle when DONE -->
+    <string name="habit_checkin_done">%1$s · logged at %2$s</string>
+    <string name="habit_gratitude_done">%1$d things noted today</string>
+    <string name="habit_breathing_done">Exercise complete · well done</string>
+    <string name="habit_lesson_done">Lesson complete · well done</string>
+
+    <!-- Habit action rows: subtitle when PENDING -->
+    <string name="habit_checkin_cta">Name what you\'re feeling</string>
+    <string name="habit_gratitude_cta">List 3 things you\'re grateful for</string>
+    <string name="habit_breathing_cta">4 min · choose a breathing pattern</string>
+    <string name="habit_lesson_cta">3–5 min · grow your emotional skills</string>
+
+    <!-- Micro-habits shortcut -->
+    <string name="today_microhabits_title">Micro-habits</string>
+    <string name="today_microhabits_subtitle">12 small daily practices</string>
+
+
 </resources>

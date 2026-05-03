@@ -39,7 +39,7 @@ import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 // ─── State ────────────────────────────────────────────────────────────────────
 
 data class GratitudeUiState(
-    val entries: List<String> = List(3) { "" },
+    val entries: List<String> = List(4) { "" }, // 🎯 Ahora son 4 campos (3 fijos + 1 libre)
     val isSaved: Boolean = false,
     val currentFocus: Int = 0,
     val alreadyDoneToday: Boolean = false
@@ -59,7 +59,7 @@ class GratitudeViewModel(application: android.app.Application) : AndroidViewMode
             val existing = db.gratitudeEntryDao().getByDate(today)
             if (existing != null) {
                 val loaded = existing.items.split("||").filter { it.isNotBlank() }
-                val padded = loaded + List((3 - loaded.size).coerceAtLeast(0)) { "" } // 🎯 Reducido a 3
+                val padded = loaded + List((4 - loaded.size).coerceAtLeast(0)) { "" } // 🎯 Rellenamos hasta 4
                 _uiState.value = _uiState.value.copy(entries = padded, isSaved = true, alreadyDoneToday = true)
             }
         }
@@ -106,9 +106,9 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
     }
 
     val allPlaceholders = stringArrayResource(R.array.gratitude_placeholders)
+    val freeSpacePlaceholder = stringResource(R.string.gratitude_free_space) // 🎯 Necesitarás agregar esto en strings.xml
 
-    // 🎯 MAGIA: Rotación de placeholders anclada al día actual.
-    // Garantiza que sean aleatorias, pero constantes durante las 24 horas del mismo día.
+    // Rotación diaria para los primeros 3
     val dailyPlaceholders = remember(allPlaceholders) {
         val calendar = Calendar.getInstance()
         val seed = calendar.get(Calendar.DAY_OF_YEAR).toLong() + calendar.get(Calendar.YEAR)
@@ -116,7 +116,7 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
         allPlaceholders.toList().shuffled(random).take(3)
     }
 
-    val progress = vm.filledCount / 3f // 🎯 Reducido a 3f
+    val progress = vm.filledCount / 4f // 🎯 Ajustado a 4f
     val animatedProgress by animateFloatAsState(targetValue = progress, animationSpec = tween(400), label = "progress")
     val canSave = vm.filledCount >= 1
 
@@ -144,7 +144,7 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                     Box(modifier = Modifier.fillMaxHeight().fillMaxWidth(animatedProgress)
                         .clip(RoundedCornerShape(3.dp)).background(accent))
                 }
-                Text("${vm.filledCount}/3", fontSize = 13.sp, // 🎯 Reducido a /3
+                Text("${vm.filledCount}/4", fontSize = 13.sp, // 🎯 Ajustado a /4
                     color = if (canSave) accent else Color(0xFF6B6B8A), fontWeight = FontWeight.Medium)
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -153,10 +153,16 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
         }
 
         items(state.entries.indices.toList()) { index ->
+            val isFreeSpace = index == 3 // 🎯 El último campo es el libre
+
             GratitudeEntryRow(
-                index = index, value = state.entries[index],
-                isFocused = state.currentFocus == index, accent = accent,
-                placeholder = dailyPlaceholders.getOrElse(index) { "" }, // 🎯 Usando las diarias
+                index = index,
+                value = state.entries[index],
+                isFocused = state.currentFocus == index,
+                accent = accent,
+                placeholder = if (isFreeSpace) freeSpacePlaceholder else dailyPlaceholders.getOrElse(index) { "" },
+                singleLine = !isFreeSpace, // 🎯 Permitimos múltiples líneas solo en el último
+                isFreeSpace = isFreeSpace,
                 onValueChange = { vm.updateEntry(index, it) },
                 onFocus = { vm.setFocus(index) }
             )
@@ -193,21 +199,36 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
 @Composable
 fun GratitudeEntryRow(
     index: Int, value: String, isFocused: Boolean, accent: Color,
-    placeholder: String, onValueChange: (String) -> Unit, onFocus: () -> Unit
+    placeholder: String, singleLine: Boolean, isFreeSpace: Boolean, // 🎯 Nuevos parámetros
+    onValueChange: (String) -> Unit, onFocus: () -> Unit
 ) {
     val scale by animateFloatAsState(targetValue = if (isFocused) 1.01f else 1f,
         animationSpec = spring(stiffness = Spring.StiffnessMediumLow), label = "scale")
     Row(modifier = Modifier.fillMaxWidth().scale(scale),
-        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Box(modifier = Modifier.size(32.dp).clip(CircleShape)
-            .background(if (value.isNotBlank()) accent.copy(alpha = 0.15f) else Color(0xFFEAE8F5)),
+        verticalAlignment = if (isFreeSpace) Alignment.Top else Alignment.CenterVertically, // Alinea arriba si es multilínea
+        horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+
+        Box(modifier = Modifier
+            .size(32.dp)
+            .clip(CircleShape)
+            .background(if (value.isNotBlank()) accent.copy(alpha = 0.15f) else Color(0xFFEAE8F5))
+            .then(if (isFreeSpace) Modifier.padding(top = 8.dp) else Modifier), // Ajuste visual para alinear con primera línea de texto
             contentAlignment = Alignment.Center) {
-            Text(if (value.isNotBlank()) "✓" else "${index + 1}", fontSize = 13.sp,
-                fontWeight = FontWeight.Bold, color = if (value.isNotBlank()) accent else Color(0xFF6B6B8A))
+
+            Text(
+                if (value.isNotBlank()) "✓" else if (isFreeSpace) "✨" else "${index + 1}",
+                fontSize = if (isFreeSpace && value.isBlank()) 16.sp else 13.sp, // Emoji un poco más grande
+                fontWeight = FontWeight.Bold,
+                color = if (value.isNotBlank()) accent else Color(0xFF6B6B8A)
+            )
         }
+
         OutlinedTextField(
             value = value, onValueChange = onValueChange,
-            modifier = Modifier.weight(1f).onFocusChanged { if (it.isFocused) onFocus() },
+            modifier = Modifier
+                .weight(1f)
+                .onFocusChanged { if (it.isFocused) onFocus() }
+                .then(if (isFreeSpace) Modifier.defaultMinSize(minHeight = 100.dp) else Modifier), // 🎯 Hace el campo libre más alto
             placeholder = { Text(placeholder, color = Color(0xFFAAAAAC), fontSize = 14.sp) },
             textStyle = LocalTextStyle.current.copy(color = Color(0xFF1A1A2E), fontSize = 14.sp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -215,12 +236,15 @@ fun GratitudeEntryRow(
                 unfocusedBorderColor = if (value.isNotBlank()) accent.copy(alpha = 0.4f) else Color(0xFFEAE8F5),
                 cursorColor = accent, focusedContainerColor = Color.White, unfocusedContainerColor = Color.White
             ),
-            shape = RoundedCornerShape(12.dp), singleLine = true
+            shape = RoundedCornerShape(12.dp),
+            singleLine = singleLine,
+            maxLines = if (singleLine) 1 else 5 // 🎯 Límite razonable para el campo libre
         )
     }
 }
 
 // ─── Done Screen ──────────────────────────────────────────────────────────────
+// ... (El resto del código se mantiene igual)
 
 @Composable
 fun GratitudeDoneScreen(count: Int, onReset: () -> Unit) {

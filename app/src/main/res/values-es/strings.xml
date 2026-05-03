@@ -20,20 +20,16 @@
 
     <!-- Habit cards -->
     <string name="habit_checkin_title">Mis Emociones</string>
-    <string name="habit_checkin_done">Hecho a las %1$s — toca para registrarte de nuevo</string>
     <string name="habit_checkin_pending">¿Cómo te sientes hoy?</string>
 
     <string name="habit_gratitude_title">Diario de Gratitud</string>
-    <string name="habit_gratitude_done">10 cosas escritas ✓</string>
     <string name="habit_gratitude_progress">%1$d/10 escritas — ¡sigue así!</string>
     <string name="habit_gratitude_pending">Escribe 10 cosas por las que estás agradecido</string>
 
     <string name="habit_breathing_title">Respiración</string>
-    <string name="habit_breathing_done">Sesión completada ✓</string>
     <string name="habit_breathing_pending">Tómate 3 minutos para respirar</string>
 
     <string name="habit_lesson_title">Lección Diaria</string>
-    <string name="habit_lesson_done">Lección completada ✓</string>
     <string name="habit_lesson_pending">Aprende algo nuevo sobre tus emociones</string>
 
     <!-- Micro habits card -->
@@ -418,7 +414,7 @@
     <string name="gratitude_write_prompt">Escribe al menos una cosa…</string>
     <string name="gratitude_beautiful">¡Hermoso!</string>
     <string name="gratitude_done_body">Encontraste %1$d cosas por las que estar agradecido hoy.\nEsa es una práctica poderosa.</string>
-    <string name="gratitude_start_fresh">Empezar de Nuevo Mañana</string>
+    <string name="gratitude_start_fresh">Empezar de nuevo mañana</string>
     <string name="gratitude_back">← Atrás</string>
     <string name="gratitude_past_entries">Entradas anteriores</string>
     <string name="gratitude_days_count">%1$d días</string>
@@ -452,7 +448,7 @@
         <item>Un recuerdo que te da calidez…</item>
         <item>Algo que sueles dar por sentado…</item>
     </string-array>
-
+    <string name="gratitude_free_space">Cualquier otra cosa que agradezcas hoy...</string>
     <string name="notif_channel_name">Registro Diario</string>
     <string name="notif_channel_desc">Te recuerda hacer tu registro emocional diario</string>
 
@@ -894,4 +890,31 @@
     <string name="insights_support_title">Apoya a Emova</string>
     <string name="insights_support_subtitle">Ayúdame a mantener este proyecto sin anuncios y en crecimiento.</string>
     <string name="insights_support_button">Invítame un café ☕</string>
+
+    <!-- Streak pill -->
+    <string name="today_streak_days">%d días</string>
+
+    <!-- Progress bar -->
+    <string name="today_progress_title">Progreso de hoy</string>
+    <string name="today_progress_count">%1$d / %2$d hechos</string>
+
+    <!-- Check-in CTA card -->
+    <string name="today_checkin_cta_title">¿Cómo te sientes?</string>
+    <string name="today_checkin_cta_subtitle">Toca para hacer tu registro diario</string>
+
+    <!-- Habit action rows: done subtitles -->
+    <string name="habit_checkin_done">%1$s · registrado a las %2$s</string>
+    <string name="habit_gratitude_done">%1$d cosas anotadas hoy</string>
+    <string name="habit_breathing_done">Ejercicio completado · muy bien</string>
+    <string name="habit_lesson_done">Lección completada · muy bien</string>
+
+    <!-- Habit action rows: pending subtitles -->
+    <string name="habit_checkin_cta">Nombra lo que estás sintiendo</string>
+    <string name="habit_gratitude_cta">Anota 3 cosas por las que estás agradecido/a</string>
+    <string name="habit_breathing_cta">4 min · elige un patrón de respiración</string>
+    <string name="habit_lesson_cta">3–5 min · desarrolla tu inteligencia emocional</string>
+
+    <!-- Micro-habits shortcut -->
+    <string name="today_microhabits_title">Micro-hábitos</string>
+    <string name="today_microhabits_subtitle">12 pequeñas prácticas diarias</string>
 </resources>
