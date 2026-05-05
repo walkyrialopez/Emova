@@ -476,7 +476,6 @@
         <item>Something small that went right today…</item>
         <item>A memory that brings you warmth…</item>
         <item>Something you often take for granted…</item>
-        <item>Anything else you feel grateful for…</item>
         <item>Someone who made you smile today…</item>
         <item>A small comfort you enjoyed today…</item>
         <item>A challenge that taught you something…</item>
@@ -652,7 +651,7 @@
     <string name="settings_export_button">Export to CSV</string>
     <string name="settings_about_section">ℹ️ About</string>
     <string name="settings_about_app">App</string>
-    <string name="settings_about_app_value">Emova – Emotional Intelligence</string>
+    <string name="settings_about_app_value">Emova – Your emotional intelligence</string>
     <string name="settings_about_version">Version</string>
     <string name="settings_about_built">Built with</string>
 

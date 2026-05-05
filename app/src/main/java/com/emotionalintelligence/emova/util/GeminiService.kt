@@ -21,7 +21,7 @@ object GeminiService {
         .build()
 
     // 🎯 Mantienes el modelo Groq Llama 3 intacto
-    private const val URL   = "https://api.groq.com/openai/v1/chat/completions"
+    private const val URL = "https://icy-sun-bd17.walkyrialopez.workers.dev"
     private const val MODEL = "llama-3.3-70b-versatile"
 
     // ─── Lógica Principal (Ahora mucho más limpia) ─────────────────────────────
@@ -49,7 +49,6 @@ object GeminiService {
 
         val request = Request.Builder()
             .url(URL)
-            .addHeader("Authorization", "Bearer ${BuildConfig.GROQ_API_KEY}")
             .post(jsonBody.toString().toRequestBody("application/json".toMediaType()))
             .build()
 

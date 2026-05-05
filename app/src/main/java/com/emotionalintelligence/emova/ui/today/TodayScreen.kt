@@ -536,16 +536,27 @@ fun HabitActionRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(cardBg)
+            // 1. LA SOMBRA PRIMERO: Así queda por debajo de la tarjeta y no ensucia el interior
+            .then(
+                if (!isDone) Modifier.shadow(
+                    elevation = 3.dp,
+                    shape = RoundedCornerShape(20.dp),
+                    spotColor = Color(0x1A000000),
+                    ambientColor = Color(0x1A000000)
+                ) else Modifier
+            )
+            // 2. EL FONDO DESPUÉS: Dibuja el blanco sólido tapando la sombra interior
+            .background(color = cardBg, shape = RoundedCornerShape(20.dp))
+            // 3. EL BORDE
             .border(
                 width = 1.dp,
                 color = if (isDone) Color(0xFFEAE8F5) else Color.Transparent,
                 shape = RoundedCornerShape(20.dp)
             )
-            // Solo las tarjetas activas tienen elevación
-            .then(if (!isDone) Modifier.shadow(2.dp, RoundedCornerShape(20.dp), spotColor = Color(0x1A000000)) else Modifier)
+            // 4. CLIP Y CLIC: Para que al tocar la tarjeta, el efecto gris de pulsación no se salga de las curvas
+            .clip(RoundedCornerShape(20.dp))
             .clickable(onClick = onClick)
+            // 5. PADDING INTERNO: El espacio entre el borde de la tarjeta y el texto
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)

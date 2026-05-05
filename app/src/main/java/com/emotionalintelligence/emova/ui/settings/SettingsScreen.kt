@@ -185,54 +185,54 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // ── 🌟 Apoya el Proyecto (Reemplaza a Export Data) ───────────────────
-        SectionHeader("💖 " + stringResource(R.string.insights_support_title))
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            border = BorderStroke(1.dp, Color(0xFFEEEEF5)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFFFF4E5)), // Un fondo cálido para el emoji
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("☕", fontSize = 18.sp)
-                    }
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Column {
-                        Text(
-                            stringResource(R.string.insights_support_title),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF111130)
-                        )
-                        Text(
-                            stringResource(R.string.insights_support_subtitle),
-                            fontSize = 12.sp,
-                            color = Color(0xFF666688)
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Button(
-                    // 🎯 Aquí colocas tu link real de Ko-fi más adelante
-                    onClick = { uriHandler.openUri("https://ko-fi.com/brunildalopez") },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
-                ) {
-                    Text(stringResource(R.string.insights_support_button), color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                }
-            }
-        }
+//        // ── 🌟 Apoya el Proyecto (Reemplaza a Export Data) ───────────────────
+//        SectionHeader("💖 " + stringResource(R.string.insights_support_title))
+//        Card(
+//            shape = RoundedCornerShape(16.dp),
+//            colors = CardDefaults.cardColors(containerColor = Color.White),
+//            border = BorderStroke(1.dp, Color(0xFFEEEEF5)),
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Column(modifier = Modifier.padding(16.dp)) {
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Box(
+//                        modifier = Modifier
+//                            .size(40.dp)
+//                            .clip(CircleShape)
+//                            .background(Color(0xFFFFF4E5)), // Un fondo cálido para el emoji
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Text("☕", fontSize = 18.sp)
+//                    }
+//                    Spacer(modifier = Modifier.width(12.dp))
+//                    Column {
+//                        Text(
+//                            stringResource(R.string.insights_support_title),
+//                            fontSize = 15.sp,
+//                            fontWeight = FontWeight.Medium,
+//                            color = Color(0xFF111130)
+//                        )
+//                        Text(
+//                            stringResource(R.string.insights_support_subtitle),
+//                            fontSize = 12.sp,
+//                            color = Color(0xFF666688)
+//                        )
+//                    }
+//                }
+//
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                Button(
+//                    // 🎯 Aquí colocas tu link real de Ko-fi más adelante
+//                    onClick = { uriHandler.openUri("https://ko-fi.com/brunildalopez") },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    shape = RoundedCornerShape(12.dp),
+//                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
+//                ) {
+//                    Text(stringResource(R.string.insights_support_button), color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+//                }
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
