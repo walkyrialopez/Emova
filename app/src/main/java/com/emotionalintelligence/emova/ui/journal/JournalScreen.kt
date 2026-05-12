@@ -25,19 +25,28 @@ import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 @Composable
 fun JournalScreen(
     checkInId: Int,
-    emotionName: String,
+    emotionName: String, // Este es el nombre en inglés ("Angry")
     emotionEmoji: String,
     emotionFamily: String,
-    initialIntensity: Int, // 🎯 El parámetro que faltaba
+    initialIntensity: Int,
     onFinish: () -> Unit,
     onBack: () -> Unit,
     viewModel: JournalViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    // Inicializamos el ViewModel con todos los datos, incluida la intensidad
+    // 🎯 1. Buscamos la emoción en nuestra lista modelo
+    val currentEmotion = remember(emotionName) {
+        com.emotionalintelligence.emova.model.emotionList
+            .firstOrNull { it.name == emotionName }
+    }
+
+    // 🎯 2. Obtenemos el nombre traducido desde strings.xml
+    val displayEmotionName = currentEmotion?.let { stringResource(it.nameResId) } ?: emotionName
+
+    // 🎯 3. Inicializamos el ViewModel pasando el nombre TRADUCIDO a Groq
     LaunchedEffect(Unit) {
-        viewModel.initialize(checkInId, emotionName, emotionEmoji, emotionFamily, initialIntensity)
+        viewModel.initialize(checkInId, displayEmotionName, emotionEmoji, emotionFamily, initialIntensity)
     }
 
     // Navegación automática cuando se completa el flujo
@@ -58,7 +67,8 @@ fun JournalScreen(
             Text(text = emotionEmoji, fontSize = 32.sp)
             Spacer(modifier = Modifier.width(12.dp))
             Text(
-                text = emotionName,
+                // 🎯 4. Mostramos el nombre traducido en el título de la pantalla
+                text = displayEmotionName,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF111130)

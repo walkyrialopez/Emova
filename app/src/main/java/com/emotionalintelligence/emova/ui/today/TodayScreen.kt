@@ -163,10 +163,15 @@ fun TodayScreen(
         else        -> stringResource(R.string.greeting_late)
     }
 
-    val todayEmoji = remember(state.todayEmotionName) {
+    // 1. Buscamos la emoción completa en tu lista
+    val currentEmotion = remember(state.todayEmotionName) {
         com.emotionalintelligence.emova.model.emotionList
-            .firstOrNull { it.name == state.todayEmotionName }?.emoji ?: "✨"
+            .firstOrNull { it.name == state.todayEmotionName }
     }
+
+    val todayEmoji = currentEmotion?.emoji ?: "✨"
+
+    val displayEmotionName = currentEmotion?.let { stringResource(it.nameResId) } ?: state.todayEmotionName
 
     val coreHabits = listOf(state.checkInDone, state.gratitudeDone, state.breathingDone, state.lessonDone)
     val doneCoreCount = coreHabits.count { it }

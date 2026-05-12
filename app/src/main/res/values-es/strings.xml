@@ -177,101 +177,142 @@
     <string name="family_difficult">Difícil</string>
     <string name="family_activated">Activado</string>
 
-    <!-- Emotion names and descriptions — POSITIVE -->
     <string name="emotion_pos_1_name">Feliz</string>
-    <string name="emotion_pos_1_desc">Sintiéndose satisfecho y contento.</string>
-    <string name="emotion_pos_2_name">Emocionado</string>
-    <string name="emotion_pos_2_desc">Anticipando algo con entusiasmo.</string>
-    <string name="emotion_pos_3_name">Orgulloso</string>
-    <string name="emotion_pos_3_desc">Sintiéndose profundamente satisfecho o realizado.</string>
-    <string name="emotion_pos_4_name">Amoroso</string>
-    <string name="emotion_pos_4_desc">Sintiéndose cálido y con afecto.</string>
-    <string name="emotion_pos_5_name">Agradecido</string>
-    <string name="emotion_pos_5_desc">Sintiéndose o mostrando agradecimiento.</string>
-    <string name="emotion_pos_6_name">Seguro</string>
-    <string name="emotion_pos_6_desc">Sintiéndose a salvo y apoyado.</string>
-    <string name="emotion_pos_7_name">Esperanzado</string>
-    <string name="emotion_pos_7_desc">Sintiéndose optimista sobre el futuro.</string>
-    <string name="emotion_pos_8_name">Curioso</string>
-    <string name="emotion_pos_8_desc">Con ganas de saber o aprender algo.</string>
-    <string name="emotion_pos_9_name">Entusiasta</string>
-    <string name="emotion_pos_9_desc">Listo y con muchas ganas de hacer algo.</string>
-    <string name="emotion_pos_10_name">Tranquilo</string>
-    <string name="emotion_pos_10_desc">Sin perturbaciones; calmado y a gusto.</string>
-    <string name="emotion_pos_11_name">Inspirado</string>
-    <string name="emotion_pos_11_desc">Sintiéndose estimulado mentalmente y creativo.</string>
-    <string name="emotion_pos_12_name">Juguetón</string>
-    <string name="emotion_pos_12_desc">Ligero de corazón y lleno de diversión.</string>
-    <string name="emotion_pos_13_name">Seguro de sí</string>
-    <string name="emotion_pos_13_desc">Sintiéndose seguro de tus propias habilidades.</string>
-    <string name="emotion_pos_14_name">Conectado</string>
-    <string name="emotion_pos_14_desc">Sintiéndose cercano y en armonía con los demás.</string>
-    <string name="emotion_pos_15_name">Satisfecho</string>
-    <string name="emotion_pos_15_desc">Contento con cómo han resultado las cosas.</string>
+    <string name="emotion_pos_1_desc">Sintiéndose satisfecho/a y contento/a.</string>
 
-    <!-- Emotion names and descriptions — DIFFICULT -->
+    <string name="emotion_pos_2_name">Emocionado/a</string>
+    <string name="emotion_pos_2_desc">Anticipando algo con entusiasmo.</string>
+
+    <string name="emotion_pos_3_name">Orgulloso/a</string>
+    <string name="emotion_pos_3_desc">Sintiéndose profundamente satisfecho/a o realizado/a.</string>
+
+    <string name="emotion_pos_4_name">Amoroso/a</string>
+    <string name="emotion_pos_4_desc">Sintiéndose cálido/a y con afecto.</string>
+
+    <string name="emotion_pos_5_name">Agradecido/a</string>
+    <string name="emotion_pos_5_desc">Sintiéndose o mostrando agradecimiento.</string>
+
+    <string name="emotion_pos_6_name">Seguro/a</string>
+    <string name="emotion_pos_6_desc">Sintiéndose a salvo y apoyado/a.</string>
+
+    <string name="emotion_pos_7_name">Esperanzado/a</string>
+    <string name="emotion_pos_7_desc">Sintiéndose optimista sobre el futuro.</string>
+
+    <string name="emotion_pos_8_name">Curioso/a</string>
+    <string name="emotion_pos_8_desc">Con ganas de saber o aprender algo.</string>
+
+    <string name="emotion_pos_9_name">Entusiasta</string>
+    <string name="emotion_pos_9_desc">Listo/a y con muchas ganas de hacer algo.</string>
+
+    <string name="emotion_pos_10_name">Tranquilo/a</string>
+    <string name="emotion_pos_10_desc">Sin perturbaciones; calmado/a y a gusto.</string>
+
+    <string name="emotion_pos_11_name">Inspirado/a</string>
+    <string name="emotion_pos_11_desc">Sintiéndose estimulado/a mentalmente y creativo/a.</string>
+
+    <string name="emotion_pos_12_name">Juguetón/ona</string>
+    <string name="emotion_pos_12_desc">Ligero/a de corazón y lleno/a de diversión.</string>
+
+    <string name="emotion_pos_13_name">Confiado/a</string>
+    <string name="emotion_pos_13_desc">Sintiéndose seguro/a de tus propias habilidades.</string>
+
+    <string name="emotion_pos_14_name">Conectado/a</string>
+    <string name="emotion_pos_14_desc">Sintiéndose cercano/a y en armonía con los demás.</string>
+
+    <string name="emotion_pos_15_name">Satisfecho/a</string>
+    <string name="emotion_pos_15_desc">Contento/a con cómo han resultado las cosas.</string>
+
+
     <string name="emotion_dif_1_name">Triste</string>
     <string name="emotion_dif_1_desc">Sintiéndose o mostrando tristeza.</string>
-    <string name="emotion_dif_2_name">Decepcionado</string>
-    <string name="emotion_dif_2_desc">Sintiéndose defraudado por alguien o algo.</string>
-    <string name="emotion_dif_3_name">Solo</string>
-    <string name="emotion_dif_3_desc">Triste por estar desconectado.</string>
-    <string name="emotion_dif_4_name">Asustado</string>
-    <string name="emotion_dif_4_desc">Con miedo; lleno de temor.</string>
-    <string name="emotion_dif_5_name">Ansioso</string>
-    <string name="emotion_dif_5_desc">Experimentando preocupación o inquietud.</string>
-    <string name="emotion_dif_6_name">Inseguro</string>
-    <string name="emotion_dif_6_desc">Sin confianza ni seguridad.</string>
-    <string name="emotion_dif_7_name">Abrumado</string>
-    <string name="emotion_dif_7_desc">Sepultado bajo demasiado a la vez.</string>
-    <string name="emotion_dif_8_name">Sin esperanza</string>
-    <string name="emotion_dif_8_desc">Sintiéndose sin esperanza ni posibilidad.</string>
-    <string name="emotion_dif_9_name">Duelo</string>
-    <string name="emotion_dif_9_desc">Profunda tristeza por una pérdida.</string>
-    <string name="emotion_dif_10_name">Avergonzado</string>
-    <string name="emotion_dif_10_desc">Sintiéndose culpable o avergonzado de uno mismo.</string>
-    <string name="emotion_dif_11_name">Confundido</string>
-    <string name="emotion_dif_11_desc">Incapaz de pensar con claridad; inseguro.</string>
-    <string name="emotion_dif_12_name">Agotado</string>
-    <string name="emotion_dif_12_desc">Completamente exhausto emocionalmente.</string>
-    <string name="emotion_dif_13_name">Entumecido</string>
-    <string name="emotion_dif_13_desc">Incapaz de sentir emociones; emocionalmente plano.</string>
-    <string name="emotion_dif_14_name">Celoso</string>
-    <string name="emotion_dif_14_desc">Envidioso de lo que tiene otra persona.</string>
-    <string name="emotion_dif_15_name">Culpable</string>
-    <string name="emotion_dif_15_desc">Sintiéndose responsable de un error.</string>
 
-    <!-- Emotion names and descriptions — ACTIVATED -->
-    <string name="emotion_act_1_name">Enojado</string>
-    <string name="emotion_act_1_desc">Sintiéndose muy molesto o disgustado.</string>
-    <string name="emotion_act_2_name">Furioso</string>
-    <string name="emotion_act_2_desc">Extremadamente enojado.</string>
-    <string name="emotion_act_3_name">Resentido</string>
+    <string name="emotion_dif_2_name">Decepcionado/a</string>
+    <string name="emotion_dif_2_desc">Sintiéndose defraudado/a por alguien o algo.</string>
+
+    <string name="emotion_dif_3_name">Solo/a</string>
+    <string name="emotion_dif_3_desc">Triste por estar desconectado/a.</string>
+
+    <string name="emotion_dif_4_name">Asustado/a</string>
+    <string name="emotion_dif_4_desc">Con miedo; lleno/a de temor.</string>
+
+    <string name="emotion_dif_5_name">Ansioso/a</string>
+    <string name="emotion_dif_5_desc">Experimentando preocupación o inquietud.</string>
+
+    <string name="emotion_dif_6_name">Inseguro/a</string>
+    <string name="emotion_dif_6_desc">Sin confianza ni seguridad en ti mismo/a.</string>
+
+    <string name="emotion_dif_7_name">Abrumado/a</string>
+    <string name="emotion_dif_7_desc">Sepultado/a bajo demasiadas cosas a la vez.</string>
+
+    <string name="emotion_dif_8_name">Desesperanzado/a</string>
+    <string name="emotion_dif_8_desc">Sintiéndose sin esperanza ni posibilidades.</string>
+
+    <string name="emotion_dif_9_name">Afligido/a</string>
+    <string name="emotion_dif_9_desc">Profunda tristeza por una pérdida o duelo.</string>
+
+    <string name="emotion_dif_10_name">Avergonzado/a</string>
+    <string name="emotion_dif_10_desc">Sintiéndose culpable o con vergüenza de uno mismo/a.</string>
+
+    <string name="emotion_dif_11_name">Confundido/a</string>
+    <string name="emotion_dif_11_desc">Incapaz de pensar con claridad; inseguro/a.</string>
+
+    <string name="emotion_dif_12_name">Agotado/a</string>
+    <string name="emotion_dif_12_desc">Completamente exhausto/a emocionalmente.</string>
+
+    <string name="emotion_dif_13_name">Apático/a</string>
+    <string name="emotion_dif_13_desc">Incapaz de sentir emociones; emocionalmente plano/a.</string>
+
+    <string name="emotion_dif_14_name">Amargado/a</string>
+    <string name="emotion_dif_14_desc">Un dolor persistente mezclado con resentimiento.</string>
+
+    <string name="emotion_dif_15_name">Culpable</string>
+    <string name="emotion_dif_15_desc">Sintiéndose responsable de un error o mala acción.</string>
+
+
+    <string name="emotion_act_1_name">Enojado/a</string>
+    <string name="emotion_act_1_desc">Sintiéndose muy molesto/a o disgustado/a.</string>
+
+    <string name="emotion_act_2_name">Furioso/a</string>
+    <string name="emotion_act_2_desc">Extremadamente enojado/a.</string>
+
+    <string name="emotion_act_3_name">Resentido/a</string>
     <string name="emotion_act_3_desc">Amargura por un agravio no resuelto.</string>
-    <string name="emotion_act_4_name">Frustrado</string>
-    <string name="emotion_act_4_desc">Molesto por estar bloqueado o no poder cambiar algo.</string>
-    <string name="emotion_act_5_name">Irritado</string>
-    <string name="emotion_act_5_desc">Mostrando ligero enojo; molesto.</string>
+
+    <string name="emotion_act_4_name">Frustrado/a</string>
+    <string name="emotion_act_4_desc">Molesto/a por estar bloqueado/a o no poder cambiar algo.</string>
+
+    <string name="emotion_act_5_name">Irritado/a</string>
+    <string name="emotion_act_5_desc">Mostrando ligero enojo; molesto/a.</string>
+
     <string name="emotion_act_6_name">Impaciente</string>
-    <string name="emotion_act_6_desc">Inquieto por tener que esperar.</string>
-    <string name="emotion_act_7_name">Disgustado</string>
-    <string name="emotion_act_7_desc">Sintiéndose repulsión o desaprobación.</string>
-    <string name="emotion_act_8_name">Repugnado</string>
-    <string name="emotion_act_8_desc">Aversión intensa hacia algo.</string>
-    <string name="emotion_act_9_name">Desprecio</string>
-    <string name="emotion_act_9_desc">Sintiéndose que algo no merece consideración.</string>
-    <string name="emotion_act_10_name">Envidioso</string>
+    <string name="emotion_act_6_desc">Inquieto/a por tener que esperar.</string>
+
+    <string name="emotion_act_7_name">Disgustado/a</string>
+    <string name="emotion_act_7_desc">Sintiendo repulsión o desaprobación.</string>
+
+    <string name="emotion_act_8_name">Repugnado/a</string>
+    <string name="emotion_act_8_desc">Aversión intensa hacia alguien o algo.</string>
+
+    <string name="emotion_act_9_name">Desdeñoso/a</string>
+    <string name="emotion_act_9_desc">Sintiendo que algo o alguien no merece consideración.</string>
+
+    <string name="emotion_act_10_name">Envidioso/a</string>
     <string name="emotion_act_10_desc">Queriendo lo que tiene otra persona.</string>
-    <string name="emotion_act_11_name">Tenso</string>
-    <string name="emotion_act_11_desc">Mental o emocionalmente estresado.</string>
-    <string name="emotion_act_12_name">Inquieto</string>
-    <string name="emotion_act_12_desc">Incapaz de quedarse quieto; agitado.</string>
-    <string name="emotion_act_13_name">Defensivo</string>
-    <string name="emotion_act_13_desc">Protegiéndose de las críticas.</string>
-    <string name="emotion_act_14_name">Celoso</string>
-    <string name="emotion_act_14_desc">Protegiendo con fuerza lo que es tuyo.</string>
-    <string name="emotion_act_15_name">Humillado</string>
-    <string name="emotion_act_15_desc">Hecho sentir avergonzado o tonto por otros.</string>
+
+    <string name="emotion_act_11_name">Tenso/a</string>
+    <string name="emotion_act_11_desc">Mental o emocionalmente estresado/a.</string>
+
+    <string name="emotion_act_12_name">Inquieto/a</string>
+    <string name="emotion_act_12_desc">Incapaz de quedarse quieto/a; agitado/a.</string>
+
+    <string name="emotion_act_13_name">A la defensiva</string>
+    <string name="emotion_act_13_desc">Protegiéndote fuertemente de las críticas.</string>
+
+    <string name="emotion_act_14_name">Posesivo/a</string>
+    <string name="emotion_act_14_desc">Protegiendo con fuerza lo que consideras tuyo.</string>
+
+    <string name="emotion_act_15_name">Humillado/a</string>
+    <string name="emotion_act_15_desc">Hecho/a sentir avergonzado/a o tonto/a por otros.</string>
 
     <!-- Insights screen -->
     <string name="insights_title">Estadísticas</string>
