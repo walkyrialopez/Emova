@@ -40,8 +40,7 @@ fun InsightsScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         contentPadding = PaddingValues(top = 32.dp, bottom = 100.dp)
     ) {
-
-        // ── Header ────────────────────────────────────────────────────────────
+        // Header
         item {
             Text(
                 stringResource(R.string.insights_title),
@@ -52,10 +51,10 @@ fun InsightsScreen(
             )
         }
 
-        // ── Period toggle ─────────────────────────────────────────────────────
+        // Period toggle
         item { PeriodToggle(period = state.period, onSelect = vm::setPeriod) }
 
-        // ── Period navigator ──────────────────────────────────────────────────
+        // Period navigator
         item {
             PeriodNavigator(
                 label = state.periodLabel,
@@ -65,7 +64,7 @@ fun InsightsScreen(
             )
         }
 
-        // ── Hero discovery card ───────────────────────────────────────────────
+        // Hero discovery card (BLINDADO: Verifica que la lista tenga contenido)
         if (state.patterns.isNotEmpty()) {
             item {
                 Text(
@@ -75,11 +74,14 @@ fun InsightsScreen(
                     color = Color(0xFF6C63FF),
                     modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
                 )
-                HeroPatternCard(pattern = state.patterns.first())
+                // Usamos firstOrNull() por seguridad extra
+                state.patterns.firstOrNull()?.let { pattern ->
+                    HeroPatternCard(pattern = pattern)
+                }
             }
         }
 
-        // ── Stat cards row ────────────────────────────────────────────────────
+        // Stat cards row
         item {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -94,14 +96,14 @@ fun InsightsScreen(
                     )
                 } ?: StatCard(
                     modifier = Modifier.weight(1f),
-                    emoji = "—",
+                    emoji = "😐",
                     value = "—",
                     label = stringResource(R.string.insights_top_feeling)
                 )
 
                 StatCard(
                     modifier = Modifier.weight(1f),
-                    emoji = "⚖️",
+                    emoji = "☀️",
                     value = "${state.positiveBalancePercentage}%",
                     label = stringResource(R.string.insights_positive_label)
                 )
@@ -115,7 +117,7 @@ fun InsightsScreen(
             }
         }
 
-        // ── Charts & breakdown ────────────────────────────────────────────────
+        // Charts & breakdown
         if (state.weekData.isEmpty() && state.familyBreakdown.isEmpty()) {
             item { EmptyState(onNavigateToCheckIn = onNavigateToCheckIn) }
         } else {
@@ -126,7 +128,7 @@ fun InsightsScreen(
                 item { FamilyBreakdownCard(breakdown = state.familyBreakdown) }
             }
 
-            // ── Secondary patterns ────────────────────────────────────────────
+            // Secondary patterns
             if (state.patterns.size > 1) {
                 item {
                     Text(
@@ -144,8 +146,6 @@ fun InsightsScreen(
         }
     }
 }
-
-// ─── Period Toggle ────────────────────────────────────────────────────────────
 
 @Composable
 fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
@@ -183,8 +183,6 @@ fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
     }
 }
 
-// ─── Period Navigator ─────────────────────────────────────────────────────────
-
 @Composable
 fun PeriodNavigator(
     label: String,
@@ -207,7 +205,7 @@ fun PeriodNavigator(
                 .padding(horizontal = 8.dp, vertical = 4.dp)
         ) {
             IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
-                Text("←", fontSize = 18.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)
+                Text("‹", fontSize = 18.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)
             }
             Text(
                 text = label,
@@ -218,7 +216,7 @@ fun PeriodNavigator(
             )
             IconButton(onClick = onForward, enabled = canGoForward, modifier = Modifier.size(36.dp)) {
                 Text(
-                    "→",
+                    "›",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = if (canGoForward) Color(0xFF6C63FF) else Color(0xFFB0B0C0)
@@ -227,8 +225,6 @@ fun PeriodNavigator(
         }
     }
 }
-
-// ─── Hero Pattern Card ────────────────────────────────────────────────────────
 
 @Composable
 fun HeroPatternCard(pattern: PatternInsight) {
@@ -272,8 +268,6 @@ fun HeroPatternCard(pattern: PatternInsight) {
     }
 }
 
-// ─── Stat Card ────────────────────────────────────────────────────────────────
-
 @Composable
 fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label: String) {
     Column(
@@ -305,12 +299,9 @@ fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label:
     }
 }
 
-// ─── Emotion Bar Chart ────────────────────────────────────────────────────────
-
 @Composable
 fun EmotionBarChart(data: List<DayData>) {
     val maxCount = data.maxOf { it.count }.coerceAtLeast(1)
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -326,7 +317,6 @@ fun EmotionBarChart(data: List<DayData>) {
             color = Color(0xFF1A1A2E)
         )
         Spacer(modifier = Modifier.height(16.dp))
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -341,7 +331,6 @@ fun EmotionBarChart(data: List<DayData>) {
                     animationSpec = tween(500, easing = EaseOutQuart),
                     label = "bar"
                 )
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -354,7 +343,6 @@ fun EmotionBarChart(data: List<DayData>) {
                     } else {
                         Spacer(modifier = Modifier.height(18.dp))
                     }
-
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -369,7 +357,6 @@ fun EmotionBarChart(data: List<DayData>) {
                                 .background(if (day.count > 0) day.color else Color(0xFFEAE8F5))
                         )
                     }
-
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(day.label, fontSize = 11.sp, color = Color(0xFF6B6B8A))
                 }
@@ -378,12 +365,9 @@ fun EmotionBarChart(data: List<DayData>) {
     }
 }
 
-// ─── Family Breakdown Card ────────────────────────────────────────────────────
-
 @Composable
 fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
     val total = breakdown.sumOf { it.third }.coerceAtLeast(1)
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -399,7 +383,6 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
             fontWeight = FontWeight.Bold,
             color = Color(0xFF1A1A2E)
         )
-
         Row(modifier = Modifier.fillMaxWidth().height(10.dp).clip(RoundedCornerShape(5.dp))) {
             breakdown.forEach { (_, color, count) ->
                 val fraction by animateFloatAsState(
@@ -415,7 +398,6 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
                 )
             }
         }
-
         breakdown.forEach { (name, color, count) ->
             val pct = count * 100 / total
             Row(
@@ -435,8 +417,6 @@ fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
         }
     }
 }
-
-// ─── Pattern Card (secondary) ─────────────────────────────────────────────────
 
 @Composable
 fun PatternCard(pattern: PatternInsight) {
@@ -475,8 +455,6 @@ fun PatternCard(pattern: PatternInsight) {
         }
     }
 }
-
-// ─── Empty State ──────────────────────────────────────────────────────────────
 
 @Composable
 fun EmptyState(onNavigateToCheckIn: () -> Unit) {

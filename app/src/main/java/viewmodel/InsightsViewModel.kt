@@ -6,14 +6,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.data.EmováDatabase
+import com.emotionalintelligence.emova.model.CheckIn
 import com.emotionalintelligence.emova.model.EmotionFamily
+import com.emotionalintelligence.emova.model.HabitRecord
 import com.emotionalintelligence.emova.model.emotionList
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.text.DateFormatSymbols
-import java.util.*
-import com.emotionalintelligence.emova.model.HabitRecord
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -43,12 +44,9 @@ data class InsightsUiState2(
     val period: InsightsPeriod = InsightsPeriod.WEEK,
     val periodLabel: String = "This week",
     val weekOffset: Int = 0,
-
-    // 🎯 MÉTRICAS ÉLITE
     val totalCheckIns: Int = 0,
     val positiveBalancePercentage: Int = 0,
-    val topEmotion: TopEmotionData? = null, // 🎯 Corregido de Emotion? a TopEmotionData?
-
+    val topEmotion: TopEmotionData? = null,
     val weekData: List<DayData> = emptyList(),
     val familyBreakdown: List<Triple<String, Color, Int>> = emptyList(),
     val patterns: List<PatternInsight> = emptyList()
@@ -65,15 +63,13 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
 
     init {
         viewModelScope.launch {
-            // 🎯 Combinamos: CheckIns + Hábitos + Filtros
             combine(
                 dao.getAllFlow(),
-                EmováDatabase.getInstance(getApplication()).habitRecordDao().getAllFlow(), // 🎯 Escuchamos hábitos
+                EmováDatabase.getInstance(getApplication()).habitRecordDao().getAllFlow(),
                 _uiState.map { it.weekOffset to it.period }.distinctUntilChanged()
             ) { checkIns, habits, (offset, period) ->
-                // Le pasamos todo a compute
                 compute(checkIns, habits, offset, period)
-            }.collect() // El collect vacío es suficiente porque compute actualiza el _uiState
+            }.collect()
         }
     }
 
@@ -87,8 +83,8 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun compute(
-        checkIns: List<com.emotionalintelligence.emova.model.CheckIn>,
-        habits: List<com.emotionalintelligence.emova.model.HabitRecord>,
+        checkIns: List<CheckIn>,
+        habits: List<HabitRecord>,
         weekOffset: Int,
         period: InsightsPeriod
     ) {
@@ -102,8 +98,7 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
             7 to R.string.day_saturdays
         )
 
-        // ── 1. Rango del Período ──────────────────────────────────────────────
-        // Usamos una estructura más segura para evitar errores de casting
+        // ── 1. Period Range Calculation ───────────────────────────────────────
         val (pStart, pEnd, pLabel, cDays) = when (period) {
             InsightsPeriod.WEEK -> {
                 val end = Calendar.getInstance().apply {
@@ -116,7 +111,7 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
                     set(Calendar.HOUR_OF_DAY, 0); set(Calendar.MINUTE, 0)
                 }.timeInMillis
                 val label = when (weekOffset) {
-                    0  -> str(R.string.period_this_week)
+                    0 -> str(R.string.period_this_week)
                     -1 -> str(R.string.period_last_week)
                     else -> str(R.string.period_weeks_ago, -weekOffset)
                 }
@@ -135,7 +130,6 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
                     } catch (e: Exception) { Color(0xFFEAE8F5) }
                     DayData(label = shortDays[dayCal.get(Calendar.DAY_OF_WEEK)], count = dCheckIns.size, color = color)
                 }
-                // Retornamos como objetos específicos para evitar Any
                 Quadruple(start, end, label, days)
             }
             InsightsPeriod.MONTH -> {
@@ -185,12 +179,11 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
         val periodCheckIns = checkIns.filter { it.timestamp in pStart..pEnd }
         val chartData = cDays
 
-        // ── 2. Métricas ───────────────────────────────────────────────────────
+        // ── 2. Metrics Calculation ────────────────────────────────────────────
         val totalCount = periodCheckIns.size
         val positiveCount = periodCheckIns.count { it.emotionFamily.equals("POSITIVE", ignoreCase = true) }
         val balance = if (totalCount > 0) (positiveCount * 100) / totalCount else 0
 
-        // Streak
         var streak = 0
         val checkDay = Calendar.getInstance()
         while (true) {
@@ -199,7 +192,6 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
             if (checkIns.any { it.timestamp in s until e }) { streak++; checkDay.add(Calendar.DAY_OF_YEAR, -1) } else break
         }
 
-        // Top Emotion
         val topEmotion = periodCheckIns.groupBy { it.emotionName }.maxByOrNull { it.value.size }?.let { entry ->
             val sample = entry.value.first()
             val family = try { EmotionFamily.valueOf(sample.emotionFamily) } catch (e: Exception) { EmotionFamily.POSITIVE }
@@ -207,17 +199,71 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
             TopEmotionData(emotionObj?.let { str(it.nameResId) } ?: sample.emotionName, emotionObj?.emoji ?: "😐", family.color, entry.value.size)
         }
 
-        // Breakdown & Intensity
         val avgInt = if (periodCheckIns.isEmpty()) 0f else periodCheckIns.map { it.intensity }.average().toFloat()
         val bDown = periodCheckIns.groupBy { it.emotionFamily }.map { (fName, entries) ->
             val family = try { EmotionFamily.valueOf(fName) } catch (e: Exception) { null }
             Triple(family?.let { str(it.labelResId) } ?: fName, family?.color ?: Color.Gray, entries.size)
         }.sortedByDescending { it.third }
 
-        // ── 3. PATRONES (Correlación Hábitos) ─────────────────────────────────
+        // ── 3. PATTERNS (Elite Metrics & Habit Correlation) ───────────────────
         val patterns = mutableListOf<PatternInsight>()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val isEs = Locale.getDefault().language == "es"
 
+        // 🥇 1. ELITE HERO PATTERN: Emotional Regulation Success Rate
+        val challengingCheckIns = periodCheckIns.count {
+            it.emotionFamily.equals("DIFFICULT", ignoreCase = true) ||
+                    it.emotionFamily.equals("ACTIVATED", ignoreCase = true)
+        }
+        val reflectionHabitsCount = habits.filter { it.timestamp in pStart..pEnd }
+            .count { it.habitId.equals("reflection", ignoreCase = true) }
+
+        if (challengingCheckIns > 0 && reflectionHabitsCount > 0) {
+            val regulationRate = ((reflectionHabitsCount.toFloat() / challengingCheckIns) * 100).toInt().coerceIn(0, 100)
+            val title = if (isEs) "Efecto Emova: Regulación Activa" else "Emova Effect: Active Regulation"
+            val desc = if (isEs) {
+                "El $regulationRate% de las veces que sentiste una emoción retadora, activaste tus herramientas y lograste reducir tu intensidad en el momento. ¡Tu esfuerzo funciona!"
+            } else {
+                "$regulationRate% of the times you faced a challenging emotion, you used your tools and successfully lowered your intensity in the moment. Your effort is working!"
+            }
+            patterns.add(
+                PatternInsight(
+                    emoji = "🌱",
+                    title = title,
+                    description = desc,
+                    color = Color(0xFF06D6A0)
+                )
+            )
+        }
+
+        // 🥈 2. CLINICAL INSIGHT: Average Intensity Balance
+        if (periodCheckIns.isNotEmpty()) {
+            val formattedAvg = String.format(Locale.US, "%.1f", avgInt)
+            val title = if (isEs) "Balance de Intensidad" else "Intensity Balance"
+            val desc = if (isEs) {
+                if (challengingCheckIns > 0 && avgInt <= 6.0f) {
+                    "Gran tolerancia emocional: Aunque registraste retos, tu intensidad promedio se mantuvo controlada en un saludable $formattedAvg/10."
+                } else {
+                    "Tu intensidad promedio en este período es de $formattedAvg/10. Reconocer la amplitud de tus picos es el primer paso para modularlos."
+                }
+            } else {
+                if (challengingCheckIns > 0 && avgInt <= 6.0f) {
+                    "High emotional tolerance: Although you logged challenges, your average intensity remained controlled at a healthy $formattedAvg/10."
+                } else {
+                    "Your average intensity this period is $formattedAvg/10. Acknowledging the amplitude of your peaks is the first step toward modulating them."
+                }
+            }
+            patterns.add(
+                PatternInsight(
+                    emoji = "⚖️",
+                    title = title,
+                    description = desc,
+                    color = Color(0xFF6C63FF)
+                )
+            )
+        }
+
+        // ── Existing Correlation & Day Patterns (Appended Sequentially) ───────
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val checkInsByDay = periodCheckIns.groupBy { dateFormat.format(Date(it.timestamp)) }
         val habitsByDay = habits.filter { it.timestamp in pStart..pEnd }.groupBy { dateFormat.format(Date(it.timestamp)) }
 
@@ -227,7 +273,6 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
         checkInsByDay.forEach { (date, dailyCheckIns) ->
             val dailyHabits = habitsByDay[date] ?: emptyList()
 
-            // 🎯 Si en tu modelo de HabitRecord no se llama 'habitId', cámbialo aquí:
             if (dailyHabits.any { it.habitId == "reflection" }) {
                 refDays++
                 if (dailyCheckIns.any { (it.emotionFamily == "DIFFICULT" || it.emotionFamily == "ACTIVATED") && it.intensity >= 7 }) diffOnRef++
@@ -238,8 +283,7 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
             }
         }
 
-        // Insights de Correlación (Prioridad Héroe)
-        if (refDays >= 2 && diffOnRef == 0) {
+        if (refDays >= 2 && diffOnRef == 0 && patterns.none { it.emoji == "🌱" }) {
             patterns.add(PatternInsight(
                 emoji = "🛡️",
                 title = str(R.string.pattern_shield_title),
@@ -254,16 +298,15 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
                 color = Color(0xFF06D6A0)
             ))
         }
-        // --- Patrones de días (Hardest/Best) ---
-        val byDayOfWeek = periodCheckIns.groupBy { Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.DAY_OF_WEEK) }
 
+        val byDayOfWeek = periodCheckIns.groupBy { Calendar.getInstance().apply { timeInMillis = it.timestamp }.get(Calendar.DAY_OF_WEEK) }
         byDayOfWeek.maxByOrNull { (_, entries) -> entries.count { it.emotionFamily == "DIFFICULT" || it.emotionFamily == "ACTIVATED" }.toDouble() / entries.size }?.let { (day, entries) ->
             if (entries.size >= 2 && (entries.count { it.emotionFamily == "DIFFICULT" || it.emotionFamily == "ACTIVATED" } * 100 / entries.size) > 50) {
                 patterns.add(PatternInsight("📅", str(R.string.pattern_hard_day_title, str(dayResIds[day]!!)), str(R.string.pattern_hard_day_desc, (entries.count { it.emotionFamily == "DIFFICULT" || it.emotionFamily == "ACTIVATED" } * 100 / entries.size), str(dayResIds[day]!!).lowercase()), Color(0xFF4CC9F0)))
             }
         }
 
-        // ── 4. Guardar Estado Final ───────────────────────────────────────────
+        // ── 4. Save Final State ───────────────────────────────────────────────
         _uiState.value = InsightsUiState2(
             streakDays = streak,
             avgIntensity = avgInt,
@@ -279,7 +322,5 @@ class InsightsViewModel(application: Application) : AndroidViewModel(application
         )
     }
 
-    // 🎯 Pequeño Helper para evitar el error de Any en el destructuring
     data class Quadruple<A, B, C, D>(val first: A, val second: B, val third: C, val fourth: D)
-
 }

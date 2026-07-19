@@ -50,6 +50,7 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     private val _uiState = MutableStateFlow(JournalUiState())
     val uiState: StateFlow<JournalUiState> = _uiState.asStateFlow()
 
+
     fun initialize(
         checkInId: Int,
         emotionName: String,
@@ -77,7 +78,44 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
         fetchAiResponse(text)
     }
 
-    // ─── PASO 2: LLAMADA A LA IA CON EL PROMPT BLINDADO Y BILINGÜE ─────────
+    // ─── FASE 1: PRO SYSTEM PROMPT BUILDER (BILINGÜE Y SIN PREGUNTAS) ──────
+    private fun buildJournalSystemPrompt(
+        emotionName: String,
+        emotionFamily: String,
+        intensity: Int,
+        brainDumpText: String,
+        languageCode: String
+    ): String {
+        // Mapeamos el código de idioma al nombre explícito para blindar la salida del LLM
+        val targetLanguage = when (languageCode.lowercase()) {
+            "es" -> "Spanish"
+            else -> "English"
+        }
+
+        // Aislamiento de seguridad: si no escribió nada, se lo indicamos sin romper el formato
+        val userNotesSection = if (brainDumpText.isNotBlank()) {
+            "The user also wrote these personal notes about how they feel:\n\"\"\"$brainDumpText\"\"\""
+        } else {
+            "The user did not provide additional written notes, only the emotional rating."
+        }
+
+        return """
+            You are Emova, an empathetic, warm, and supportive emotional cognitive assistant.
+            The user has just completed an emotional check-in with the following current state:
+            - Primary Emotion: $emotionName
+            - Emotion Family: $emotionFamily
+            - Intensity Level: $intensity out of 10
+            $userNotesSection
+
+            STRICT OPERATIONAL GUARDRAILS:
+            1. VALIDATE AND HOLD SPACE: Acknowledge the user's emotion with deep empathy, warmth, and validation. Make them feel heard and safe.
+            2. NO QUESTIONS ALLOWED: You MUST NOT ask any questions under any circumstances (neither direct nor rhetorical). Do NOT end your response with a question mark. Never ask "Why do you feel this way?" or "How can I support you?".
+            3. BE CONCISE: Keep your response short, clean, and direct. Limit your answer to a maximum of 2 or 3 supportive sentences.
+            4. NO UNSOLICITED ADVICE: Do not offer action plans, solutions, or toxic positivity unless the user explicitly asked for advice in their written notes. Simply hold space.
+            5. STRICT LANGUAGE LOCK: Your entire output MUST be written strictly and completely in $targetLanguage. Do not mix languages or translate terms needlessly.
+        """.trimIndent()
+    }
+
     // ─── PASO 2: LLAMADA A LA IA CON EL PROMPT BLINDADO Y BILINGÜE ─────────
     private fun fetchAiResponse(brainDumpText: String) {
         val state = _uiState.value
@@ -92,12 +130,13 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
             try {
                 val language = loadLanguage(getApplication()).code
 
-                // 🎯 Construimos el Prompt usando el archivo strings.xml (Bilingüe)
-                val systemPrompt = getApplication<Application>().getString(
-                    R.string.ai_system_prompt_difficult,
-                    state.emotionName,
-                    state.initialIntensity,
-                    if (brainDumpText.isBlank()) "No quiso escribir nada inicial." else brainDumpText
+                // 🎯 FASE 1: Construimos el Prompt blindado directamente en Kotlin
+                val systemPrompt = buildJournalSystemPrompt(
+                    emotionName = state.emotionName,
+                    emotionFamily = state.emotionFamily,
+                    intensity = state.initialIntensity,
+                    brainDumpText = brainDumpText,
+                    languageCode = language
                 )
 
                 val result = GeminiService.getJournalResponse(

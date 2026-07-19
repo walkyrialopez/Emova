@@ -21,6 +21,8 @@ import com.emotionalintelligence.emova.viewmodel.JournalStep
 import com.emotionalintelligence.emova.viewmodel.JournalViewModel
 import androidx.compose.ui.draw.clip
 import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @Composable
 fun JournalScreen(
@@ -171,6 +173,7 @@ fun BrainDumpStep(onContinue: (String) -> Unit, onSkip: () -> Unit) {
 }
 
 // ─── PASO 2: La Respuesta de la IA ───
+// PASO 2: La Respuesta de la IA (Refactorizado con Diseño UI Defensivo)
 @Composable
 fun AiChatStep(aiResponse: String, isLoading: Boolean, error: String, onContinue: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -183,30 +186,33 @@ fun AiChatStep(aiResponse: String, isLoading: Boolean, error: String, onContinue
                 Text(error, color = Color(0xFFEF233C), textAlign = TextAlign.Center)
             }
         } else {
-            // Burbuja de chat de la IA
+            // 🎯 Burbuja de chat de la IA
             Card(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 20.dp, bottomEnd = 20.dp, bottomStart = 20.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
-                Text(
-                    text = aiResponse,
-                    modifier = Modifier.padding(20.dp),
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp,
-                    color = Color(0xFF111130)
-                )
+                // 🌟 EL BLINDAJE PRO: Agregamos un Box que permite scroll vertical interno
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()) // <- ESTA ES LA MAGIA
+                        .padding(20.dp)
+                ) {
+                    Text(
+                        text = aiResponse,
+                        fontSize = 16.sp,
+                        lineHeight = 24.sp,
+                        color = Color(0xFF111130)
+                    )
+                }
             }
         }
-
         Spacer(modifier = Modifier.height(16.dp))
-
-        // 🎯 Aquí está tu Disclaimer de Seguridad y Privacidad
+        // Aquí está tu Disclaimer de Seguridad y Privacidad
         PrivacyDisclaimer()
-
         Spacer(modifier = Modifier.height(24.dp))
-
         Button(
             onClick = onContinue,
             enabled = !isLoading && error.isEmpty(),
@@ -218,7 +224,6 @@ fun AiChatStep(aiResponse: String, isLoading: Boolean, error: String, onContinue
         }
     }
 }
-
 // ─── PASO 3: Cierre e Intensidad Final ───
 @Composable
 fun IntensityCheckStep(initialIntensity: Int, onFinish: (Int) -> Unit) {
