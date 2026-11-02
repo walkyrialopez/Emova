@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.emotionalintelligence.emova.R
-import com.emotionalintelligence.emova.model.emotionList
+import com.emotionalintelligence.emova.model.allEmotions
 
 data class ThermometerStepRes(
     val number: Int,
@@ -52,7 +52,7 @@ fun ThoughtThermometerScreen(
     val answers = remember { mutableStateListOf("", "", "") }
 
     // Resolve localized emotion name
-    val emotion = remember(emotionName) { emotionList.firstOrNull { it.name == emotionName } }
+    val emotion = remember(emotionName) { allEmotions.firstOrNull { it.name == emotionName } }
     val displayName = emotion?.let { stringResource(it.nameResId) } ?: emotionName
 
     Column(

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+    <!-- Vibration cues in the breathing exercise (normal permission, no prompt) -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".EmováApplication"
         android:allowBackup="true"

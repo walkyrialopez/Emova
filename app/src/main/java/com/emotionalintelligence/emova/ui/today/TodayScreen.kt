@@ -165,7 +165,7 @@ fun TodayScreen(
 
     // 1. Buscamos la emoción completa en tu lista
     val currentEmotion = remember(state.todayEmotionName) {
-        com.emotionalintelligence.emova.model.emotionList
+        com.emotionalintelligence.emova.model.allEmotions
             .firstOrNull { it.name == state.todayEmotionName }
     }
 
@@ -340,7 +340,7 @@ fun TodayScreen(
                     stringResource(R.string.habit_breathing_cta),
                 isDone    = state.breathingDone,
                 accentColor = Color(0xFF4CC9F0),
-                onClick   = { vm.markBreathingDone(); onNavigateToBreathe() }
+                onClick   = onNavigateToBreathe
             )
 
             HabitActionRow(
@@ -353,7 +353,7 @@ fun TodayScreen(
                     stringResource(R.string.habit_lesson_cta),
                 isDone    = state.lessonDone,
                 accentColor = Color(0xFF6C63FF),
-                onClick   = { vm.markLessonDone(); onNavigateToLesson() }
+                onClick   = onNavigateToLesson
             )
         }
 

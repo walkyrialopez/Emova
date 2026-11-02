@@ -1,19 +1,40 @@
 package com.emotionalintelligence.emova.ui.insights
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,138 +44,124 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.emotionalintelligence.emova.R
-import com.emotionalintelligence.emova.viewmodel.*
+import com.emotionalintelligence.emova.viewmodel.DayDot
+import com.emotionalintelligence.emova.viewmodel.Discovery
+import com.emotionalintelligence.emova.viewmodel.EmotionBar
+import com.emotionalintelligence.emova.viewmodel.HistoryItem
+import com.emotionalintelligence.emova.viewmodel.InsightsPeriod
+import com.emotionalintelligence.emova.viewmodel.InsightsViewModel
+import com.emotionalintelligence.emova.viewmodel.MIN_FOR_DEEP_PATTERNS
 
+private val Ink = Color(0xFF1A1A2E)
+private val Muted = Color(0xFF6B6B8A)
+private val Accent = Color(0xFF6C63FF)
+
+/**
+ * One simple screen, top to bottom:
+ *   1. Discoveries (what your check-ins reveal)  ← the point of the screen
+ *   2. Three numbers
+ *   3. Your emotions
+ *   4. Last 7 days
+ */
 @Composable
 fun InsightsScreen(
     onNavigateToCheckIn: () -> Unit = {},
     vm: InsightsViewModel = viewModel()
 ) {
     val state by vm.uiState.collectAsStateWithLifecycle()
+    var showHistory by rememberSaveable { mutableStateOf(false) }
+    val expanded = remember { mutableStateMapOf<Int, Boolean>() }
+    var toDelete by remember { mutableStateOf<HistoryItem?>(null) }
+
+    toDelete?.let { item ->
+        AlertDialog(
+            onDismissRequest = { toDelete = null },
+            title = { Text(stringResource(R.string.ins_h_delete_q)) },
+            text = { Text(stringResource(R.string.ins_h_delete_body)) },
+            confirmButton = {
+                TextButton(onClick = { vm.deleteCheckIn(item.id); toDelete = null }) {
+                    Text(stringResource(R.string.ins_h_confirm), color = Color(0xFFEF233C))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { toDelete = null }) { Text(stringResource(R.string.ins_h_cancel)) }
+            }
+        )
+    }
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF7F6FB))
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB)).padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(top = 32.dp, bottom = 100.dp)
     ) {
-        // Header
-        item {
-            Text(
-                stringResource(R.string.insights_title),
-                fontSize = 26.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1A1A2E),
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
+        item { Text(stringResource(R.string.insights_title), fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Ink) }
+
+        if (state.allTimeCount == 0) {
+            item { EmptyState(onNavigateToCheckIn) }
+            return@LazyColumn
         }
 
-        // Period toggle
-        item { PeriodToggle(period = state.period, onSelect = vm::setPeriod) }
+        item { ViewToggle(showHistory, onChange = { showHistory = it }) }
+        item { PeriodToggle(state.period, vm::setPeriod) }
 
-        // Period navigator
-        item {
-            PeriodNavigator(
-                label = state.periodLabel,
-                canGoForward = state.weekOffset < 0,
-                onBack = { vm.shiftWeek(-1) },
-                onForward = { vm.shiftWeek(1) }
-            )
-        }
-
-        // Hero discovery card (BLINDADO: Verifica que la lista tenga contenido)
-        if (state.patterns.isNotEmpty()) {
-            item {
-                Text(
-                    stringResource(R.string.insights_discovery_label),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF6C63FF),
-                    modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
-                )
-                // Usamos firstOrNull() por seguridad extra
-                state.patterns.firstOrNull()?.let { pattern ->
-                    HeroPatternCard(pattern = pattern)
+        if (showHistory) {
+            if (state.history.isEmpty()) {
+                item { Text(stringResource(R.string.ins_h_empty), fontSize = 14.sp, color = Muted) }
+            } else {
+                item { Text(stringResource(R.string.ins_h_count, state.history.size), fontSize = 12.sp, color = Muted) }
+                state.history.groupBy { it.dateLabel }.forEach { (label, list) ->
+                    item(key = "day_$label") {
+                        Text(label, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Muted, modifier = Modifier.padding(top = 4.dp))
+                    }
+                    items(list, key = { it.id }) { entry ->
+                        HistoryCard(
+                            item = entry,
+                            isExpanded = expanded[entry.id] == true,
+                            onToggle = { expanded[entry.id] = expanded[entry.id] != true },
+                            onDelete = { toDelete = entry }
+                        )
+                    }
                 }
             }
+            return@LazyColumn
         }
 
-        // Stat cards row
+        // 1) Discoveries / progress toward them
         item {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                state.topEmotion?.let {
-                    StatCard(
-                        modifier = Modifier.weight(1f),
-                        emoji = it.emoji,
-                        value = it.name,
-                        label = stringResource(R.string.insights_top_feeling)
-                    )
-                } ?: StatCard(
-                    modifier = Modifier.weight(1f),
-                    emoji = "😐",
-                    value = "—",
-                    label = stringResource(R.string.insights_top_feeling)
-                )
-
-                StatCard(
-                    modifier = Modifier.weight(1f),
-                    emoji = "☀️",
-                    value = "${state.positiveBalancePercentage}%",
-                    label = stringResource(R.string.insights_positive_label)
-                )
-
-                StatCard(
-                    modifier = Modifier.weight(1f),
-                    emoji = "📝",
-                    value = "${state.totalCheckIns}",
-                    label = stringResource(R.string.insights_checkins_label)
-                )
-            }
+            Text(stringResource(R.string.ins_discoveries_title), fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Ink)
         }
-
-        // Charts & breakdown
-        if (state.weekData.isEmpty() && state.familyBreakdown.isEmpty()) {
-            item { EmptyState(onNavigateToCheckIn = onNavigateToCheckIn) }
+        if (!state.isUnlocked) {
+            item { UnlockCard(have = state.allTimeCount, need = MIN_FOR_DEEP_PATTERNS) }
+        }
+        if (state.discoveries.isEmpty()) {
+            item { Text(stringResource(R.string.ins_no_discoveries), fontSize = 14.sp, color = Muted) }
         } else {
-            if (state.weekData.isNotEmpty()) {
-                item { EmotionBarChart(data = state.weekData) }
-            }
-            if (state.familyBreakdown.isNotEmpty()) {
-                item { FamilyBreakdownCard(breakdown = state.familyBreakdown) }
-            }
+            items(state.discoveries) { DiscoveryCard(it) }
+        }
 
-            // Secondary patterns
-            if (state.patterns.size > 1) {
-                item {
-                    Text(
-                        stringResource(R.string.insights_other_patterns),
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1A1A2E),
-                        modifier = Modifier.padding(top = 12.dp, bottom = 4.dp, start = 4.dp)
-                    )
-                }
-                items(state.patterns.drop(1)) { pattern ->
-                    PatternCard(pattern = pattern)
-                }
+        // 2) Numbers
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.fillMaxWidth()) {
+                StatCard(Modifier.weight(1f), "📝", "${state.totalCheckIns}", stringResource(R.string.insights_checkins_label))
+                StatCard(Modifier.weight(1f), "☀️", "${state.positivePercent}%", stringResource(R.string.insights_positive_label))
+                StatCard(Modifier.weight(1f), "🔥", "${state.streakDays}", stringResource(R.string.ins_streak_label))
             }
         }
+
+        // 3) Emotions
+        if (state.bars.isNotEmpty()) {
+            item { EmotionBarsCard(state.bars) }
+        }
+
+        // 4) Last 7 days
+        item { WeekStripCard(state.lastSevenDays) }
     }
 }
 
 @Composable
-fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
+private fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFEAE8F5))
-            .padding(4.dp),
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color(0xFFEAE8F5)).padding(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         InsightsPeriod.entries.forEach { p ->
@@ -169,14 +176,16 @@ fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = when (p) {
-                        InsightsPeriod.WEEK     -> stringResource(R.string.insights_weekly)
-                        InsightsPeriod.MONTH    -> stringResource(R.string.insights_monthly)
-                        InsightsPeriod.ALL_TIME -> stringResource(R.string.insights_all_time)
-                    },
+                    text = stringResource(
+                        when (p) {
+                            InsightsPeriod.WEEK -> R.string.ins_period_7
+                            InsightsPeriod.MONTH -> R.string.ins_period_30
+                            InsightsPeriod.ALL_TIME -> R.string.insights_all_time
+                        }
+                    ),
                     fontSize = 14.sp,
                     fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                    color = if (selected) Color(0xFF6C63FF) else Color(0xFF6B6B8A)
+                    color = if (selected) Accent else Muted
                 )
             }
         }
@@ -184,313 +193,208 @@ fun PeriodToggle(period: InsightsPeriod, onSelect: (InsightsPeriod) -> Unit) {
 }
 
 @Composable
-fun PeriodNavigator(
-    label: String,
-    canGoForward: Boolean,
-    onBack: () -> Unit,
-    onForward: () -> Unit
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color.White)
-                .shadow(elevation = 2.dp, shape = RoundedCornerShape(20.dp), spotColor = Color(0x1A000000))
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            IconButton(onClick = onBack, modifier = Modifier.size(36.dp)) {
-                Text("‹", fontSize = 18.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)
-            }
-            Text(
-                text = label,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1A1A2E),
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            IconButton(onClick = onForward, enabled = canGoForward, modifier = Modifier.size(36.dp)) {
-                Text(
-                    "›",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = if (canGoForward) Color(0xFF6C63FF) else Color(0xFFB0B0C0)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun HeroPatternCard(pattern: PatternInsight) {
+private fun UnlockCard(have: Int, need: Int) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(elevation = 6.dp, shape = RoundedCornerShape(20.dp), spotColor = pattern.color.copy(alpha = 0.4f))
-            .clip(RoundedCornerShape(20.dp))
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(Color.White, pattern.color.copy(alpha = 0.08f))
-                )
-            )
-            .padding(24.dp)
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Accent.copy(alpha = 0.08f)).padding(16.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(stringResource(R.string.ins_unlock_title), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(4.dp))
+        Text(stringResource(R.string.ins_unlock_desc, have, need), fontSize = 13.sp, color = Muted, lineHeight = 18.sp)
+        Spacer(Modifier.height(10.dp))
+        Box(modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape).background(Color(0xFFEAE8F5))) {
             Box(
                 modifier = Modifier
-                    .size(48.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth((have / need.toFloat()).coerceIn(0f, 1f))
                     .clip(CircleShape)
-                    .background(pattern.color.copy(alpha = 0.15f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(pattern.emoji, fontSize = 24.sp)
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(
-                text = pattern.title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFF1A1A2E)
+                    .background(Accent)
             )
         }
-        Spacer(modifier = Modifier.height(14.dp))
-        Text(
-            text = pattern.description,
-            fontSize = 14.sp,
-            color = Color(0xFF4A4A68),
-            lineHeight = 22.sp
-        )
     }
 }
 
 @Composable
-fun StatCard(modifier: Modifier = Modifier, emoji: String, value: String, label: String) {
-    Column(
-        modifier = modifier
-            .shadow(elevation = 2.dp, shape = RoundedCornerShape(16.dp), spotColor = Color(0x1A000000))
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color.White)
-            .padding(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(emoji, fontSize = 22.sp)
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            value,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1A1A2E),
-            textAlign = TextAlign.Center,
-            maxLines = 1
-        )
-        Text(
-            label,
-            fontSize = 11.sp,
-            color = Color(0xFF6B6B8A),
-            textAlign = TextAlign.Center,
-            maxLines = 1
-        )
-    }
-}
-
-@Composable
-fun EmotionBarChart(data: List<DayData>) {
-    val maxCount = data.maxOf { it.count }.coerceAtLeast(1)
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(elevation = 2.dp, shape = RoundedCornerShape(18.dp), spotColor = Color(0x1A000000))
-            .clip(RoundedCornerShape(18.dp))
-            .background(Color.White)
-            .padding(18.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.insights_checkins),
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1A1A2E)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(140.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            data.forEach { day ->
-                val targetFraction = if (day.count > 0) day.count.toFloat() / maxCount else 0.02f
-                val animFraction by animateFloatAsState(
-                    targetValue = targetFraction,
-                    animationSpec = tween(500, easing = EaseOutQuart),
-                    label = "bar"
-                )
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                ) {
-                    if (day.count > 0) {
-                        Text("${day.count}", fontSize = 10.sp, color = Color(0xFF6B6B8A))
-                        Spacer(modifier = Modifier.height(4.dp))
-                    } else {
-                        Spacer(modifier = Modifier.height(18.dp))
-                    }
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.BottomCenter
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .width(24.dp)
-                                .fillMaxHeight(animFraction)
-                                .clip(RoundedCornerShape(topStart = 6.dp, topEnd = 6.dp))
-                                .background(if (day.count > 0) day.color else Color(0xFFEAE8F5))
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Text(day.label, fontSize = 11.sp, color = Color(0xFF6B6B8A))
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun FamilyBreakdownCard(breakdown: List<Triple<String, Color, Int>>) {
-    val total = breakdown.sumOf { it.third }.coerceAtLeast(1)
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(elevation = 2.dp, shape = RoundedCornerShape(18.dp), spotColor = Color(0x1A000000))
-            .clip(RoundedCornerShape(18.dp))
-            .background(Color.White)
-            .padding(18.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            stringResource(R.string.insights_emotion_mix),
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1A1A2E)
-        )
-        Row(modifier = Modifier.fillMaxWidth().height(10.dp).clip(RoundedCornerShape(5.dp))) {
-            breakdown.forEach { (_, color, count) ->
-                val fraction by animateFloatAsState(
-                    targetValue = count.toFloat() / total,
-                    animationSpec = tween(500),
-                    label = "frac"
-                )
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(fraction.coerceAtLeast(0.01f))
-                        .background(color)
-                )
-            }
-        }
-        breakdown.forEach { (name, color, count) ->
-            val pct = count * 100 / total
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Box(modifier = Modifier.size(10.dp).clip(CircleShape).background(color))
-                    Text(name, fontSize = 14.sp, color = Color(0xFF1A1A2E))
-                }
-                Text("$count ($pct%)", fontSize = 13.sp, color = Color(0xFF6B6B8A))
-            }
-        }
-    }
-}
-
-@Composable
-fun PatternCard(pattern: PatternInsight) {
+private fun DiscoveryCard(d: Discovery) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(pattern.color.copy(alpha = 0.08f))
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(14.dp),
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White).padding(16.dp),
         verticalAlignment = Alignment.Top
     ) {
         Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(pattern.color.copy(alpha = 0.15f)),
+            modifier = Modifier.size(40.dp).clip(CircleShape).background(d.color.copy(alpha = 0.15f)),
             contentAlignment = Alignment.Center
-        ) {
-            Text(pattern.emoji, fontSize = 20.sp)
-        }
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                pattern.title,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF1A1A2E)
-            )
-            Spacer(modifier = Modifier.height(3.dp))
-            Text(
-                pattern.description,
-                fontSize = 13.sp,
-                color = Color(0xFF6B6B8A),
-                lineHeight = 19.sp
-            )
+        ) { Text(d.emoji, fontSize = 20.sp) }
+        Spacer(Modifier.width(14.dp))
+        Text(d.text, fontSize = 14.sp, color = Ink, lineHeight = 20.sp, modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+private fun StatCard(modifier: Modifier, emoji: String, value: String, label: String) {
+    Column(
+        modifier = modifier.clip(RoundedCornerShape(16.dp)).background(Color.White).padding(vertical = 14.dp, horizontal = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(emoji, fontSize = 22.sp)
+        Spacer(Modifier.height(4.dp))
+        Text(value, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(label, fontSize = 11.sp, color = Muted, textAlign = TextAlign.Center, maxLines = 1)
+    }
+}
+
+@Composable
+private fun EmotionBarsCard(bars: List<EmotionBar>) {
+    Column(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White).padding(16.dp)) {
+        Text(stringResource(R.string.ins_mix_title), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(12.dp))
+        bars.forEach { bar ->
+            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 5.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("${bar.emoji} ${bar.name}", fontSize = 13.sp, color = Ink, modifier = Modifier.width(120.dp), maxLines = 1)
+                Box(modifier = Modifier.weight(1f).height(10.dp).clip(CircleShape).background(Color(0xFFF0F0F8))) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(bar.fraction.coerceIn(0.04f, 1f))
+                            .clip(CircleShape)
+                            .background(bar.color)
+                    )
+                }
+                Text("${bar.count}", fontSize = 12.sp, color = Muted, modifier = Modifier.width(32.dp), textAlign = TextAlign.End)
+            }
         }
     }
 }
 
 @Composable
-fun EmptyState(onNavigateToCheckIn: () -> Unit) {
+private fun WeekStripCard(days: List<DayDot>) {
+    Column(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White).padding(16.dp)) {
+        Text(stringResource(R.string.ins_week_title), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(12.dp))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            days.forEach { day ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(
+                        modifier = Modifier.size(34.dp).clip(CircleShape).background(day.color),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (day.count > 0) Text("${day.count}", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Text(day.label, fontSize = 11.sp, color = Muted)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun EmptyState(onNavigateToCheckIn: () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 48.dp),
+        modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("📊", fontSize = 48.sp)
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            stringResource(R.string.insights_empty_title),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1A1A2E)
-        )
-        Text(
-            stringResource(R.string.insights_empty_subtitle),
-            fontSize = 14.sp,
-            color = Color(0xFF6B6B8A),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp)
-        )
-        Spacer(modifier = Modifier.height(24.dp))
+        Text("🔍", fontSize = 48.sp)
+        Spacer(Modifier.height(12.dp))
+        Text(stringResource(R.string.insights_empty_title), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Spacer(Modifier.height(6.dp))
+        Text(stringResource(R.string.ins_empty_subtitle), fontSize = 14.sp, color = Muted, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(20.dp))
         Button(
             onClick = onNavigateToCheckIn,
             shape = RoundedCornerShape(14.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
-            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
-        ) {
-            Text(
-                stringResource(R.string.insights_first_checkin_cta),
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Bold
-            )
+            colors = ButtonDefaults.buttonColors(containerColor = Accent)
+        ) { Text(stringResource(R.string.insights_first_checkin_cta), color = Color.White) }
+    }
+}
+
+@Composable
+private fun ViewToggle(showHistory: Boolean, onChange: (Boolean) -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        listOf(false to R.string.ins_tab_summary, true to R.string.ins_tab_history).forEach { (isHistory, label) ->
+            val selected = showHistory == isHistory
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(if (selected) Accent else Color.White)
+                    .clickable { onChange(isHistory) }
+                    .padding(horizontal = 18.dp, vertical = 8.dp)
+            ) {
+                Text(
+                    stringResource(label),
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = if (selected) Color.White else Muted
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun HistoryCard(item: HistoryItem, isExpanded: Boolean, onToggle: () -> Unit, onDelete: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.White)
+            .clickable(onClick = onToggle)
+            .padding(14.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier.size(40.dp).clip(CircleShape).background(item.color.copy(alpha = 0.15f)),
+                contentAlignment = Alignment.Center
+            ) { Text(item.emoji, fontSize = 20.sp) }
+            Spacer(Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(item.name, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+                val intensityText = if (item.finalIntensity > 0 && item.finalIntensity != item.intensity)
+                    stringResource(R.string.ins_h_intensity, item.intensity, item.finalIntensity)
+                else stringResource(R.string.ins_h_intensity_single, item.intensity)
+                Text("${item.time} · $intensityText", fontSize = 12.sp, color = Muted)
+            }
+            Text(if (isExpanded) "▲" else "▼", fontSize = 11.sp, color = item.color)
+        }
+
+        AnimatedVisibility(visible = isExpanded) {
+            Column(modifier = Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                if (item.triggers.isNotEmpty() || item.hardToControl) {
+                    val tags = buildList {
+                        item.triggers.forEach { add("${it.emoji} ${stringResource(it.labelResId)}") }
+                        if (item.hardToControl) add(stringResource(R.string.ins_h_hard))
+                    }
+                    Text(tags.joinToString("  ·  "), fontSize = 12.sp, color = Muted, lineHeight = 18.sp)
+                }
+                HistoryField(stringResource(R.string.ins_h_note), item.note)
+                HistoryField(stringResource(R.string.ins_h_could), item.couldHaveDone)
+                HistoryField(stringResource(R.string.w_plan_cue), item.planCue)
+                HistoryField(stringResource(R.string.w_plan_instead), item.planInstead)
+                HistoryField(stringResource(R.string.w_plan_will), item.plan)
+                if (item.aiComment.isNotBlank()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(item.color.copy(alpha = 0.08f))
+                            .padding(12.dp)
+                    ) {
+                        Text(stringResource(R.string.ins_h_ai), fontSize = 11.sp, fontWeight = FontWeight.Bold, color = item.color)
+                        Spacer(Modifier.height(4.dp))
+                        Text(item.aiComment, fontSize = 13.sp, color = Ink, lineHeight = 19.sp)
+                    }
+                }
+                TextButton(onClick = onDelete) {
+                    Text(stringResource(R.string.ins_h_delete), fontSize = 12.sp, color = Color(0xFFEF233C))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HistoryField(label: String, value: String) {
+    if (value.isBlank()) return
+    Column {
+        Text(label, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Muted)
+        Text(value, fontSize = 14.sp, color = Ink, lineHeight = 20.sp)
     }
 }

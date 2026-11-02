@@ -14,7 +14,8 @@ data class Emotion(
     val descResId: Int
 )
 
-val emotionList = listOf(
+/** Full historical list. Kept so old check-ins (45-emotion version) still resolve to a name/emoji. */
+val allEmotions = listOf(
 
     // ── POSITIVE ──────────────────────────────────────────────────────────────
     Emotion("pos_1",  "Happy",      "😄", EmotionFamily.POSITIVE, "Feeling pleased and content.",                EmotionFamily.POSITIVE.color, R.string.emotion_pos_1_name,  R.string.emotion_pos_1_desc),
@@ -73,3 +74,16 @@ val emotionList = listOf(
     Emotion("act_14", "Possessive", "😬", EmotionFamily.ACTIVATED, "Fiercely protective of what or who is yours.",     EmotionFamily.ACTIVATED.color, R.string.emotion_act_14_name, R.string.emotion_act_14_desc),
     Emotion("act_15", "Humiliated", "😞", EmotionFamily.ACTIVATED, "Made to feel ashamed or foolish by others.",       EmotionFamily.ACTIVATED.color, R.string.emotion_act_15_name, R.string.emotion_act_15_desc)
 )
+
+/**
+ * Simplified set shown in the new check-in: 3 families x 3 emotions (a 3x3 grid).
+ * IDs match the ones in [allEmotions], so no data migration is needed for emotions.
+ * The order here is the order on screen: positive row, difficult row, activated row.
+ */
+val coreEmotionIds = listOf(
+    "pos_1", "pos_10", "pos_5",    // Happy, Peaceful, Grateful
+    "dif_1", "dif_5", "dif_4",     // Sad, Anxious, Scared
+    "act_1", "act_3", "act_10"     // Angry, Resentful, Envious
+)
+
+val emotionList: List<Emotion> = coreEmotionIds.mapNotNull { id -> allEmotions.firstOrNull { it.id == id } }

@@ -28,7 +28,12 @@ import androidx.compose.ui.text.style.TextAlign
 // ─── Lessons List Screen ──────────────────────────────────────────────────────
 
 @Composable
-fun LessonsScreen(onBack: (() -> Unit)? = null, viewModel: LessonViewModel = viewModel()) {
+fun LessonsScreen(
+    onBack: (() -> Unit)? = null,
+    onOpenVocabulary: () -> Unit = {},
+    onOpenConflict: () -> Unit = {},
+    viewModel: LessonViewModel = viewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showDetail by remember { mutableStateOf(false) }
 
@@ -43,16 +48,54 @@ fun LessonsScreen(onBack: (() -> Unit)? = null, viewModel: LessonViewModel = vie
             Text(stringResource(R.string.lessons_title), fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
             Text(stringResource(R.string.lessons_subtitle), fontSize = 14.sp, color = Color(0xFF6B6B8A))
 
+            Spacer(modifier = Modifier.height(14.dp))
+            val total = uiState.allLessons.size
+            val doneCount = uiState.allLessons.count { it.id in uiState.completedIds }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier.weight(1f).height(6.dp).clip(RoundedCornerShape(3.dp)).background(Color(0xFFEAE8F5))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(if (total == 0) 0f else doneCount / total.toFloat())
+                            .clip(RoundedCornerShape(3.dp))
+                            .background(Color(0xFF6C63FF))
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(stringResource(R.string.lessons_progress, doneCount, total), fontSize = 12.sp, color = Color(0xFF6B6B8A))
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
 
-            uiState.todaysLesson?.let { lesson ->
-                Text(stringResource(R.string.lessons_today_label), fontSize = 11.sp, fontWeight = FontWeight.Bold,
+            if (uiState.allCompleted) {
+                Text(stringResource(R.string.lessons_all_done), fontSize = 13.sp, color = Color(0xFF6B6B8A))
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(stringResource(R.string.lessons_practice_label), fontSize = 11.sp, fontWeight = FontWeight.Bold,
                     color = Color(0xFF6C63FF), letterSpacing = 1.5.sp)
                 Spacer(modifier = Modifier.height(8.dp))
-                TodayLessonCard(lesson = lesson, onClick = {
-                    viewModel.selectLesson(lesson)
-                    showDetail = true
-                })
+                PracticeCard(
+                    index = uiState.practiceIndex,
+                    answer = uiState.practiceAnswer,
+                    done = uiState.practiceDone,
+                    onAnswerChange = viewModel::setPracticeAnswer,
+                    onFinish = viewModel::finishPractice
+                )
+            } else {
+                uiState.todaysLesson?.let { lesson ->
+                    Text(stringResource(R.string.lessons_today_label), fontSize = 11.sp, fontWeight = FontWeight.Bold,
+                        color = Color(0xFF6C63FF), letterSpacing = 1.5.sp)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    TodayLessonCard(
+                        lesson = lesson,
+                        done = lesson.id in uiState.completedIds,
+                        onClick = {
+                            viewModel.selectLesson(lesson)
+                            showDetail = true
+                        }
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -67,15 +110,95 @@ fun LessonsScreen(onBack: (() -> Unit)? = null, viewModel: LessonViewModel = vie
                     }
                     Spacer(modifier = Modifier.height(10.dp))
                     categoryLessons.forEach { lesson ->
-                        LessonCard(lesson = lesson, onClick = {
-                            viewModel.selectLesson(lesson)
-                            showDetail = true
-                        })
+                        LessonCard(
+                            lesson = lesson,
+                            completed = lesson.id in uiState.completedIds,
+                            onClick = {
+                                viewModel.selectLesson(lesson)
+                                showDetail = true
+                            }
+                        )
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+
+            // Tools: what used to be two extra tabs
+            Text(stringResource(R.string.growth_tools_label), fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color(0xFF6B6B8A))
+            Spacer(modifier = Modifier.height(10.dp))
+            ToolCard("📚", stringResource(R.string.growth_vocab_title), stringResource(R.string.growth_vocab_desc), onOpenVocabulary)
+            Spacer(modifier = Modifier.height(10.dp))
+            ToolCard("🤝", stringResource(R.string.growth_conflict_title), stringResource(R.string.growth_conflict_desc), onOpenConflict)
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+private fun ToolCard(emoji: String, title: String, desc: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
+            .background(Color.White)
+            .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick).padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.size(44.dp).clip(RoundedCornerShape(12.dp)).background(Color(0xFFEAE8F5)),
+            contentAlignment = Alignment.Center
+        ) { Text(emoji, fontSize = 20.sp) }
+        Spacer(modifier = Modifier.width(14.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(title, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF1A1A2E))
+            Text(desc, fontSize = 12.sp, color = Color(0xFF6B6B8A))
+        }
+        Text("›", fontSize = 20.sp, color = Color(0xFFAAAAAC))
+    }
+}
+
+/** One-minute daily prompt, shown once every lesson has been completed. */
+@Composable
+private fun PracticeCard(
+    index: Int,
+    answer: String,
+    done: Boolean,
+    onAnswerChange: (String) -> Unit,
+    onFinish: () -> Unit
+) {
+    val prompts = androidx.compose.ui.res.stringArrayResource(R.array.daily_practices)
+    Column(
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))
+            .background(Color(0xFF6C63FF).copy(alpha = 0.12f))
+            .border(1.dp, Color(0xFF6C63FF).copy(alpha = 0.35f), RoundedCornerShape(20.dp))
+            .padding(20.dp)
+    ) {
+        Text("💭", fontSize = 26.sp)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(prompts.getOrElse(index) { "" }, fontSize = 17.sp, fontWeight = FontWeight.SemiBold,
+            color = Color(0xFF1A1A2E), lineHeight = 24.sp)
+        Spacer(modifier = Modifier.height(14.dp))
+        OutlinedTextField(
+            value = answer,
+            onValueChange = onAnswerChange,
+            placeholder = { Text(stringResource(R.string.lessons_write_answer), color = Color(0xFFAAAAAC)) },
+            modifier = Modifier.fillMaxWidth().heightIn(min = 90.dp),
+            shape = RoundedCornerShape(14.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF6C63FF),
+                unfocusedBorderColor = Color(0xFFEAE8F5),
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White
+            )
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Button(
+            onClick = onFinish,
+            enabled = !done,
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
+        ) {
+            Text(if (done) "✓" else stringResource(R.string.lessons_finish), fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
 }
@@ -83,7 +206,7 @@ fun LessonsScreen(onBack: (() -> Unit)? = null, viewModel: LessonViewModel = vie
 // ─── Today Lesson Card ────────────────────────────────────────────────────────
 
 @Composable
-fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit) {
+fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit, done: Boolean = false) {
     Box(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))
             .background(Color(0xFF6C63FF).copy(alpha = 0.15f))
@@ -96,7 +219,12 @@ fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(lesson.category.labelResId), fontSize = 12.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Medium)
                 Spacer(modifier = Modifier.weight(1f))
-                Text("⏱ ${lesson.duration}", fontSize = 12.sp, color = Color(0xFF6B6B8A))
+                Text(
+                    if (done) stringResource(R.string.lessons_done_badge) else "⏱ ${lesson.duration}",
+                    fontSize = 12.sp,
+                    color = if (done) Color(0xFF06A77D) else Color(0xFF6B6B8A),
+                    fontWeight = if (done) FontWeight.Bold else FontWeight.Normal
+                )
             }
             Spacer(modifier = Modifier.height(10.dp))
             // 🎯 APLICADO: stringResource para el título
@@ -110,7 +238,10 @@ fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit) {
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
             ) {
-                Text(stringResource(R.string.lessons_start_button), fontWeight = FontWeight.Bold, color = Color.White)
+                Text(
+                    stringResource(if (done) R.string.lessons_review_button else R.string.lessons_start_button),
+                    fontWeight = FontWeight.Bold, color = Color.White
+                )
             }
         }
     }
@@ -119,7 +250,7 @@ fun TodayLessonCard(lesson: Lesson, onClick: () -> Unit) {
 // ─── Lesson Card ──────────────────────────────────────────────────────────────
 
 @Composable
-fun LessonCard(lesson: Lesson, onClick: () -> Unit) {
+fun LessonCard(lesson: Lesson, onClick: () -> Unit, completed: Boolean = false) {
     Row(
         modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
             .background(Color(0xFFFFFFFF))
@@ -146,6 +277,10 @@ fun LessonCard(lesson: Lesson, onClick: () -> Unit) {
             // 🎯 APLICADO
             Text(stringResource(lesson.titleResId), fontSize = 15.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF1A1A2E))
             Text(stringResource(lesson.descriptionResId), fontSize = 12.sp, color = Color(0xFF6B6B8A), maxLines = 1)
+        }
+        if (completed) {
+            Text("✓", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF06A77D))
+            Spacer(modifier = Modifier.width(8.dp))
         }
         Text("⏱ ${lesson.duration}", fontSize = 11.sp, color = Color(0xFFAAAAAC))
     }

@@ -3,7 +3,9 @@ package com.emotionalintelligence.emova.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.emotionalintelligence.emova.R
 import com.emotionalintelligence.emova.model.*
+import com.emotionalintelligence.emova.util.LessonProgress
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +14,12 @@ import kotlinx.coroutines.launch
 data class LessonUiState(
     val todaysLesson: Lesson? = null,
     val allLessons: List<Lesson> = emptyList(),
+    val completedIds: Set<String> = emptySet(),
+    /** True when every lesson is done: the screen then shows a daily practice prompt instead. */
+    val allCompleted: Boolean = false,
+    val practiceIndex: Int = 0,
+    val practiceDone: Boolean = false,
+    val practiceAnswer: String = "",
     val selectedLesson: Lesson? = null,
     // Scenario state
     val selectedOptionIndex: Int = -1,
@@ -34,21 +42,41 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
     private val _uiState = MutableStateFlow(LessonUiState())
     val uiState: StateFlow<LessonUiState> = _uiState.asStateFlow()
 
+    private val progress = LessonProgress(application)
+
     init {
-        // 🎯 APLICADO: Ahora llamamos directamente a lessonLibrary
-        // (ya no usamos localizedLessonLibrary porque los IDs son universales)
-        val dayIndex = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_YEAR)
-        val todaysLesson = lessonLibrary[dayIndex % lessonLibrary.size]
+        val completed = progress.completedIds()
+        val todayId = progress.todaysLessonId(lessonPath)
+        val todaysLesson = lessonPath.firstOrNull { it.id == todayId }
+        val practiceCount = application.resources.getStringArray(R.array.daily_practices).size
 
         _uiState.value = LessonUiState(
             todaysLesson = todaysLesson,
-            allLessons = lessonLibrary,
+            allLessons = lessonPath,
+            completedIds = completed,
+            allCompleted = todaysLesson == null,
+            practiceIndex = LessonProgress.practiceIndexForToday(practiceCount),
+            practiceDone = progress.isPracticeDoneToday(),
             selectedLesson = todaysLesson,
-            // 🎯 APLICADO: Ajustamos para leer promptResIds en lugar de prompts
-            gratitudeAnswers = if (todaysLesson.content is LessonContent.GuidedJournal)
-                MutableList((todaysLesson.content as LessonContent.GuidedJournal).promptResIds.size) { "" }
-            else emptyList()
+            gratitudeAnswers = (todaysLesson?.content as? LessonContent.GuidedJournal)
+                ?.let { MutableList(it.promptResIds.size) { "" } } ?: emptyList()
         )
+    }
+
+    /** Called when the person actually finishes the lesson they are viewing. */
+    private fun completeSelected() {
+        val lesson = _uiState.value.selectedLesson ?: return
+        progress.markCompleted(lesson.id)
+        _uiState.value = _uiState.value.copy(completedIds = progress.completedIds())
+    }
+
+    fun setPracticeAnswer(text: String) {
+        _uiState.value = _uiState.value.copy(practiceAnswer = text)
+    }
+
+    fun finishPractice() {
+        progress.markPracticeDone()
+        _uiState.value = _uiState.value.copy(practiceDone = true)
     }
 
     fun selectLesson(lesson: Lesson) {
@@ -75,6 +103,7 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
             selectedOptionIndex = index,
             showFeedback = true
         )
+        completeSelected()
     }
 
     // ── Reflection ────────────────────────────────────────────────────────────
@@ -84,6 +113,7 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
 
     fun saveReflection() {
         _uiState.value = _uiState.value.copy(reflectionSaved = true)
+        completeSelected()
     }
 
     // ── Breathing ─────────────────────────────────────────────────────────────
@@ -116,6 +146,7 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
                 }
             }
             _uiState.value = _uiState.value.copy(breathingActive = false)
+            completeSelected()
         }
     }
 
@@ -135,6 +166,7 @@ class LessonViewModel(application: Application) : AndroidViewModel(application) 
             _uiState.value = state.copy(currentGratitudeIndex = state.currentGratitudeIndex + 1)
         } else {
             _uiState.value = state.copy(gratitudeDone = true)
+            completeSelected()
         }
     }
 }

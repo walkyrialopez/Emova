@@ -23,10 +23,10 @@
     <string name="habit_checkin_pending">¿Cómo te sientes hoy?</string>
 
     <string name="habit_gratitude_title">Diario de Gratitud</string>
-    <string name="habit_gratitude_progress">%1$d/10 escritas — ¡sigue así!</string>
-    <string name="habit_gratitude_pending">Escribe 10 cosas por las que estás agradecido</string>
+    <string name="habit_gratitude_progress">%1$d/4 escritas — ¡sigue así!</string>
+    <string name="habit_gratitude_pending">Escribe por lo que estás agradecido hoy</string>
 
-    <string name="habit_breathing_title">Respiración</string>
+    <string name="habit_breathing_title">Calma</string>
     <string name="habit_breathing_pending">Tómate 3 minutos para respirar</string>
 
     <string name="habit_lesson_title">Lección Diaria</string>
@@ -476,6 +476,48 @@
         <item>Algo pequeño que salió bien hoy…</item>
         <item>Un recuerdo que te da calidez…</item>
         <item>Algo que sueles dar por sentado…</item>
+    
+        <item>Alguien a quien aún no le has dado las gracias…</item>
+        <item>Un error que terminó enseñándote algo…</item>
+        <item>Algo que hoy puedes hacer y hace un año no podías…</item>
+        <item>Un lugar donde te sientes tranquilo/a…</item>
+        <item>Un amigo con quien puedes ser tú mismo/a…</item>
+        <item>Algo que te hizo reír últimamente…</item>
+        <item>Una comida que alguien preparó para ti…</item>
+        <item>Agua limpia, una cama cálida o un techo sobre tu cabeza…</item>
+        <item>Un maestro o mentor que te marcó…</item>
+        <item>Algo de tu personalidad que te gusta…</item>
+        <item>Un mensaje o llamada que te alegró el día…</item>
+        <item>El clima o el cielo de hoy…</item>
+        <item>Una herramienta o tecnología que te facilita la vida…</item>
+        <item>Una etapa difícil que lograste superar…</item>
+        <item>Un libro, serie o película que te reconfortó…</item>
+        <item>Un desconocido que fue amable contigo…</item>
+        <item>Algo que esperas con ilusión…</item>
+        <item>Un hábito que te está ayudando…</item>
+        <item>Una parte de tu mañana que disfrutas…</item>
+        <item>Alguien que cree en ti…</item>
+        <item>Un aroma que te hace sentir bien…</item>
+        <item>Un momento de silencio o descanso que tuviste…</item>
+        <item>Algo que aprendiste esta semana…</item>
+        <item>Una mascota, planta o animal que te da alegría…</item>
+        <item>Una parte de tu cuerpo que funciona bien para ti…</item>
+        <item>Una tradición o ritual que amas…</item>
+        <item>Algo que tienes y te alegra tener…</item>
+        <item>Una promesa que cumpliste…</item>
+        <item>Una vez que alguien te escuchó…</item>
+        <item>Un pequeño logro que no celebraste…</item>
+        <item>Una persona que admiras…</item>
+        <item>Una prenda de ropa cómoda…</item>
+        <item>Algo de tu barrio que aprecias…</item>
+        <item>Una oportunidad que se te dio…</item>
+        <item>Un momento en que te sentiste orgulloso/a de ti…</item>
+        <item>Un regalo que recuerdas con cariño…</item>
+        <item>Algo que va bien en tu vida ahora mismo…</item>
+        <item>Algo gratis que mejoró tu día…</item>
+        <item>Alguien que te perdonó…</item>
+        <item>Un abrazo, un gesto o una palabra amable…</item>
+        <item>Un momento cotidiano que quisieras recordar…</item>
     </string-array>
     <string name="gratitude_free_space">Cualquier otra cosa que agradezcas hoy...</string>
     <string name="notif_channel_name">Registro Diario</string>
@@ -940,10 +982,250 @@
     <!-- Habit action rows: pending subtitles -->
     <string name="habit_checkin_cta">Nombra lo que estás sintiendo</string>
     <string name="habit_gratitude_cta">Anota 3 cosas por las que estás agradecido/a</string>
-    <string name="habit_breathing_cta">4 min · elige un patrón de respiración</string>
+    <string name="habit_breathing_cta">Respira, ancla tu mente o medita</string>
     <string name="habit_lesson_cta">3–5 min · desarrolla tu inteligencia emocional</string>
 
     <!-- Micro-habits shortcut -->
     <string name="today_microhabits_title">Micro-hábitos</string>
     <string name="today_microhabits_subtitle">12 pequeñas prácticas diarias</string>
+
+    <!-- ═══ v1.1: guided check-in, simple insights, mindfulness ═══ -->
+    <string name="w_step">Paso %1$d de %2$d</string>
+    <string name="w_continue">Continuar</string>
+    <string name="w_see_note">Ver mi nota</string>
+    <string name="w_finish">Terminar</string>
+    <string name="w_context_title">¿Por qué te sientes así?</string>
+    <string name="w_context_subtitle">¿En qué situaciones te pasa más seguido? Elige las que apliquen.</string>
+    <string name="w_trigger_work">Trabajo / estudios</string>
+    <string name="w_trigger_family">Familia</string>
+    <string name="w_trigger_people">Pareja / amistades</string>
+    <string name="w_trigger_health">Salud</string>
+    <string name="w_trigger_money">Dinero</string>
+    <string name="w_trigger_sleep">Sueño / cansancio</string>
+    <string name="w_trigger_lonely">Soledad</string>
+    <string name="w_trigger_other">Otra cosa</string>
+    <string name="w_reflect_title">Haz una pausa y mírala</string>
+    <string name="w_reflect_subtitle">Una pregunta para entenderla mejor. Responde solo si quieres.</string>
+    <string name="w_reflect_q_positive">¿Qué hizo bueno este momento y cómo podría traer más de esto a mi semana?</string>
+    <string name="w_reflect_hint">Escribe aquí…</string>
+    <string name="w_plan_s1">Respirar lento tres veces</string>
+    <string name="w_plan_s2">Alejarme y caminar unos minutos</string>
+    <string name="w_plan_s3">Escribir lo que siento</string>
+    <string name="w_plan_s4">Hablar con alguien de confianza</string>
+    <string name="w_plan_s5">Esperar 10 minutos antes de reaccionar</string>
+    <string name="w_plan_hint">O escribe el tuyo…</string>
+    <string name="w_result_title">Una nota para ti</string>
+    <string name="w_result_loading">Escribiendo algo para ti…</string>
+    <string name="w_ai_fallback">Gracias por tomarte un momento para notar lo que sientes. Ponerle nombre ya es un paso real. Sé amable contigo hoy.</string>
+    <string name="w_ai_disclaimer">Escrita por una IA, así que puede equivocarse. Tus registros se guardan solo en este dispositivo; el texto de este se envía a un servicio de IA para escribir esta nota.</string>
+    <string name="w_crisis_title">No tienes que cargar con esto solo/a</string>
+    <string name="w_crisis_body">Lo que escribiste suena muy pesado. Si podrías hacerte daño o estás en peligro, por favor llama ahora al número de emergencias de tu país. También puedes encontrar una línea de ayuda en tu país en findahelpline.com. Hablar hoy con alguien de confianza también puede ayudar.</string>
+    <string name="w_after_title">¿Qué tan fuerte es ahora?</string>
+    <string name="w_mindful_cta">Probar una meditación guiada 🎧</string>
+    <string name="ins_discoveries_title">Lo que revelan tus registros</string>
+    <string name="ins_no_discoveries">Aún no hay suficientes datos en este período. Sigue registrando y aparecerán patrones.</string>
+    <string name="ins_unlock_title">Tus patrones se están formando</string>
+    <string name="ins_unlock_desc">%1$d de %2$d registros para desbloquear patrones más profundos (días, horas, causas).</string>
+    <string name="ins_streak_label">Racha</string>
+    <string name="ins_mix_title">Tus emociones</string>
+    <string name="ins_week_title">Últimos 7 días</string>
+    <string name="ins_empty_subtitle">Haz un registro y aquí empezarán a aparecer tus primeros patrones.</string>
+    <string name="ins_period_7">7 días</string>
+    <string name="ins_period_30">30 días</string>
+    <string name="ins_tod_morning">por la mañana</string>
+    <string name="ins_tod_afternoon">por la tarde</string>
+    <string name="ins_tod_evening">por la noche</string>
+    <string name="ins_tod_night">de madrugada</string>
+    <string name="ins_d_top">Tu emoción más frecuente es %1$s (%2$d%% de tus registros).</string>
+    <string name="ins_d_trigger">Cuando tus registros tienen que ver con %1$s, el %2$d%% son emociones difíciles.</string>
+    <string name="ins_d_time">Las emociones difíciles aparecen más %1$s (%2$d%% de tus registros en ese momento).</string>
+    <string name="ins_d_day_hard">%1$s suelen ser tus días más difíciles: el %2$d%% de esos registros fueron emociones difíciles.</string>
+    <string name="ins_d_day_best">%1$s son tus días más ligeros: el %2$d%% de esos registros fueron positivos.</string>
+    <string name="ins_d_relief">Después de reflexionar, tu intensidad baja en promedio %1$.1f puntos. Hacer esta pausa te funciona.</string>
+    <string name="ins_d_mindful">Los días que hiciste mindfulness, el %1$d%% de tus registros fueron difíciles, frente al %2$d%% en otros días.</string>
+    <string name="ins_d_trend_down">Comparado con el período anterior, las emociones difíciles bajaron: %1$d%% → %2$d%%.</string>
+    <string name="ins_d_trend_up">Comparado con el período anterior, las emociones difíciles subieron: %1$d%% → %2$d%%. Sé amable contigo.</string>
+    <string name="ins_d_streak">%1$d días seguidos registrando. La constancia es lo que hace visibles los patrones.</string>
+    <string name="mf_s5_title">Pausa rápida</string>
+    <string name="mf_s5_desc">Una pausa corta para respirar y asentarte.</string>
+    <string name="mf_s10_title">Escaneo corporal</string>
+    <string name="mf_s10_desc">Relaja tu cuerpo de la cabeza a los pies.</string>
+    <string name="mf_s20_title">Práctica profunda</string>
+    <string name="mf_s20_desc">Una meditación más larga para soltar el día.</string>
+    <string name="mf_minutes">%1$d min</string>
+    <string name="mf_coming">Próximamente</string>
+    <string name="mf_back">Atrás</string>
+    <string name="mf_done">Sesión completada 🌿</string>
+
+    <!-- worksheet-style steps -->
+    <string name="w_feel_title">¿Qué sientes?</string>
+    <string name="w_feel_subtitle">Elige el sentimiento que tienes ahora. Luego marcarás si te cuesta controlarlo.</string>
+    <string name="w_other_name">Otro</string>
+    <string name="w_other_desc">Tu propia palabra</string>
+    <string name="w_other_hint">¿Cómo lo llamarías?</string>
+    <string name="w_other_family_q">¿Con cuál se parece más?</string>
+    <string name="w_fam_pos">Agradable</string>
+    <string name="w_fam_dif">Tristeza o ansiedad</string>
+    <string name="w_fam_act">Enojo o tensión</string>
+    <string name="w_hard_q">¿Te cuesta controlar esta emoción?</string>
+    <string name="w_how_title">¿Cómo lo harías ahora?</string>
+    <string name="w_how_subtitle">Piensa en una situación real. Responde solo lo que quieras.</string>
+    <string name="w_how_q1">Piensa en una vez en que esta emoción te ganó. ¿Qué pasó?</string>
+    <string name="w_how_q2">Mirándolo ahora, ¿qué habrías podido hacer distinto?</string>
+    <string name="w_goal_title">¿Cómo quieres responder?</string>
+    <string name="w_goal_subtitle">Arma tu plan para la próxima vez.</string>
+    <string name="w_plan_cue">Cuando vuelva a sentirlo:</string>
+    <string name="w_plan_cue_hint">Ej.: cuando alguien me hable con voz fuerte</string>
+    <string name="w_plan_instead">En vez de mi reacción de siempre:</string>
+    <string name="w_plan_instead_hint">Ej.: responder gritando</string>
+    <string name="w_plan_will">Esta vez voy a:</string>
+    <string name="ins_d_hard">La emoción que más te cuesta controlar es %1$s (%2$d de tus registros).</string>
+
+    <!-- calm tab + check-in history -->
+    <string name="wellness_tab_calm">🌬️ Calma</string>
+    <string name="calm_title">Calma</string>
+    <string name="calm_subtitle">Respira, ancla tu mente o medita.</string>
+    <string name="calm_sec_breathe">Respirar</string>
+    <string name="calm_sec_ground">Anclaje</string>
+    <string name="calm_sec_meditate">Meditar</string>
+    <string name="calm_why_breathe">Las exhalaciones largas le indican a tu sistema nervioso que estás a salvo, y eso ayuda a bajar la ansiedad en pocos minutos.</string>
+    <string name="calm_why_ground">Cuando sube la ansiedad, la mente corre hacia adelante o da vueltas. Notar lo que ves, tocas y oyes ancla tu atención en el presente y ayuda a que el cuerpo se asiente.</string>
+    <string name="calm_why_meditate">Practicar la atención sin juzgar tus pensamientos te entrena para notar las emociones antes y reaccionar menos en automático.</string>
+    <string name="calm_ground_title">Anclaje 5-4-3-2-1</string>
+    <string name="calm_ground_desc">Cuando todo te abruma, tus sentidos te devuelven al presente.</string>
+    <string name="calm_ground_time">2 min</string>
+    <string name="ins_tab_summary">Resumen</string>
+    <string name="ins_tab_history">Registros</string>
+    <string name="ins_h_empty">Aún no hay registros en este período.</string>
+    <string name="ins_h_count">%1$d registros</string>
+    <string name="ins_h_today">Hoy</string>
+    <string name="ins_h_yesterday">Ayer</string>
+    <string name="ins_h_intensity">Intensidad %1$d → %2$d</string>
+    <string name="ins_h_intensity_single">Intensidad %1$d</string>
+    <string name="ins_h_hard">🎯 Me cuesta controlarla</string>
+    <string name="ins_h_note">Lo que escribiste</string>
+    <string name="ins_h_could">Lo que habrías podido hacer</string>
+    <string name="ins_h_ai">Nota de Emova</string>
+    <string name="ins_h_delete">Eliminar registro</string>
+    <string name="ins_h_delete_q">¿Eliminar este registro?</string>
+    <string name="ins_h_delete_body">Esta acción no se puede deshacer.</string>
+    <string name="ins_h_confirm">Eliminar</string>
+    <string name="ins_h_cancel">Cancelar</string>
+
+    <!-- v1.2: new lessons, daily practices, growth tools -->
+    <string name="lesson_mt01_title">Tu porqué</string>
+    <string name="lesson_mt01_desc">La motivación dura más cuando está conectada con lo que te importa.</string>
+    <string name="lesson_mt01_prompt">Piensa en algo que has estado postergando. ¿Por qué te importa a ti, no a otras personas? Escribe la razón real en una frase.</string>
+    <string name="lesson_mt01_hint1">¿Es algo que quiero o algo que siento que debo hacer?</string>
+    <string name="lesson_mt01_hint2">¿Qué cambiaría en mi vida si lo hiciera?</string>
+    <string name="lesson_mt01_hint3">¿Para quién o para qué lo hago?</string>
+    <string name="lesson_mt02_title">Empezar por dos minutos</string>
+    <string name="lesson_mt02_desc">Empezar en pequeño es como se logran las cosas grandes.</string>
+    <string name="lesson_mt02_situation">Tienes una tarea grande y cero energía. Cada vez que piensas en ella te sientes más bloqueado/a. ¿Qué haces?</string>
+    <string name="lesson_mt02_opt1_text">Espero a sentirme con suficiente motivación para empezar</string>
+    <string name="lesson_mt02_opt1_fb">La motivación suele llegar después de actuar, no antes. Esperar el ánimo perfecto puede dejarte estancado/a por días.</string>
+    <string name="lesson_mt02_opt2_text">Me comprometo solo a dos minutos del primer paso pequeño</string>
+    <string name="lesson_mt02_opt2_fb">Empezar en pequeño baja la resistencia. Una vez que comienzas, continuar suele ser más fácil, y si no, igual avanzaste.</string>
+    <string name="lesson_mt02_opt3_text">Intento hacerlo todo de una vez esta noche</string>
+    <string name="lesson_mt02_opt3_fb">Los planes de todo o nada agotan la energía y suelen terminar en evasión. Los pasos pequeños y repetibles son más sostenibles.</string>
+    <string name="lesson_mt03_title">Celebrar los pequeños logros</string>
+    <string name="lesson_mt03_desc">El progreso que notas es el progreso que repites.</string>
+    <string name="lesson_mt03_q1">¿Qué hiciste esta semana que te alegra haber hecho?</string>
+    <string name="lesson_mt03_q2">¿Qué te exigió: esfuerzo, valentía, paciencia?</string>
+    <string name="lesson_mt03_q3">¿Cómo puedes reconocerte o premiarte hoy?</string>
+    <string name="lesson_mt03_done_title">¡Los pasos pequeños cuentan!</string>
+    <string name="lesson_mt03_done_body">Notar tu progreso alimenta la energía para seguir.</string>
+    <string name="lesson_ss02_title">Decir que no con amabilidad</string>
+    <string name="lesson_ss02_desc">Un no claro, dicho con calidez, protege tu energía y tus relaciones.</string>
+    <string name="lesson_ss02_situation">Un amigo te pide ayuda con su mudanza este fin de semana, pero estás agotado/a y necesitas descansar. ¿Cómo respondes?</string>
+    <string name="lesson_ss02_opt1_text">Digo que sí y lo resiento toda la semana</string>
+    <string name="lesson_ss02_opt1_fb">Decir que sí cuando quieres decir no suele traer resentimiento, y eso puede dañar la relación más que un no honesto.</string>
+    <string name="lesson_ss02_opt2_text">\"Este fin de semana no puedo, necesito descansar. Me encantaría ayudarte en otro momento. ¿Quizás pueda pasar una hora el viernes?\"</string>
+    <string name="lesson_ss02_opt2_fb">Es honesto, cálido y ofrece una alternativa dentro de tus límites. Un no amable te protege a ti y a la amistad.</string>
+    <string name="lesson_ss02_opt3_text">Ignoro el mensaje y espero que se les olvide</string>
+    <string name="lesson_ss02_opt3_fb">Evitar deja a la otra persona adivinando y suele doler más que una respuesta clara.</string>
+    <string name="lesson_ss03_title">Pedir lo que necesitas</string>
+    <string name="lesson_ss03_desc">Nadie lee la mente. Una petición clara es un acto de confianza.</string>
+    <string name="lesson_ss03_prompt">Piensa en algo que necesitas de alguien (ayuda, tiempo, espacio, una conversación). Escribe tu petición en una frase clara, empezando con \"Necesito…\" o \"¿Podrías…?\", sin culpar.</string>
+    <string name="lesson_ss03_hint1">Di lo que necesitas, no lo que hicieron mal</string>
+    <string name="lesson_ss03_hint2">Sé específico/a: ¿qué, cuándo, cuánto?</string>
+    <string name="lesson_ss03_hint3">Imagina cómo te sentirías al escucharlo</string>
+    <string name="lesson_re03_title">Ponle nombre para calmarlo</string>
+    <string name="lesson_re03_desc">Ponerle palabras a lo que sientes ayuda a que tu cerebro lo suelte un poco.</string>
+    <string name="lesson_re03_prompt">La próxima vez que aparezca una emoción fuerte hoy, haz una pausa y completa esta frase en voz alta o por escrito: \"Ahora siento ___ porque ___\". Luego observa qué pasa con su intensidad.</string>
+    <string name="lesson_re03_hint1">Sé específico/a: \"decepcionado/a\" dice más que \"mal\"</string>
+    <string name="lesson_re03_hint2">Revisa tu cuerpo: ¿dónde lo sientes?</string>
+    <string name="lesson_re03_hint3">¿Cambió la intensidad después de nombrarla?</string>
+    <string name="lesson_re04_title">Responder, no reaccionar</string>
+    <string name="lesson_re04_desc">Una pequeña pausa entre sentir y actuar lo cambia todo.</string>
+    <string name="lesson_re04_situation">Estás estresado/a y un familiar te hace una pregunta sencilla. Notas que estás a punto de contestar mal. ¿Qué haces?</string>
+    <string name="lesson_re04_opt1_text">Contesto mal ahora y pido perdón después</string>
+    <string name="lesson_re04_opt1_fb">Las palabras no se pueden retirar, y las disculpas repetidas enseñan a los demás a andar con cuidado a tu alrededor.</string>
+    <string name="lesson_re04_opt2_text">\"Estoy un poco estresado/a ahora. Dame cinco minutos y te respondo.\"</string>
+    <string name="lesson_re04_opt2_fb">Nombrar tu estado y pedir una pausa corta es honesto y le da tiempo a tu cuerpo para asentarse. Convierte una reacción en una respuesta.</string>
+    <string name="lesson_re04_opt3_text">Me lo aguanto y no digo nada</string>
+    <string name="lesson_re04_opt3_fb">Guardártelo no hace desaparecer el estrés; suele salir después de formas más grandes. Mejor nómbralo con calma.</string>
+    <string name="lessons_progress">%1$d de %2$d lecciones completadas</string>
+    <string name="lessons_done_badge">✓ Hecha hoy</string>
+    <string name="lessons_review_button">Repasar lección →</string>
+    <string name="lessons_practice_label">PRÁCTICA DE HOY</string>
+    <string name="lessons_all_done">¡Completaste todas las lecciones! Aquí tienes una práctica corta para hoy.</string>
+    <string name="growth_tools_label">Herramientas</string>
+    <string name="growth_vocab_title">Vocabulario emocional</string>
+    <string name="growth_vocab_desc">Encuentra la palabra exacta para lo que sientes.</string>
+    <string name="growth_conflict_title">Resolver un conflicto</string>
+    <string name="growth_conflict_desc">5 pasos para pensar antes de reaccionar.</string>
+    <string name="growth_back">← Crecimiento</string>
+    <string-array name="daily_practices">
+        <item>¿Qué emoción has sentido más hoy? ¿En qué parte del cuerpo la notaste?</item>
+        <item>¿Qué puedes soltar hoy porque no depende de ti?</item>
+        <item>¿Quién te ha facilitado un poco el día últimamente? ¿Cómo podrías hacérselo saber?</item>
+        <item>¿Qué le dirías a un amigo que se sintiera exactamente como tú ahora?</item>
+        <item>Describe tu estado de ánimo de ahora con tres palabras distintas.</item>
+        <item>¿Qué límite haría tu semana más ligera?</item>
+        <item>¿Cuándo fue la última vez que te sentiste orgulloso/a de cómo manejaste algo difícil?</item>
+        <item>¿Qué te está agotando ahora y qué te está recargando?</item>
+        <item>¿Qué pensamiento se repite hoy en tu cabeza? ¿Es un hecho o una preocupación?</item>
+        <item>¿Qué necesitabas hoy y no pediste?</item>
+        <item>Piensa en alguien con quien no estás de acuerdo. ¿Qué podría estar sintiendo en el fondo?</item>
+        <item>¿Qué cosa pequeña podrías hacer en la próxima hora para sentirte un poco mejor?</item>
+        <item>¿Qué emoción tiendes a evitar? ¿Qué podría estar intentando decirte?</item>
+        <item>¿Qué te hizo sonreír o reír últimamente? ¿Cómo podrías crear más de eso esta semana?</item>
+        <item>¿Cómo te hablaste hoy? ¿Le hablarías así a alguien que quieres?</item>
+        <item>¿Qué es algo que esperas con ilusión esta semana?</item>
+        <item>Fíjate en tu respiración ahora. ¿Es corta o profunda? ¿Qué podría significar?</item>
+        <item>¿Qué has estado evitando y cuál sería el primer paso más pequeño?</item>
+        <item>¿Hay alguien a quien necesites perdonar, quizás incluso tú mismo/a, para sentirte más ligero/a?</item>
+        <item>¿Qué te ayudó la última vez que te sentiste abrumado/a?</item>
+        <item>¿Qué te gustaría que la gente entendiera de ti cuando estás estresado/a?</item>
+        <item>¿Cuál de tus fortalezas te ayudó hoy?</item>
+        <item>Cuando sientes ansiedad, ¿cuáles son las primeras señales en tu cuerpo?</item>
+        <item>¿Por qué cosa puedes dar las gracias ahora mismo?</item>
+        <item>Piensa en un desacuerdo reciente. ¿Qué parte fue tuya y cuál no?</item>
+        <item>¿Cómo se ve el descanso para ti? ¿Cuándo fue la última vez que descansaste de verdad?</item>
+        <item>¿Qué preocupación tienes que probablemente no ocurrirá? ¿Qué es más probable?</item>
+        <item>¿Cómo quieres sentirte al final del día de hoy? ¿Qué podría ayudarte?</item>
+        <item>¿Qué gesto amable puedes tener hoy con alguien sin esperar nada a cambio?</item>
+        <item>¿Qué creencia sobre ti te gustaría cambiar? ¿Cómo sonaría una versión más amable?</item>
+        <item>¿Cuándo te sentiste más tú mismo/a esta semana?</item>
+        <item>¿Qué es algo que todavía estás aprendiendo a aceptar?</item>
+        <item>¿Cómo te avisa tu cuerpo que necesitas una pausa?</item>
+        <item>¿Qué momento de hoy quieres recordar?</item>
+        <item>¿Cómo se vería \"suficientemente bien\" para hoy?</item>
+        <item>¿Qué pregunta te gustaría hacerte más seguido?</item>
+    </string-array>
+
+    <!-- vibration guide -->
+    <string name="breathe_get_ready">Prepárate…</string>
+    <string name="haptic_title">Puedes cerrar los ojos</string>
+    <string name="haptic_toggle">Guía con vibración</string>
+    <string name="haptic_how">¿Cómo funciona?</string>
+    <string name="haptic_hide">Ocultar</string>
+    <string name="haptic_intro">Tu teléfono vibrará cada vez que cambie la fase de la respiración, para que no necesites mirar la pantalla. Toca cada una para sentirla antes de empezar.</string>
+    <string name="haptic_l_inhale">1 vibración corta</string>
+    <string name="haptic_l_exhale">2 vibraciones cortas</string>
+    <string name="haptic_l_hold">Sin vibración</string>
+    <string name="haptic_l_done">1 vibración larga</string>
+    <string name="haptic_m_done">Terminaste</string>
+    <string name="haptic_note">Si no sientes nada, revisa que la vibración esté activada en los ajustes de tu teléfono. Una cuenta de 3 segundos te da tiempo para cerrar los ojos.</string>
 </resources>

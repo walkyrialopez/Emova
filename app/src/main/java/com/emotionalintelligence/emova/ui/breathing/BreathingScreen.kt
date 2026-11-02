@@ -1,10 +1,10 @@
 package com.emotionalintelligence.emova.ui.breathing
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import com.emotionalintelligence.emova.ui.sos.SOSPanel
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -19,9 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import com.emotionalintelligence.emova.R
+import com.emotionalintelligence.emova.util.BreathHaptics
 import kotlinx.coroutines.delay
-import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -43,57 +45,6 @@ val breathingPatterns = listOf(
     BreathingPattern(2, 2, 5, 0, 7, 0, Color(0xFF06D6A0), "🌿"),
     BreathingPattern(3, 3, 2, 0, 4, 0, Color(0xFFE8A020), "⚡")
 )
-
-// ─── Screen ───────────────────────────────────────────────────────────────────
-
-@Composable
-fun BreathingScreen(onBack: (() -> Unit)? = null) {
-    var selectedPattern by remember { mutableStateOf<BreathingPattern?>(null) }
-    if (selectedPattern != null) {
-        BreathingExercise(pattern = selectedPattern!!, onBack = { selectedPattern = null })
-    } else {
-        BreathingMenu(onSelect = { selectedPattern = it })
-    }
-}
-
-// ─── Menu ─────────────────────────────────────────────────────────────────────
-
-@Composable
-fun BreathingMenu(onSelect: (BreathingPattern) -> Unit, onBack: (() -> Unit)? = null) {
-    val names = stringArrayResource(R.array.breathing_pattern_names)
-    val descs = stringArrayResource(R.array.breathing_pattern_descs)
-
-    LazyColumn(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB)),
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(stringResource(R.string.breathe_title), fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
-            Text(stringResource(R.string.breathe_subtitle), fontSize = 14.sp, color = Color(0xFF6B6B8A))
-
-            // 🎯 NUEVO: La tarjeta educativa justo después del título
-            Spacer(modifier = Modifier.height(16.dp))
-            WhyItWorksCard(message = stringResource(R.string.why_it_works_breathing))
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            SOSPanel()
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        items(breathingPatterns.size) { index ->
-            val pattern = breathingPatterns[index]
-            BreathingPatternCard(
-                pattern = pattern,
-                name = names.getOrElse(index) { "" },
-                desc = descs.getOrElse(index) { "" },
-                onClick = { onSelect(pattern) }
-            )
-        }
-        // He eliminado el "item" de la propina vieja para no repetir información
-    }
-}
 
 // ─── Pattern Card ─────────────────────────────────────────────────────────────
 
@@ -138,7 +89,7 @@ fun PhaseChip(label: String, color: Color) {
 enum class BreathPhase { INHALE, HOLD_IN, EXHALE, HOLD_OUT, DONE }
 
 @Composable
-fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
+fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted: () -> Unit = {}) {
     val names = stringArrayResource(R.array.breathing_pattern_names)
     val patternName = names.getOrElse(pattern.nameResId) { "" }
 
@@ -146,6 +97,40 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
     var secondsLeft by remember { mutableIntStateOf(pattern.inhale) }
     var roundsLeft by remember { mutableIntStateOf(4) }
     var isRunning by remember { mutableStateOf(false) }
+
+    // ── Vibration guide (eyes-closed mode) ───────────────────────────────
+    val context = LocalContext.current
+    val haptics = remember { BreathHaptics(context) }
+    var hapticsOn by remember { mutableStateOf(BreathHaptics.isEnabled(context)) }
+    var showHow by remember { mutableStateOf(!BreathHaptics.introSeen(context)) }
+    var hasStarted by remember { mutableStateOf(false) }
+    var countdown by remember { mutableIntStateOf(0) }   // 3..1 while "get ready", 0 otherwise
+
+    // Keep the screen on while exercising: with eyes closed nobody touches it, and it must not lock.
+    val view = LocalView.current
+    DisposableEffect(Unit) {
+        view.keepScreenOn = true
+        onDispose { view.keepScreenOn = false; haptics.cancel() }
+    }
+
+    // 3-2-1 so the person has time to close their eyes before the first inhale.
+    LaunchedEffect(countdown) {
+        if (countdown > 0) {
+            delay(1000)
+            if (countdown == 1) { countdown = 0; isRunning = true } else countdown--
+        }
+    }
+
+    // One vibration pattern per phase change.
+    LaunchedEffect(isRunning, phase) {
+        if (!isRunning || !hapticsOn || !haptics.isAvailable) return@LaunchedEffect
+        when (phase) {
+            BreathPhase.INHALE -> haptics.inhale()
+            BreathPhase.EXHALE -> haptics.exhale()
+            BreathPhase.DONE -> haptics.finish()
+            else -> Unit   // holds: silence
+        }
+    }
 
     LaunchedEffect(isRunning, phase, roundsLeft) {
         if (!isRunning || phase == BreathPhase.DONE) return@LaunchedEffect
@@ -165,6 +150,8 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
             BreathPhase.DONE -> 0
         }
     }
+
+    LaunchedEffect(phase) { if (phase == BreathPhase.DONE) onCompleted() }
 
     val targetScale = when (phase) { BreathPhase.INHALE, BreathPhase.HOLD_IN -> 1.4f; else -> 0.7f }
     val animDuration = when (phase) { BreathPhase.INHALE -> pattern.inhale * 1000; BreathPhase.EXHALE -> pattern.exhale * 1000; else -> 300 }
@@ -195,7 +182,7 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
                     .border(3.dp, pattern.color.copy(alpha = 0.5f), CircleShape), contentAlignment = Alignment.Center) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            when (phase) {
+                            if (countdown > 0) stringResource(R.string.breathe_get_ready) else when (phase) {
                                 BreathPhase.INHALE -> stringResource(R.string.breathe_inhale)
                                 BreathPhase.HOLD_IN, BreathPhase.HOLD_OUT -> stringResource(R.string.breathe_hold)
                                 BreathPhase.EXHALE -> stringResource(R.string.breathe_exhale)
@@ -203,13 +190,35 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
                             },
                             fontSize = 20.sp, fontWeight = FontWeight.Bold, color = pattern.color
                         )
-                        Text("$secondsLeft", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+                        Text(if (countdown > 0) "$countdown" else "$secondsLeft", fontSize = 42.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(48.dp))
-            if (!isRunning) {
-                Button(onClick = { isRunning = true }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(16.dp),
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Vibration guide: explained before the first start, toggleable afterwards.
+            if (!hasStarted && haptics.isAvailable) {
+                HapticGuide(
+                    haptics = haptics,
+                    enabled = hapticsOn,
+                    expanded = showHow,
+                    accent = pattern.color,
+                    onToggle = { hapticsOn = it; BreathHaptics.setEnabled(context, it) },
+                    onExpandChange = { showHow = it }
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+            } else {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            if (countdown > 0) {
+                // nothing to press while "get ready" runs
+                Spacer(modifier = Modifier.height(56.dp))
+            } else if (!isRunning) {
+                Button(onClick = {
+                    BreathHaptics.markIntroSeen(context)
+                    if (hasStarted) isRunning = true else { hasStarted = true; countdown = 3 }
+                }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = pattern.color)) {
                     Text(stringResource(R.string.breathe_begin), fontWeight = FontWeight.Bold, color = Color.White, fontSize = 17.sp)
                 }
@@ -224,3 +233,69 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit) {
     }
 }
 
+// ─── Vibration guide (explains the eyes-closed mode before the exercise starts) ──
+
+@Composable
+private fun HapticGuide(
+    haptics: BreathHaptics,
+    enabled: Boolean,
+    expanded: Boolean,
+    accent: Color,
+    onToggle: (Boolean) -> Unit,
+    onExpandChange: (Boolean) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
+            .background(Color.White)
+            .border(1.dp, Color(0xFFEAE8F5), RoundedCornerShape(16.dp))
+            .padding(14.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("📳", fontSize = 22.sp)
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(stringResource(R.string.haptic_title), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
+                Text(stringResource(R.string.haptic_toggle), fontSize = 12.sp, color = Color(0xFF6B6B8A))
+            }
+            Switch(
+                checked = enabled,
+                onCheckedChange = onToggle,
+                colors = SwitchDefaults.colors(checkedTrackColor = accent)
+            )
+        }
+
+        if (enabled) {
+            TextButton(onClick = { onExpandChange(!expanded) }, contentPadding = PaddingValues(horizontal = 0.dp)) {
+                Text(
+                    stringResource(if (expanded) R.string.haptic_hide else R.string.haptic_how),
+                    fontSize = 13.sp, color = accent, fontWeight = FontWeight.Medium
+                )
+            }
+            AnimatedVisibility(visible = expanded) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.haptic_intro), fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 19.sp)
+                    HapticRow("•", stringResource(R.string.haptic_l_inhale), stringResource(R.string.breathe_inhale), accent) { haptics.inhale() }
+                    HapticRow("• •", stringResource(R.string.haptic_l_exhale), stringResource(R.string.breathe_exhale), accent) { haptics.exhale() }
+                    HapticRow("·", stringResource(R.string.haptic_l_hold), stringResource(R.string.breathe_hold), accent, onTest = null)
+                    HapticRow("▬", stringResource(R.string.haptic_l_done), stringResource(R.string.haptic_m_done), accent) { haptics.finish() }
+                    Text(stringResource(R.string.haptic_note), fontSize = 11.sp, color = Color(0xFF6B6B8A), lineHeight = 16.sp)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HapticRow(symbol: String, label: String, meaning: String, accent: Color, onTest: (() -> Unit)?) {
+    Row(
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp))
+            .background(accent.copy(alpha = 0.08f))
+            .then(if (onTest != null) Modifier.clickable(onClick = onTest) else Modifier)
+            .padding(horizontal = 12.dp, vertical = 9.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(symbol, fontSize = 16.sp, color = accent, fontWeight = FontWeight.Bold, modifier = Modifier.width(36.dp))
+        Text(label, fontSize = 13.sp, color = Color(0xFF1A1A2E), modifier = Modifier.weight(1f))
+        Text("→ $meaning", fontSize = 13.sp, fontWeight = FontWeight.Bold, color = accent)
+    }
+}

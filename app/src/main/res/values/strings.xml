@@ -23,10 +23,10 @@
     <string name="habit_checkin_pending">How are you feeling today?</string>
 
     <string name="habit_gratitude_title">Gratitude Diary</string>
-    <string name="habit_gratitude_progress">%1$d/10 written — keep going!</string>
-    <string name="habit_gratitude_pending">Write 10 things you\'re grateful for</string>
+    <string name="habit_gratitude_progress">%1$d/4 written — keep going!</string>
+    <string name="habit_gratitude_pending">Write what you\'re grateful for today</string>
 
-    <string name="habit_breathing_title">Breathing Exercise</string>
+    <string name="habit_breathing_title">Calm</string>
     <string name="habit_breathing_pending">Take 3 minutes to breathe</string>
 
     <string name="habit_lesson_title">Daily Lesson</string>
@@ -474,6 +474,48 @@
         <item>Something that made your work or chores easier…</item>
         <item>A color that caught your eye today…</item>
         <item>Something you read or heard that inspired you…</item>
+    
+        <item>Someone you haven\'t thanked yet…</item>
+        <item>A mistake that turned out to teach you something…</item>
+        <item>Something you can do today that you couldn\'t do a year ago…</item>
+        <item>A place that makes you feel at ease…</item>
+        <item>A friend you can be yourself with…</item>
+        <item>Something that made you laugh recently…</item>
+        <item>A meal someone prepared for you…</item>
+        <item>Clean water, a warm bed, or a roof over your head…</item>
+        <item>A teacher or mentor who shaped you…</item>
+        <item>Something about your personality you like…</item>
+        <item>A message or call that brightened your day…</item>
+        <item>The weather or the sky today…</item>
+        <item>A tool or technology that makes your life easier…</item>
+        <item>A hard time you got through…</item>
+        <item>A book, show or movie that comforted you…</item>
+        <item>A stranger who was kind to you…</item>
+        <item>Something you are looking forward to…</item>
+        <item>A habit that is helping you…</item>
+        <item>A part of your morning you enjoy…</item>
+        <item>Someone who believes in you…</item>
+        <item>A smell that makes you feel good…</item>
+        <item>A moment of silence or rest you got…</item>
+        <item>Something you learned this week…</item>
+        <item>A pet, plant or animal that brings you joy…</item>
+        <item>A part of your body that works well for you…</item>
+        <item>A tradition or ritual you love…</item>
+        <item>Something you own that you\'re glad to have…</item>
+        <item>A promise you kept…</item>
+        <item>A time someone listened to you…</item>
+        <item>A small win you didn\'t celebrate…</item>
+        <item>A person you admire…</item>
+        <item>A comfortable piece of clothing…</item>
+        <item>Something in your neighborhood you appreciate…</item>
+        <item>A chance you were given…</item>
+        <item>A time you felt proud of yourself…</item>
+        <item>A gift you remember fondly…</item>
+        <item>Something that is going well in your life right now…</item>
+        <item>A free thing that made your day better…</item>
+        <item>Someone who forgave you…</item>
+        <item>A hug, a touch or a kind word…</item>
+        <item>An ordinary moment you\'d like to remember…</item>
     </string-array>
     <string name="gratitude_free_space">Anything else you feel grateful for...</string>
     <string name="tip_title_default">Pro tip</string>
@@ -900,12 +942,250 @@
     <!-- Habit action rows: subtitle when PENDING -->
     <string name="habit_checkin_cta">Name what you\'re feeling</string>
     <string name="habit_gratitude_cta">List 3 things you\'re grateful for</string>
-    <string name="habit_breathing_cta">4 min · choose a breathing pattern</string>
+    <string name="habit_breathing_cta">Breathe, ground yourself or meditate</string>
     <string name="habit_lesson_cta">3–5 min · grow your emotional skills</string>
 
     <!-- Micro-habits shortcut -->
     <string name="today_microhabits_title">Micro-habits</string>
     <string name="today_microhabits_subtitle">12 small daily practices</string>
 
+    <!-- ═══ v1.1: guided check-in, simple insights, mindfulness ═══ -->
+    <string name="w_step">Step %1$d of %2$d</string>
+    <string name="w_continue">Continue</string>
+    <string name="w_see_note">See my note</string>
+    <string name="w_finish">Finish</string>
+    <string name="w_context_title">Why do you feel this way?</string>
+    <string name="w_context_subtitle">In which situations does it happen most? Pick all that apply.</string>
+    <string name="w_trigger_work">Work / school</string>
+    <string name="w_trigger_family">Family</string>
+    <string name="w_trigger_people">Partner / friends</string>
+    <string name="w_trigger_health">Health</string>
+    <string name="w_trigger_money">Money</string>
+    <string name="w_trigger_sleep">Sleep / tiredness</string>
+    <string name="w_trigger_lonely">Loneliness</string>
+    <string name="w_trigger_other">Something else</string>
+    <string name="w_reflect_title">Pause and look at it</string>
+    <string name="w_reflect_subtitle">One question to understand it better. Answer only if you want.</string>
+    <string name="w_reflect_q_positive">What made this moment good, and how could I bring more of it into my week?</string>
+    <string name="w_reflect_hint">Write here…</string>
+    <string name="w_plan_s1">Take three slow breaths</string>
+    <string name="w_plan_s2">Step away and walk for a few minutes</string>
+    <string name="w_plan_s3">Write down what I feel</string>
+    <string name="w_plan_s4">Talk to someone I trust</string>
+    <string name="w_plan_s5">Wait 10 minutes before reacting</string>
+    <string name="w_plan_hint">Or write your own…</string>
+    <string name="w_result_title">A note for you</string>
+    <string name="w_result_loading">Writing something for you…</string>
+    <string name="w_ai_fallback">Thank you for taking a moment to notice what you feel. Naming it is already a real step. Be gentle with yourself today.</string>
+    <string name="w_ai_disclaimer">Written by AI, so it can make mistakes. Your check-ins are saved only on this device; the text of this one is sent to an AI service to write this note.</string>
+    <string name="w_crisis_title">You don\'t have to carry this alone</string>
+    <string name="w_crisis_body">What you wrote sounds really heavy. If you might hurt yourself or you are in danger, please contact your local emergency number right now. You can also find a helpline in your country at findahelpline.com. Reaching out to someone you trust today can help too.</string>
+    <string name="w_after_title">How strong is it now?</string>
+    <string name="w_mindful_cta">Try a guided meditation 🎧</string>
+    <string name="ins_discoveries_title">What your check-ins reveal</string>
+    <string name="ins_no_discoveries">Not enough data in this period yet. Keep checking in and patterns will appear.</string>
+    <string name="ins_unlock_title">Your patterns are forming</string>
+    <string name="ins_unlock_desc">%1$d of %2$d check-ins to unlock deeper patterns (days, times, triggers).</string>
+    <string name="ins_streak_label">Day streak</string>
+    <string name="ins_mix_title">Your emotions</string>
+    <string name="ins_week_title">Last 7 days</string>
+    <string name="ins_empty_subtitle">Do a check-in and your first patterns will start to appear here.</string>
+    <string name="ins_period_7">7 days</string>
+    <string name="ins_period_30">30 days</string>
+    <string name="ins_tod_morning">in the morning</string>
+    <string name="ins_tod_afternoon">in the afternoon</string>
+    <string name="ins_tod_evening">in the evening</string>
+    <string name="ins_tod_night">late at night</string>
+    <string name="ins_d_top">Your most frequent emotion is %1$s (%2$d%% of your check-ins).</string>
+    <string name="ins_d_trigger">When your check-ins involve %1$s, %2$d%% of them are difficult emotions.</string>
+    <string name="ins_d_time">Difficult emotions show up most %1$s (%2$d%% of your check-ins then).</string>
+    <string name="ins_d_day_hard">%1$s tend to be your hardest days: %2$d%% of those check-ins were difficult emotions.</string>
+    <string name="ins_d_day_best">%1$s are your lightest days: %2$d%% of those check-ins were positive.</string>
+    <string name="ins_d_relief">After reflecting, your intensity drops %1$.1f points on average. Taking this pause works for you.</string>
+    <string name="ins_d_mindful">On days you did a mindfulness session, %1$d%% of your check-ins were difficult, versus %2$d%% on other days.</string>
+    <string name="ins_d_trend_down">Compared to the previous period, difficult emotions went down: %1$d%% → %2$d%%.</string>
+    <string name="ins_d_trend_up">Compared to the previous period, difficult emotions went up: %1$d%% → %2$d%%. Be kind to yourself.</string>
+    <string name="ins_d_streak">%1$d days in a row checking in. Consistency is what makes patterns visible.</string>
+    <string name="mf_s5_title">Quick reset</string>
+    <string name="mf_s5_desc">A short pause to breathe and settle.</string>
+    <string name="mf_s10_title">Body scan</string>
+    <string name="mf_s10_desc">Relax your body from head to toe.</string>
+    <string name="mf_s20_title">Deep practice</string>
+    <string name="mf_s20_desc">A longer meditation to let the day go.</string>
+    <string name="mf_minutes">%1$d min</string>
+    <string name="mf_coming">Coming soon</string>
+    <string name="mf_back">Back</string>
+    <string name="mf_done">Session completed 🌿</string>
 
+    <!-- worksheet-style steps -->
+    <string name="w_feel_title">What are you feeling?</string>
+    <string name="w_feel_subtitle">Pick the feeling you have right now. Next you\'ll mark whether it\'s hard to control.</string>
+    <string name="w_other_name">Other</string>
+    <string name="w_other_desc">Your own word</string>
+    <string name="w_other_hint">What would you call it?</string>
+    <string name="w_other_family_q">Which is it closest to?</string>
+    <string name="w_fam_pos">Pleasant</string>
+    <string name="w_fam_dif">Sad or anxious</string>
+    <string name="w_fam_act">Anger or tension</string>
+    <string name="w_hard_q">Is this one hard for you to control?</string>
+    <string name="w_how_title">How would you handle it now?</string>
+    <string name="w_how_subtitle">Think of a real situation. Answer only what you want.</string>
+    <string name="w_how_q1">Think of a time this emotion got the better of you. What happened?</string>
+    <string name="w_how_q2">Looking back, what could you have done differently?</string>
+    <string name="w_goal_title">How do you want to respond?</string>
+    <string name="w_goal_subtitle">Build your plan for the next time.</string>
+    <string name="w_plan_cue">When I feel it again:</string>
+    <string name="w_plan_cue_hint">E.g. when someone raises their voice</string>
+    <string name="w_plan_instead">Instead of my usual reaction:</string>
+    <string name="w_plan_instead_hint">E.g. snapping back</string>
+    <string name="w_plan_will">This time I\'ll:</string>
+    <string name="ins_d_hard">The emotion you find hardest to control is %1$s (%2$d of your check-ins).</string>
+
+    <!-- calm tab + check-in history -->
+    <string name="wellness_tab_calm">🌬️ Calm</string>
+    <string name="calm_title">Calm</string>
+    <string name="calm_subtitle">Breathe, ground yourself or meditate.</string>
+    <string name="calm_sec_breathe">Breathe</string>
+    <string name="calm_sec_ground">Grounding</string>
+    <string name="calm_sec_meditate">Meditate</string>
+    <string name="calm_why_breathe">Long exhales tell your nervous system you\'re safe, which helps anxiety ease within minutes.</string>
+    <string name="calm_why_ground">When anxiety spikes, the mind races ahead or loops. Noticing what you can see, touch and hear anchors your attention in the present and helps your body settle.</string>
+    <string name="calm_why_meditate">Practicing attention without judging your thoughts trains you to notice emotions earlier and react less on autopilot.</string>
+    <string name="calm_ground_title">5-4-3-2-1 Grounding</string>
+    <string name="calm_ground_desc">When everything feels like too much, your senses bring you back to the present.</string>
+    <string name="calm_ground_time">2 min</string>
+    <string name="ins_tab_summary">Summary</string>
+    <string name="ins_tab_history">Check-ins</string>
+    <string name="ins_h_empty">No check-ins in this period yet.</string>
+    <string name="ins_h_count">%1$d check-ins</string>
+    <string name="ins_h_today">Today</string>
+    <string name="ins_h_yesterday">Yesterday</string>
+    <string name="ins_h_intensity">Intensity %1$d → %2$d</string>
+    <string name="ins_h_intensity_single">Intensity %1$d</string>
+    <string name="ins_h_hard">🎯 Hard to control</string>
+    <string name="ins_h_note">What you wrote</string>
+    <string name="ins_h_could">What you could have done</string>
+    <string name="ins_h_ai">Note from Emova</string>
+    <string name="ins_h_delete">Delete check-in</string>
+    <string name="ins_h_delete_q">Delete this check-in?</string>
+    <string name="ins_h_delete_body">This can\'t be undone.</string>
+    <string name="ins_h_confirm">Delete</string>
+    <string name="ins_h_cancel">Cancel</string>
+
+    <!-- v1.2: new lessons, daily practices, growth tools -->
+    <string name="lesson_mt01_title">Your Why</string>
+    <string name="lesson_mt01_desc">Motivation lasts longer when it\'s connected to what matters to you.</string>
+    <string name="lesson_mt01_prompt">Think of something you\'ve been putting off. Why does it matter to you, not to anyone else? Write the real reason in one sentence.</string>
+    <string name="lesson_mt01_hint1">Is this something I want, or something I feel I should do?</string>
+    <string name="lesson_mt01_hint2">What would change in my life if I did it?</string>
+    <string name="lesson_mt01_hint3">Who or what am I doing it for?</string>
+    <string name="lesson_mt02_title">The Two-Minute Start</string>
+    <string name="lesson_mt02_desc">Starting small is how big things get done.</string>
+    <string name="lesson_mt02_situation">You have a big task and zero energy. Every time you think about it, you feel more stuck. What do you do?</string>
+    <string name="lesson_mt02_opt1_text">Wait until I feel motivated enough to start</string>
+    <string name="lesson_mt02_opt1_fb">Motivation usually follows action, not the other way around. Waiting for the perfect mood can keep you stuck for days.</string>
+    <string name="lesson_mt02_opt2_text">Commit to just two minutes of the first tiny step</string>
+    <string name="lesson_mt02_opt2_fb">Starting small lowers the resistance. Once you begin, continuing is often easier, and if not, you still made progress.</string>
+    <string name="lesson_mt02_opt3_text">Try to do the whole thing in one long push tonight</string>
+    <string name="lesson_mt02_opt3_fb">All-or-nothing plans drain energy and often end in avoidance. Small, repeatable steps are more sustainable.</string>
+    <string name="lesson_mt03_title">Celebrating Small Wins</string>
+    <string name="lesson_mt03_desc">Progress you notice is progress you repeat.</string>
+    <string name="lesson_mt03_q1">What did you do this week that you\'re glad you did?</string>
+    <string name="lesson_mt03_q2">What did it take from you: effort, courage, patience?</string>
+    <string name="lesson_mt03_q3">How can you acknowledge or reward yourself today?</string>
+    <string name="lesson_mt03_done_title">Small steps count!</string>
+    <string name="lesson_mt03_done_body">Noticing your progress feeds the energy to keep going.</string>
+    <string name="lesson_ss02_title">Saying No Kindly</string>
+    <string name="lesson_ss02_desc">A clear no, said with warmth, protects your energy and your relationships.</string>
+    <string name="lesson_ss02_situation">A friend asks you to help them move this weekend, but you\'re exhausted and need to rest. How do you answer?</string>
+    <string name="lesson_ss02_opt1_text">Say yes and resent it all week</string>
+    <string name="lesson_ss02_opt1_fb">Saying yes when you mean no often leads to resentment, which can hurt the relationship more than an honest no.</string>
+    <string name="lesson_ss02_opt2_text">\"I can\'t this weekend, I need to rest. I\'d love to help another time. Maybe I can come by for an hour on Friday?\"</string>
+    <string name="lesson_ss02_opt2_fb">It\'s honest, warm and offers an alternative within your limits. A kind no protects both you and the friendship.</string>
+    <string name="lesson_ss02_opt3_text">Ignore the message and hope they forget</string>
+    <string name="lesson_ss02_opt3_fb">Avoiding leaves the other person guessing and often hurts more than a clear answer.</string>
+    <string name="lesson_ss03_title">Asking for What You Need</string>
+    <string name="lesson_ss03_desc">People can\'t read minds. A clear request is an act of trust.</string>
+    <string name="lesson_ss03_prompt">Think of something you need from someone (help, time, space, a conversation). Write your request in one clear sentence, starting with \"I need…\" or \"Could you…\", without blaming.</string>
+    <string name="lesson_ss03_hint1">Say what you need, not what they did wrong</string>
+    <string name="lesson_ss03_hint2">Be specific: what, when, how much?</string>
+    <string name="lesson_ss03_hint3">Imagine how you would feel hearing it</string>
+    <string name="lesson_re03_title">Name It to Tame It</string>
+    <string name="lesson_re03_desc">Putting a feeling into words helps your brain loosen its grip.</string>
+    <string name="lesson_re03_prompt">Next time a strong emotion shows up today, pause and finish this sentence out loud or in writing: \"Right now I feel ___ because ___.\" Then notice what happens to its intensity.</string>
+    <string name="lesson_re03_hint1">Be specific: \"disappointed\" says more than \"bad\"</string>
+    <string name="lesson_re03_hint2">Check your body: where do you feel it?</string>
+    <string name="lesson_re03_hint3">Did the intensity change after naming it?</string>
+    <string name="lesson_re04_title">Responding, Not Reacting</string>
+    <string name="lesson_re04_desc">A small pause between feeling and acting changes everything.</string>
+    <string name="lesson_re04_situation">You\'re stressed and a family member asks you a simple question. You notice you\'re about to snap. What do you do?</string>
+    <string name="lesson_re04_opt1_text">Snap now and apologize later</string>
+    <string name="lesson_re04_opt1_fb">Words can\'t be taken back, and repeated apologies teach people to walk on eggshells around you.</string>
+    <string name="lesson_re04_opt2_text">\"I\'m a bit stressed right now. Give me five minutes and I\'ll get back to you.\"</string>
+    <string name="lesson_re04_opt2_fb">Naming your state and asking for a short pause is honest and gives your body time to settle. It turns a reaction into a response.</string>
+    <string name="lesson_re04_opt3_text">Hold it in and say nothing</string>
+    <string name="lesson_re04_opt3_fb">Bottling it up doesn\'t make stress disappear; it often leaks out later in bigger ways. Name it calmly instead.</string>
+    <string name="lessons_progress">%1$d of %2$d lessons completed</string>
+    <string name="lessons_done_badge">✓ Done today</string>
+    <string name="lessons_review_button">Review lesson →</string>
+    <string name="lessons_practice_label">TODAY\'S PRACTICE</string>
+    <string name="lessons_all_done">You\'ve completed every lesson! Here\'s a short practice for today.</string>
+    <string name="growth_tools_label">Tools</string>
+    <string name="growth_vocab_title">Emotion vocabulary</string>
+    <string name="growth_vocab_desc">Find the exact word for what you feel.</string>
+    <string name="growth_conflict_title">Work through a conflict</string>
+    <string name="growth_conflict_desc">5 steps to think before you react.</string>
+    <string name="growth_back">← Growth</string>
+    <string-array name="daily_practices">
+        <item>What emotion have you felt most today? Where did you feel it in your body?</item>
+        <item>What is one thing you can let go of today because it isn\'t in your control?</item>
+        <item>Who made your day a little easier lately? How could you let them know?</item>
+        <item>What would you say to a friend who felt exactly how you feel right now?</item>
+        <item>Describe your mood right now using three different words.</item>
+        <item>What is one boundary that would make your week lighter?</item>
+        <item>When did you last feel proud of how you handled something hard?</item>
+        <item>What is draining your energy right now, and what is refilling it?</item>
+        <item>Which thought keeps repeating in your head today? Is it a fact or a worry?</item>
+        <item>What did you need today that you didn\'t ask for?</item>
+        <item>Think of someone you disagree with. What might they be feeling underneath?</item>
+        <item>What is one small thing you could do in the next hour to feel a bit better?</item>
+        <item>Which emotion do you tend to avoid? What might it be trying to tell you?</item>
+        <item>What made you smile or laugh recently? How could you create more of that this week?</item>
+        <item>How did you speak to yourself today? Would you speak that way to someone you love?</item>
+        <item>What is one thing you\'re looking forward to this week?</item>
+        <item>Notice your breathing right now. Is it shallow or deep? What might that mean?</item>
+        <item>What is one thing you\'ve been avoiding, and what is the smallest first step?</item>
+        <item>Is there someone you need to forgive, maybe even yourself, to feel lighter?</item>
+        <item>What helped you the last time you felt overwhelmed?</item>
+        <item>What do you wish people understood about you when you\'re stressed?</item>
+        <item>Which of your strengths helped you today?</item>
+        <item>When you feel anxious, what are the first signs in your body?</item>
+        <item>What is one thing you can say thank you for right now?</item>
+        <item>Think of a recent disagreement. Which part was yours, and which wasn\'t?</item>
+        <item>What does rest look like for you? When did you last really get it?</item>
+        <item>What is a worry you have that probably won\'t happen? What is more likely?</item>
+        <item>How do you want to feel by the end of today? What could help?</item>
+        <item>What is one kind thing you can do for someone today without expecting anything back?</item>
+        <item>What belief about yourself would you like to change? What would a kinder version sound like?</item>
+        <item>When did you feel most like yourself this week?</item>
+        <item>What is something you are still learning to accept?</item>
+        <item>How does your body tell you that you need a break?</item>
+        <item>What is one moment from today you want to remember?</item>
+        <item>What would \"good enough\" look like for today?</item>
+        <item>What is one question you would like to ask yourself more often?</item>
+    </string-array>
+
+    <!-- vibration guide -->
+    <string name="breathe_get_ready">Get ready…</string>
+    <string name="haptic_title">You can close your eyes</string>
+    <string name="haptic_toggle">Vibration guide</string>
+    <string name="haptic_how">How does it work?</string>
+    <string name="haptic_hide">Hide</string>
+    <string name="haptic_intro">Your phone will vibrate every time the breathing phase changes, so you don\'t need to look at the screen. Tap each one to feel it before you start.</string>
+    <string name="haptic_l_inhale">1 short vibration</string>
+    <string name="haptic_l_exhale">2 short vibrations</string>
+    <string name="haptic_l_hold">No vibration</string>
+    <string name="haptic_l_done">1 long vibration</string>
+    <string name="haptic_m_done">You\'re done</string>
+    <string name="haptic_note">If you don\'t feel anything, check that vibration is turned on in your phone\'s settings. A 3-second countdown gives you time to close your eyes.</string>
 </resources>

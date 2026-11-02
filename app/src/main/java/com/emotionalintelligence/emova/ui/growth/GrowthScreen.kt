@@ -1,17 +1,20 @@
 package com.emotionalintelligence.emova.ui.growth
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.emotionalintelligence.emova.R
@@ -19,52 +22,35 @@ import com.emotionalintelligence.emova.ui.conflict.ConflictScreen
 import com.emotionalintelligence.emova.ui.lessons.LessonsScreen
 import com.emotionalintelligence.emova.ui.vocabulary.VocabularyScreen
 
+private enum class GrowthPage { LESSONS, CONFLICT, VOCABULARY }
+
+/**
+ * Growth = daily lesson first. Vocabulary and conflict work are tools one tap away
+ * (they used to be tabs of equal weight, which made the screen feel crowded).
+ *
+ * [startTab] keeps the old numbering: 0 lessons, 1 conflict ("Reflect"), 2 vocabulary ("Words").
+ */
 @Composable
 fun GrowthScreen(startTab: Int = 0) {
-    var selectedTab by remember { mutableStateOf(startTab) }
+    var page by remember {
+        mutableStateOf(when (startTab) { 1 -> GrowthPage.CONFLICT; 2 -> GrowthPage.VOCABULARY; else -> GrowthPage.LESSONS })
+    }
 
-    Column(
-        modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB))
-    ) {
-        val tabs = listOf(
-            stringResource(R.string.growth_tab_lessons),
-            stringResource(R.string.growth_tab_reflect),
-            stringResource(R.string.growth_tab_words)
+    BackHandler(enabled = page != GrowthPage.LESSONS) { page = GrowthPage.LESSONS }
+
+    when (page) {
+        GrowthPage.LESSONS -> LessonsScreen(
+            onOpenVocabulary = { page = GrowthPage.VOCABULARY },
+            onOpenConflict = { page = GrowthPage.CONFLICT }
         )
+        else -> Column(modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB))) {
+            TextButton(
+                onClick = { page = GrowthPage.LESSONS },
+                modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+            ) { Text(stringResource(R.string.growth_back), color = Color(0xFF6B6B8A), fontSize = 15.sp) }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 16.dp)
-                .clip(RoundedCornerShape(14.dp))
-                .background(Color(0xFFEAE8F5))
-        ) {
-            tabs.forEachIndexed { index, label ->
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(4.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(if (selectedTab == index) Color.White else Color.Transparent)
-                        .clickable { selectedTab = index }
-                        .padding(vertical = 10.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = label,
-                        fontSize = 12.sp,
-                        fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal,
-                        color = if (selectedTab == index) Color(0xFF6C63FF) else Color(0xFF6B6B8A)
-                    )
-                }
-            }
-        }
-
-        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            when (selectedTab) {
-                0 -> LessonsScreen()
-                1 -> ConflictScreen()
-                2 -> VocabularyScreen()
+            Column(modifier = Modifier.weight(1f)) {
+                if (page == GrowthPage.CONFLICT) ConflictScreen() else VocabularyScreen()
             }
         }
     }

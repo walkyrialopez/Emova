@@ -22,6 +22,9 @@ interface CheckInDao {
 
     @Query("DELETE FROM checkins WHERE id = :id")
     suspend fun deleteById(id: Int)
+
+    @Query("UPDATE checkins SET finalIntensity = :finalIntensity, aiComment = :aiComment WHERE id = :id")
+    suspend fun updateResult(id: Int, finalIntensity: Int, aiComment: String)
 }
 
 // ─── JournalEntry DAO ─────────────────────────────────────────────────────────
@@ -75,6 +78,8 @@ interface HabitRecordDao {
 //   1 → 2: (unknown — add retroactively if you need to support upgrades from v1)
 //   2 → 3: (unknown)
 //   3 → 4: added habit_records table
+//   4 → 5: check-ins gained triggers, plan, finalIntensity, aiComment
+//   5 → 6: check-ins gained couldHaveDone, planCue, planInstead, hardToControl
 
 val MIGRATION_3_4 = object : Migration(3, 4) {
     override fun migrate(database: SupportSQLiteDatabase) {
@@ -90,9 +95,27 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
     }
 }
 
+val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE checkins ADD COLUMN triggers TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN plan TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN finalIntensity INTEGER NOT NULL DEFAULT 0")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN aiComment TEXT NOT NULL DEFAULT ''")
+    }
+}
+
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE checkins ADD COLUMN couldHaveDone TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN planCue TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN planInstead TEXT NOT NULL DEFAULT ''")
+        database.execSQL("ALTER TABLE checkins ADD COLUMN hardToControl INTEGER NOT NULL DEFAULT 0")
+    }
+}
+
 // Template for your next migration — fill in the ALTER/CREATE statements:
 //
-// val MIGRATION_4_5 = object : Migration(4, 5) {
+// val MIGRATION_6_7 = object : Migration(6, 7) {
 //     override fun migrate(database: SupportSQLiteDatabase) {
 //         database.execSQL("ALTER TABLE checkins ADD COLUMN newField TEXT NOT NULL DEFAULT ''")
 //     }
@@ -102,7 +125,7 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
 
 @Database(
     entities = [CheckIn::class, JournalEntry::class, GratitudeEntry::class, HabitRecord::class],
-    version = 4,
+    version = 6,
     exportSchema = true   // set to true so schema diffs are tracked in version control
 )
 abstract class EmováDatabase : RoomDatabase() {
@@ -121,8 +144,8 @@ abstract class EmováDatabase : RoomDatabase() {
                     EmováDatabase::class.java,
                     "emova_db"
                 )
-                    .addMigrations(MIGRATION_3_4)
-                    // Add future migrations here: .addMigrations(MIGRATION_3_4, MIGRATION_4_5)
+                    .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                    // Add future migrations here: .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                     // DO NOT add fallbackToDestructiveMigration() — it deletes user data.
                     .build()
                     .also { INSTANCE = it }

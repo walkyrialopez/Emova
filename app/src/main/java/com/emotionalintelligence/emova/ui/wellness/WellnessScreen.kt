@@ -15,23 +15,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.emotionalintelligence.emova.R
-import com.emotionalintelligence.emova.ui.breathing.BreathingExercise
-import com.emotionalintelligence.emova.ui.breathing.BreathingMenu
-import com.emotionalintelligence.emova.ui.breathing.BreathingPattern
+import com.emotionalintelligence.emova.ui.calm.CalmScreen
 import com.emotionalintelligence.emova.ui.gratitude.GratitudeScreen
-import com.emotionalintelligence.emova.ui.tips.DailyTipsScreen
 import com.emotionalintelligence.emova.ui.habits.GoldHabitsScreen
-import com.emotionalintelligence.emova.ui.today.WellnessTipOfTheDay // 👈 Importamos el tip aquí
+import com.emotionalintelligence.emova.ui.tips.DailyTipsScreen
 
+/**
+ * Tabs: 0 Calma (breathe + grounding + meditate), 1 Gratitud, 2 Hábitos, 3 Consejos.
+ */
 @Composable
 fun WellnessScreen(startTab: Int = 0) {
-    var selectedTab by remember { mutableStateOf(startTab) }
-    var selectedPattern by remember { mutableStateOf<BreathingPattern?>(null) }
+    var selectedTab by remember { mutableIntStateOf(startTab.coerceIn(0, 3)) }
+    var exerciseRunning by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB))) {
-        if (selectedPattern == null) {
+        if (!exerciseRunning) {
             val tabs = listOf(
-                stringResource(R.string.wellness_tab_breathe),
+                stringResource(R.string.wellness_tab_calm),
                 stringResource(R.string.wellness_tab_gratitude),
                 stringResource(R.string.wellness_tab_habits),
                 stringResource(R.string.wellness_tab_tips)
@@ -52,12 +52,13 @@ fun WellnessScreen(startTab: Int = 0) {
                             .clip(RoundedCornerShape(10.dp))
                             .background(if (selectedTab == index) Color.White else Color.Transparent)
                             .clickable { selectedTab = index }
-                            .padding(vertical = 8.dp),
+                            .padding(vertical = 9.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = label,
-                            fontSize = 11.sp,
+                            fontSize = 12.sp,
+                            maxLines = 1,
                             fontWeight = if (selectedTab == index) FontWeight.Bold else FontWeight.Normal,
                             color = if (selectedTab == index) Color(0xFF6C63FF) else Color(0xFF6B6B8A)
                         )
@@ -67,15 +68,11 @@ fun WellnessScreen(startTab: Int = 0) {
         }
 
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            when {
-                selectedPattern != null -> BreathingExercise(
-                    pattern = selectedPattern!!,
-                    onBack = { selectedPattern = null }
-                )
-                selectedTab == 0 -> BreathingMenu(onSelect = { selectedPattern = it })
-                selectedTab == 1 -> GratitudeScreen()
-                selectedTab == 2 -> GoldHabitsScreen()
-                selectedTab == 3 -> DailyTipsScreen()
+            when (selectedTab) {
+                0 -> CalmScreen(onImmersiveChange = { exerciseRunning = it })
+                1 -> GratitudeScreen()
+                2 -> GoldHabitsScreen()
+                3 -> DailyTipsScreen()
             }
         }
     }

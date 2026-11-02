@@ -24,65 +24,20 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.emotionalintelligence.emova.R
-import com.emotionalintelligence.emova.ui.breathing.BreathingExercise
-import com.emotionalintelligence.emova.ui.breathing.breathingPatterns
 
+/**
+ * 5-4-3-2-1 grounding exercise as a full-screen dialog.
+ * [onDismiss] closes it; [onCompleted] fires when the person reaches the last step and taps "I feel calmer".
+ */
 @Composable
-fun SOSPanel() {
-    var showDialog by remember { mutableStateOf(false) }
-    var startBreathing by remember { mutableStateOf(false) }
+fun GroundingExercise(onDismiss: () -> Unit, onCompleted: () -> Unit = {}) {
     var groundingStep by remember { mutableIntStateOf(0) }
-    var showGrounding by remember { mutableStateOf(false) }
-
     val groundingEmojis = stringArrayResource(R.array.sos_grounding_emojis)
     val groundingTexts = stringArrayResource(R.array.sos_grounding_steps)
 
-    // Main SOS card — lives in Breathe tab
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(Color(0xFFEDECFF))
-            .border(1.dp, Color(0xFF6C63FF).copy(alpha = 0.3f), RoundedCornerShape(20.dp))
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("🆘", fontSize = 36.sp)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(stringResource(R.string.sos_overwhelmed), fontSize = 17.sp,
-            fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
-        Text(stringResource(R.string.sos_subtitle), fontSize = 13.sp,
-            color = Color(0xFF6B6B8A), textAlign = TextAlign.Center)
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            OutlinedButton(
-                onClick = { showGrounding = true; groundingStep = 0 },
-                modifier = Modifier.weight(1f),
-                shape = RoundedCornerShape(12.dp),
-                border = ButtonDefaults.outlinedButtonBorder.copy(),
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF6C63FF))
-            ) {
-                Text(stringResource(R.string.sos_grounding_button), fontSize = 12.sp, textAlign = TextAlign.Center)
-            }
-            Button(
-                onClick = { startBreathing = true },
-                modifier = Modifier.weight(1f),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF))
-            ) {
-                Text(stringResource(R.string.sos_breathing_button), fontSize = 12.sp,
-                    textAlign = TextAlign.Center, color = Color.White)
-            }
-        }
-    }
-
-    // Grounding exercise dialog — tap to advance
-    if (showGrounding) {
+    run {
         Dialog(
-            onDismissRequest = { showGrounding = false },
+            onDismissRequest = { onDismiss() },
             properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
             Column(
@@ -148,7 +103,7 @@ fun SOSPanel() {
                     }
                 } else {
                     Button(
-                        onClick = { showGrounding = false },
+                        onClick = { onCompleted(); onDismiss() },
                         modifier = Modifier.fillMaxWidth().height(54.dp),
                         shape = RoundedCornerShape(14.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF06D6A0))
@@ -158,25 +113,11 @@ fun SOSPanel() {
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
-                TextButton(onClick = { showGrounding = false }) {
+                TextButton(onClick = { onDismiss() }) {
                     Text(stringResource(R.string.sos_close), color = Color(0xFF6B6B8A))
                 }
             }
         }
     }
 
-    // Breathing fullscreen
-    if (startBreathing) {
-        Dialog(
-            onDismissRequest = { startBreathing = false },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize().background(Color(0xFFF7F6FB))
-            ) {
-                val pattern = breathingPatterns[1] // index 1 = 4-7-8 Relaxing
-                BreathingExercise(pattern = pattern, onBack = { startBreathing = false })
-            }
-        }
-    }
 }

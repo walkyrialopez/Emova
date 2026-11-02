@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import com.emotionalintelligence.emova.ui.components.WhyInfoButton
 import com.emotionalintelligence.emova.ui.components.WhyItWorksCard
 
 // ─── State ────────────────────────────────────────────────────────────────────
@@ -94,6 +95,7 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
     val state by vm.uiState.collectAsState()
     val accent = Color(0xFFE8A020)
     var showHistory by remember { mutableStateOf(false) }
+    var showWhy by remember { mutableStateOf(false) }
 
     if (showHistory) {
         GratitudeHistoryScreen(onBack = { showHistory = false }, vm = vm)
@@ -108,12 +110,16 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
     val allPlaceholders = stringArrayResource(R.array.gratitude_placeholders)
     val freeSpacePlaceholder = stringResource(R.string.gratitude_free_space) // 🎯 Necesitarás agregar esto en strings.xml
 
-    // Rotación diaria para los primeros 3
+    // Daily prompts: walk through a fixed shuffled order, 3 per day, so prompts don't repeat
+    // until the whole list has been used (60 prompts = a 20-day cycle).
     val dailyPlaceholders = remember(allPlaceholders) {
-        val calendar = Calendar.getInstance()
-        val seed = calendar.get(Calendar.DAY_OF_YEAR).toLong() + calendar.get(Calendar.YEAR)
-        val random = java.util.Random(seed)
-        allPlaceholders.toList().shuffled(random).take(3)
+        val n = allPlaceholders.size
+        if (n == 0) emptyList()
+        else {
+            val order = (0 until n).toList().shuffled(java.util.Random(2024))
+            val epochDay = java.time.LocalDate.now().toEpochDay()
+            (0 until 3).map { k -> allPlaceholders[order[(((epochDay * 3) + k) % n).toInt()]] }
+        }
     }
 
     val progress = vm.filledCount / 4f // 🎯 Ajustado a 4f
@@ -134,8 +140,17 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                     Text(stringResource(R.string.gratitude_title), fontSize = 26.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
                     Text(stringResource(R.string.gratitude_subtitle), fontSize = 14.sp, color = Color(0xFF6B6B8A))
                 }
-                TextButton(onClick = { showHistory = true }) {
-                    Text(stringResource(R.string.gratitude_history), color = accent, fontWeight = FontWeight.Medium)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    WhyInfoButton(expanded = showWhy, onClick = { showWhy = !showWhy })
+                    TextButton(onClick = { showHistory = true }) {
+                        Text(stringResource(R.string.gratitude_history), color = accent, fontWeight = FontWeight.Medium)
+                    }
+                }
+            }
+            AnimatedVisibility(visible = showWhy) {
+                Column {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    WhyItWorksCard(message = stringResource(R.string.why_it_works_gratitude))
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -147,8 +162,6 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                 Text("${vm.filledCount}/4", fontSize = 13.sp, // 🎯 Ajustado a /4
                     color = if (canSave) accent else Color(0xFF6B6B8A), fontWeight = FontWeight.Medium)
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            WhyItWorksCard(message = stringResource(R.string.why_it_works_gratitude))
             Spacer(modifier = Modifier.height(8.dp))
         }
 

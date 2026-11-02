@@ -1,5 +1,8 @@
 package com.emotionalintelligence.emova.ui.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,5 +46,25 @@ fun WhyItWorksCard(
             color = Color(0xFF1A1A2E),
             lineHeight = 18.sp
         )
+    }
+}
+
+/**
+ * Small "💡" button used next to a screen title. The explanation (WhyItWorksCard) stays hidden
+ * until the person taps it, so it doesn't take up space on every visit.
+ */
+@Composable
+fun WhyInfoButton(expanded: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(36.dp)
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(
+                if (expanded) Color(0xFF6C63FF).copy(alpha = 0.18f) else Color(0xFF6C63FF).copy(alpha = 0.08f)
+            )
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("💡", fontSize = 16.sp)
     }
 }

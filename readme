@@ -6,9 +6,9 @@ A beautiful Android app to help you develop emotional intelligence through daily
 
 ## Features
 
-- 💙 **Check-In** — Log your emotions using Plutchik's emotion wheel with intensity and notes
-- 📓 **Journal** — Guided reflection prompts that adapt to your emotion
-- 📊 **Insights** — Weekly mood trends, streak counter, and emotion breakdown
+- 💙 **Guided Check-In** — 9 core emotions, intensity, what's behind it, one reflection question, a plan for next time, and a short AI note that validates how you feel
+- 📊 **Insights** — Simple discoveries (days, times, triggers, what helps) that appear from your first check-ins
+- 🧘 **Mindfulness** — Guided audio sessions of 5, 10 and 20 minutes
 - ⭐ **Lessons** — Daily EQ exercises (reflection, scenarios, breathing, gratitude)
 - 🤝 **Conflict Reflection** — 5-step empathy walkthrough after difficult interactions
 - 📚 **Vocabulary** — 35+ emotion words with definitions and examples
@@ -27,6 +27,7 @@ A beautiful Android app to help you develop emotional intelligence through daily
 | Database | Room |
 | Navigation | Jetpack Navigation Compose |
 | Notifications | AlarmManager + BroadcastReceiver |
+| AI | Gemini Flash-Lite via a Cloudflare Worker (`/worker`) |
 
 ---
 

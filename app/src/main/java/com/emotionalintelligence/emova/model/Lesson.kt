@@ -197,5 +197,120 @@ val lessonLibrary = listOf(
             finishTitleResId = R.string.lesson_dd_done_title,
             finishBodyResId = R.string.lesson_dd_done_body
         )
+    ),
+
+    Lesson(
+        id = "mo_01",
+        titleResId = R.string.lesson_mt01_title,
+        category = LessonCategory.MOTIVATION,
+        duration = "4 min",
+        descriptionResId = R.string.lesson_mt01_desc,
+        content = LessonContent.Reflection(
+            promptResId = R.string.lesson_mt01_prompt,
+            hintResIds = listOf(R.string.lesson_mt01_hint1, R.string.lesson_mt01_hint2, R.string.lesson_mt01_hint3)
+        )
+    ),
+
+    Lesson(
+        id = "mo_02",
+        titleResId = R.string.lesson_mt02_title,
+        category = LessonCategory.MOTIVATION,
+        duration = "3 min",
+        descriptionResId = R.string.lesson_mt02_desc,
+        content = LessonContent.Scenario(
+            situationResId = R.string.lesson_mt02_situation,
+            options = listOf(
+                ScenarioOption(R.string.lesson_mt02_opt1_text, R.string.lesson_mt02_opt1_fb, false),
+                ScenarioOption(R.string.lesson_mt02_opt2_text, R.string.lesson_mt02_opt2_fb, true),
+                ScenarioOption(R.string.lesson_mt02_opt3_text, R.string.lesson_mt02_opt3_fb, false)
+            )
+        )
+    ),
+
+    Lesson(
+        id = "mo_03",
+        titleResId = R.string.lesson_mt03_title,
+        category = LessonCategory.MOTIVATION,
+        duration = "4 min",
+        descriptionResId = R.string.lesson_mt03_desc,
+        content = LessonContent.GuidedJournal(
+            promptResIds = listOf(R.string.lesson_mt03_q1, R.string.lesson_mt03_q2, R.string.lesson_mt03_q3),
+            finishEmoji = "🏆",
+            finishTitleResId = R.string.lesson_mt03_done_title,
+            finishBodyResId = R.string.lesson_mt03_done_body
+        )
+    ),
+
+    Lesson(
+        id = "ss_02",
+        titleResId = R.string.lesson_ss02_title,
+        category = LessonCategory.SOCIAL,
+        duration = "3 min",
+        descriptionResId = R.string.lesson_ss02_desc,
+        content = LessonContent.Scenario(
+            situationResId = R.string.lesson_ss02_situation,
+            options = listOf(
+                ScenarioOption(R.string.lesson_ss02_opt1_text, R.string.lesson_ss02_opt1_fb, false),
+                ScenarioOption(R.string.lesson_ss02_opt2_text, R.string.lesson_ss02_opt2_fb, true),
+                ScenarioOption(R.string.lesson_ss02_opt3_text, R.string.lesson_ss02_opt3_fb, false)
+            )
+        )
+    ),
+
+    Lesson(
+        id = "ss_03",
+        titleResId = R.string.lesson_ss03_title,
+        category = LessonCategory.SOCIAL,
+        duration = "4 min",
+        descriptionResId = R.string.lesson_ss03_desc,
+        content = LessonContent.Reflection(
+            promptResId = R.string.lesson_ss03_prompt,
+            hintResIds = listOf(R.string.lesson_ss03_hint1, R.string.lesson_ss03_hint2, R.string.lesson_ss03_hint3)
+        )
+    ),
+
+    Lesson(
+        id = "re_03",
+        titleResId = R.string.lesson_re03_title,
+        category = LessonCategory.REGULATION,
+        duration = "3 min",
+        descriptionResId = R.string.lesson_re03_desc,
+        content = LessonContent.Reflection(
+            promptResId = R.string.lesson_re03_prompt,
+            hintResIds = listOf(R.string.lesson_re03_hint1, R.string.lesson_re03_hint2, R.string.lesson_re03_hint3)
+        )
+    ),
+
+    Lesson(
+        id = "re_04",
+        titleResId = R.string.lesson_re04_title,
+        category = LessonCategory.REGULATION,
+        duration = "3 min",
+        descriptionResId = R.string.lesson_re04_desc,
+        content = LessonContent.Scenario(
+            situationResId = R.string.lesson_re04_situation,
+            options = listOf(
+                ScenarioOption(R.string.lesson_re04_opt1_text, R.string.lesson_re04_opt1_fb, false),
+                ScenarioOption(R.string.lesson_re04_opt2_text, R.string.lesson_re04_opt2_fb, true),
+                ScenarioOption(R.string.lesson_re04_opt3_text, R.string.lesson_re04_opt3_fb, false)
+            )
+        )
     )
 )
+
+/**
+ * The order lessons are offered as "today's lesson": categories are interleaved so the
+ * daily lesson feels varied. Lessons missing from this list are appended at the end.
+ */
+private val lessonPathOrder = listOf(
+    "sa_01", "re_01", "em_01", "mo_01", "ss_01",
+    "sa_02", "re_02", "em_02", "mo_02", "ss_02",
+    "dd_01", "sa_03", "re_03", "em_03", "mo_03",
+    "ss_03", "re_04", "dd_02"
+)
+
+val lessonPath: List<Lesson> = run {
+    val byId = lessonLibrary.associateBy { it.id }
+    val ordered = lessonPathOrder.mapNotNull { byId[it] }
+    ordered + lessonLibrary.filter { it !in ordered }
+}

@@ -24,15 +24,16 @@ android {
         applicationId = "com.emotionalintelligence.emova"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "1.0.3"
+        versionCode = 4
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // Obtenemos la llave. Si no existe, ponemos un string vacío para que no falle el build
-        // Busca estas líneas y cámbialas para que digan GROQ:
-        val apiKey = localProperties.getProperty("GROQ_API_KEY") ?: ""
-        buildConfigField("String", "GROQ_API_KEY", "\"$apiKey\"")
+        // The AI key lives ONLY in the Cloudflare Worker (see /worker). The app just sends
+        // an optional shared token so random traffic is rejected. Put it in local.properties:
+        //   APP_TOKEN=some-long-random-string
+        val appToken = localProperties.getProperty("APP_TOKEN") ?: ""
+        buildConfigField("String", "APP_TOKEN", "\"$appToken\"")
     }
 
     buildTypes {
