@@ -268,6 +268,7 @@ private fun EmotionBarsCard(bars: List<EmotionBar>) {
 private fun WeekStripCard(days: List<DayDot>) {
     Column(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Color.White).padding(16.dp)) {
         Text(stringResource(R.string.ins_week_title), fontSize = 15.sp, fontWeight = FontWeight.Bold, color = Ink)
+        Text(stringResource(R.string.ins_week_note), fontSize = 11.sp, color = Muted)
         Spacer(Modifier.height(12.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             days.forEach { day ->
@@ -366,6 +367,7 @@ private fun HistoryCard(item: HistoryItem, isExpanded: Boolean, onToggle: () -> 
                 }
                 HistoryField(stringResource(R.string.ins_h_note), item.note)
                 HistoryField(stringResource(R.string.ins_h_could), item.couldHaveDone)
+                HistoryField(stringResource(R.string.ins_h_perspective), item.perspective)
                 HistoryField(stringResource(R.string.w_plan_cue), item.planCue)
                 HistoryField(stringResource(R.string.w_plan_instead), item.planInstead)
                 HistoryField(stringResource(R.string.w_plan_will), item.plan)

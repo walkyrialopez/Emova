@@ -148,6 +148,7 @@ fun CheckInScreen(
                     CheckInStep.EMOTION -> EmotionStep(ui, viewModel)
                     CheckInStep.INTENSITY_CONTEXT -> IntensityContextStep(ui, viewModel)
                     CheckInStep.REFLECT -> ReflectStep(ui, viewModel)
+                    CheckInStep.PERSPECTIVE -> PerspectiveStep(ui, viewModel)
                     CheckInStep.PLAN -> PlanStep(ui, viewModel)
                     CheckInStep.RESULT -> ResultStep(ui, viewModel, onOpenMindfulness)
                 }
@@ -340,7 +341,44 @@ private fun ReflectStep(ui: CheckInUiState, vm: CheckInViewModel) {
     )
 }
 
-// ─── Step 4 (worksheet step 5): ¿Qué quieres lograr? ──────────────────────────
+// ─── Another angle: what could help you see it differently? ───────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun PerspectiveStep(ui: CheckInUiState, vm: CheckInViewModel) {
+    val emotion = ui.selectedEmotion ?: return
+    val ideas = listOf(
+        R.string.w_persp_c1, R.string.w_persp_c2, R.string.w_persp_c3, R.string.w_persp_c4, R.string.w_persp_c5
+    ).map { stringResource(it) }
+
+    StepTitle(stringResource(R.string.w_persp_title), stringResource(R.string.w_persp_subtitle))
+    Spacer(Modifier.height(20.dp))
+
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        ideas.forEach { text ->
+            FilterChip(
+                selected = ui.perspective == text,
+                onClick = { vm.setPerspective(text) },
+                label = { Text(text, fontSize = 13.sp) },
+                colors = FilterChipDefaults.filterChipColors(
+                    selectedContainerColor = emotion.color.copy(alpha = 0.18f),
+                    selectedLabelColor = Ink
+                )
+            )
+        }
+    }
+
+    Spacer(Modifier.height(16.dp))
+    TextArea(ui.perspective, vm::setPerspective, stringResource(R.string.w_persp_hint), height = 120.dp)
+
+    Spacer(Modifier.height(28.dp))
+    PrimaryButton(text = stringResource(R.string.w_continue), color = emotion.color, onClick = vm::next)
+}
+
+// ─── Last step (worksheet step 5): ¿Qué quieres lograr? ──────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -480,8 +518,9 @@ private fun ResultStep(ui: CheckInUiState, vm: CheckInViewModel, onOpenMindfulne
         }
     }
 
-    // Don't ask "how do you feel now?" while a crisis message is on screen or the note is still loading.
-    if (!ui.aiLoading && !ui.showCrisisCard) {
+    // "How strong is it now?" only makes sense for difficult emotions (it measures relief), and never
+    // while a crisis message is on screen or the note is still loading.
+    if (!ui.aiLoading && !ui.showCrisisCard && !ui.isPositive) {
         Spacer(Modifier.height(28.dp))
         IntensitySlider(
             value = ui.finalIntensity,
@@ -490,7 +529,7 @@ private fun ResultStep(ui: CheckInUiState, vm: CheckInViewModel, onOpenMindfulne
             title = stringResource(R.string.w_after_title)
         )
 
-        if (!ui.isPositive) {
+        run {
             Spacer(Modifier.height(20.dp))
             OutlinedButton(
                 onClick = onOpenMindfulness,

@@ -977,7 +977,7 @@
     <string name="w_result_title">A note for you</string>
     <string name="w_result_loading">Writing something for you…</string>
     <string name="w_ai_fallback">Thank you for taking a moment to notice what you feel. Naming it is already a real step. Be gentle with yourself today.</string>
-    <string name="w_ai_disclaimer">Written by AI, so it can make mistakes. Your check-ins are saved only on this device; the text of this one is sent to an AI service to write this note.</string>
+    <string name="w_ai_disclaimer">Written by AI, so it can make mistakes. It is generated anonymously: your name and any personal data are never sent, only the text of this check-in. Your check-ins are saved only on this device.</string>
     <string name="w_crisis_title">You don\'t have to carry this alone</string>
     <string name="w_crisis_body">What you wrote sounds really heavy. If you might hurt yourself or you are in danger, please contact your local emergency number right now. You can also find a helpline in your country at findahelpline.com. Reaching out to someone you trust today can help too.</string>
     <string name="w_after_title">How strong is it now?</string>
@@ -1031,7 +1031,7 @@
     <string name="w_how_title">How would you handle it now?</string>
     <string name="w_how_subtitle">Think of a real situation. Answer only what you want.</string>
     <string name="w_how_q1">Think of a time this emotion got the better of you. What happened?</string>
-    <string name="w_how_q2">Looking back, what could you have done differently?</string>
+    <string name="w_how_q2">What could you have done to stay more in control?</string>
     <string name="w_goal_title">How do you want to respond?</string>
     <string name="w_goal_subtitle">Build your plan for the next time.</string>
     <string name="w_plan_cue">When I feel it again:</string>
@@ -1188,4 +1188,33 @@
     <string name="haptic_l_done">1 long vibration</string>
     <string name="haptic_m_done">You\'re done</string>
     <string name="haptic_note">If you don\'t feel anything, check that vibration is turned on in your phone\'s settings. A 3-second countdown gives you time to close your eyes.</string>
+
+    <!-- v1.1.1: perspective step, tip notification, small fixes -->
+    <string name="w_persp_title">What principle or perspective could help you see it differently?</string>
+    <string name="w_persp_subtitle">Write a thought that helps, or pick one. It\'s optional.</string>
+    <string name="w_persp_hint">Or write your own…</string>
+    <string name="w_persp_c1">This is temporary and it will pass</string>
+    <string name="w_persp_c2">Will this matter a year from now?</string>
+    <string name="w_persp_c3">What they did says more about them than about my worth</string>
+    <string name="w_persp_c4">I can\'t control what happened, but I can choose how I respond</string>
+    <string name="w_persp_c5">I protect myself by responding calmly and respectfully</string>
+    <string name="ins_h_perspective">Another angle</string>
+    <string name="ins_week_note">Always shows your last 7 days, whatever period you picked above.</string>
+    <string name="today_hero_done">Done</string>
+    <string name="gratitude_view_history">View history →</string>
+    <string name="settings_notif_section">Notifications</string>
+    <string name="settings_tip_title">Tip of the day</string>
+    <string name="settings_tip_subtitle">One short tip a day, at a different time than your reminder</string>
+    <string name="settings_tip_time">Tip time</string>
+    <string name="notif_tip_channel_name">Tip of the day</string>
+    <string name="notif_tip_channel_desc">A short daily tip for your well-being</string>
+
+    <!-- breathing cue modes -->
+    <string name="cue_subtitle">Choose how we tell you each phase</string>
+    <string name="cue_voice">Voice</string>
+    <string name="cue_vibration">Vibration</string>
+    <string name="cue_off">No guide</string>
+    <string name="cue_voice_intro">A voice will tell you when to inhale, hold and exhale, so you don\'t need to look at the screen. Tap each one to hear it before you start.</string>
+    <string name="cue_tap_listen">Tap to listen</string>
+    <string name="cue_voice_note">If you can\'t hear it, turn up your media volume. A 3-second countdown gives you time to close your eyes.</string>
 </resources>

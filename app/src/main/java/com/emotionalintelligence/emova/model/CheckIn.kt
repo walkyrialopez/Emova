@@ -33,7 +33,11 @@ data class CheckIn(
     /** Step 5, field 2: "En lugar de hacer esto:" */
     @ColumnInfo(defaultValue = "''") val planInstead: String = "",
     /** Step 1/2: "¿Es una emoción que te cuesta controlar?" */
-    @ColumnInfo(defaultValue = "0") val hardToControl: Boolean = false
+    @ColumnInfo(defaultValue = "0") val hardToControl: Boolean = false,
+
+    // ── Added in DB v7 ────────────────────────────────────────────────────
+    /** "¿Qué podría ayudarte a verlo desde otro ángulo?" (free text, optional) */
+    @ColumnInfo(defaultValue = "''") val perspective: String = ""
 ) {
     val triggerList: List<String>
         get() = if (triggers.isBlank()) emptyList() else triggers.split(",").filter { it.isNotBlank() }

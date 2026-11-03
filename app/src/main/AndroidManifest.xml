@@ -39,6 +39,8 @@
 
         <receiver android:name=".notifications.CheckInReminderReceiver"
             android:exported="false"/>
+        <receiver android:name=".notifications.DailyTipReceiver"
+            android:exported="false"/>
         <receiver android:name=".notifications.BootReceiver"
             android:exported="true">
             <intent-filter>

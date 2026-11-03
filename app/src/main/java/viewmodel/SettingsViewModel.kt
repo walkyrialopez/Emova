@@ -13,6 +13,8 @@ data class SettingsUiState(
     val notificationsEnabled: Boolean = false,
     val reminderHour: Int = 20,
     val reminderMinute: Int = 0,
+    val tipEnabled: Boolean = false,
+    val tipHour: Int = 11,
     val language: AppLanguage = AppLanguage.ENGLISH
 )
 
@@ -26,6 +28,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             notificationsEnabled = prefs.getBoolean("notif_enabled", false),
             reminderHour = prefs.getInt("reminder_hour", 20),
             reminderMinute = prefs.getInt("reminder_minute", 0),
+            tipEnabled = prefs.getBoolean("tip_notif_enabled", false),
+            tipHour = prefs.getInt("tip_hour", 11),
             language = AppLanguage.fromCode(
                 prefs.getString("app_language", AppLanguage.ENGLISH.code) ?: AppLanguage.ENGLISH.code
             )
@@ -45,6 +49,16 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun setReminderTime(hour: Int, minute: Int) {
         prefs.edit().putInt("reminder_hour", hour).putInt("reminder_minute", minute).apply()
         _uiState.value = _uiState.value.copy(reminderHour = hour, reminderMinute = minute)
+    }
+
+    fun setTipEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean("tip_notif_enabled", enabled).apply()
+        _uiState.value = _uiState.value.copy(tipEnabled = enabled)
+    }
+
+    fun setTipHour(hour: Int) {
+        prefs.edit().putInt("tip_hour", hour).putInt("tip_minute", 0).apply()
+        _uiState.value = _uiState.value.copy(tipHour = hour)
     }
 
     fun setLanguage(language: AppLanguage) {

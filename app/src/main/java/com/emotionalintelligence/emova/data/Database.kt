@@ -80,6 +80,7 @@ interface HabitRecordDao {
 //   3 → 4: added habit_records table
 //   4 → 5: check-ins gained triggers, plan, finalIntensity, aiComment
 //   5 → 6: check-ins gained couldHaveDone, planCue, planInstead, hardToControl
+//   6 → 7: check-ins gained perspective
 
 val MIGRATION_3_4 = object : Migration(3, 4) {
     override fun migrate(database: SupportSQLiteDatabase) {
@@ -113,9 +114,15 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
     }
 }
 
+val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE checkins ADD COLUMN perspective TEXT NOT NULL DEFAULT ''")
+    }
+}
+
 // Template for your next migration — fill in the ALTER/CREATE statements:
 //
-// val MIGRATION_6_7 = object : Migration(6, 7) {
+// val MIGRATION_7_8 = object : Migration(7, 8) {
 //     override fun migrate(database: SupportSQLiteDatabase) {
 //         database.execSQL("ALTER TABLE checkins ADD COLUMN newField TEXT NOT NULL DEFAULT ''")
 //     }
@@ -125,7 +132,7 @@ val MIGRATION_5_6 = object : Migration(5, 6) {
 
 @Database(
     entities = [CheckIn::class, JournalEntry::class, GratitudeEntry::class, HabitRecord::class],
-    version = 6,
+    version = 7,
     exportSchema = true   // set to true so schema diffs are tracked in version control
 )
 abstract class EmováDatabase : RoomDatabase() {
@@ -144,7 +151,7 @@ abstract class EmováDatabase : RoomDatabase() {
                     EmováDatabase::class.java,
                     "emova_db"
                 )
-                    .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                    .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                     // Add future migrations here: .addMigrations(MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                     // DO NOT add fallbackToDestructiveMigration() — it deletes user data.
                     .build()

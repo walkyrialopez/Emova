@@ -142,9 +142,6 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     WhyInfoButton(expanded = showWhy, onClick = { showWhy = !showWhy })
-                    TextButton(onClick = { showHistory = true }) {
-                        Text(stringResource(R.string.gratitude_history), color = accent, fontWeight = FontWeight.Medium)
-                    }
                 }
             }
             AnimatedVisibility(visible = showWhy) {
@@ -202,7 +199,14 @@ fun GratitudeScreen(onBack: (() -> Unit)? = null, vm: GratitudeViewModel = viewM
                     color = if (canSave) Color.White else Color(0xFF6B6B8A)
                 )
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            // History link lives at the bottom so the header stays uncluttered.
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                TextButton(onClick = { showHistory = true }) {
+                    Text(stringResource(R.string.gratitude_view_history), color = accent, fontWeight = FontWeight.Medium)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

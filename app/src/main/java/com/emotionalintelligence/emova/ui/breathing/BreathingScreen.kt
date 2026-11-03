@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import com.emotionalintelligence.emova.R
+import com.emotionalintelligence.emova.util.BreathCues
 import com.emotionalintelligence.emova.util.BreathHaptics
+import com.emotionalintelligence.emova.util.CueMode
 import kotlinx.coroutines.delay
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -100,8 +102,8 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted
 
     // ── Vibration guide (eyes-closed mode) ───────────────────────────────
     val context = LocalContext.current
-    val haptics = remember { BreathHaptics(context) }
-    var hapticsOn by remember { mutableStateOf(BreathHaptics.isEnabled(context)) }
+    val cues = remember { BreathCues(context) }
+    var mode by remember { mutableStateOf(BreathCues.loadMode(context, cues)) }
     var showHow by remember { mutableStateOf(!BreathHaptics.introSeen(context)) }
     var hasStarted by remember { mutableStateOf(false) }
     var countdown by remember { mutableIntStateOf(0) }   // 3..1 while "get ready", 0 otherwise
@@ -110,7 +112,7 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted
     val view = LocalView.current
     DisposableEffect(Unit) {
         view.keepScreenOn = true
-        onDispose { view.keepScreenOn = false; haptics.cancel() }
+        onDispose { view.keepScreenOn = false; cues.release() }
     }
 
     // 3-2-1 so the person has time to close their eyes before the first inhale.
@@ -121,14 +123,14 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted
         }
     }
 
-    // One vibration pattern per phase change.
+    // One cue (voice or vibration) per phase change.
     LaunchedEffect(isRunning, phase) {
-        if (!isRunning || !hapticsOn || !haptics.isAvailable) return@LaunchedEffect
+        if (!isRunning || mode == CueMode.OFF) return@LaunchedEffect
         when (phase) {
-            BreathPhase.INHALE -> haptics.inhale()
-            BreathPhase.EXHALE -> haptics.exhale()
-            BreathPhase.DONE -> haptics.finish()
-            else -> Unit   // holds: silence
+            BreathPhase.INHALE -> cues.inhale(mode)
+            BreathPhase.HOLD_IN, BreathPhase.HOLD_OUT -> cues.hold(mode)
+            BreathPhase.EXHALE -> cues.exhale(mode)
+            BreathPhase.DONE -> cues.done(mode)
         }
     }
 
@@ -196,14 +198,14 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted
             }
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Vibration guide: explained before the first start, toggleable afterwards.
-            if (!hasStarted && haptics.isAvailable) {
-                HapticGuide(
-                    haptics = haptics,
-                    enabled = hapticsOn,
+            // Cue guide (voice / vibration / none): explained before the first start.
+            if (!hasStarted && (cues.voiceAvailable || cues.vibrationAvailable)) {
+                CueGuide(
+                    cues = cues,
+                    mode = mode,
                     expanded = showHow,
                     accent = pattern.color,
-                    onToggle = { hapticsOn = it; BreathHaptics.setEnabled(context, it) },
+                    onModeChange = { mode = it; BreathCues.saveMode(context, it) },
                     onExpandChange = { showHow = it }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
@@ -233,15 +235,15 @@ fun BreathingExercise(pattern: BreathingPattern, onBack: () -> Unit, onCompleted
     }
 }
 
-// ─── Vibration guide (explains the eyes-closed mode before the exercise starts) ──
+// ─── Cue guide: voice / vibration / none (explains the eyes-closed mode) ──────
 
 @Composable
-private fun HapticGuide(
-    haptics: BreathHaptics,
-    enabled: Boolean,
+private fun CueGuide(
+    cues: BreathCues,
+    mode: CueMode,
     expanded: Boolean,
     accent: Color,
-    onToggle: (Boolean) -> Unit,
+    onModeChange: (CueMode) -> Unit,
     onExpandChange: (Boolean) -> Unit
 ) {
     Column(
@@ -251,20 +253,34 @@ private fun HapticGuide(
             .padding(14.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("📳", fontSize = 22.sp)
+            Text("🎧", fontSize = 22.sp)
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(stringResource(R.string.haptic_title), fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1A2E))
-                Text(stringResource(R.string.haptic_toggle), fontSize = 12.sp, color = Color(0xFF6B6B8A))
+                Text(stringResource(R.string.cue_subtitle), fontSize = 12.sp, color = Color(0xFF6B6B8A))
             }
-            Switch(
-                checked = enabled,
-                onCheckedChange = onToggle,
-                colors = SwitchDefaults.colors(checkedTrackColor = accent)
-            )
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            @Composable
+            fun ModeChip(target: CueMode, label: Int) {
+                FilterChip(
+                    selected = mode == target,
+                    onClick = { onModeChange(target) },
+                    label = { Text(stringResource(label), fontSize = 13.sp) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = accent.copy(alpha = 0.18f),
+                        selectedLabelColor = Color(0xFF1A1A2E)
+                    )
+                )
+            }
+            if (cues.voiceAvailable) ModeChip(CueMode.VOICE, R.string.cue_voice)
+            if (cues.vibrationAvailable) ModeChip(CueMode.VIBRATION, R.string.cue_vibration)
+            ModeChip(CueMode.OFF, R.string.cue_off)
         }
 
-        if (enabled) {
+        if (mode != CueMode.OFF) {
             TextButton(onClick = { onExpandChange(!expanded) }, contentPadding = PaddingValues(horizontal = 0.dp)) {
                 Text(
                     stringResource(if (expanded) R.string.haptic_hide else R.string.haptic_how),
@@ -273,12 +289,22 @@ private fun HapticGuide(
             }
             AnimatedVisibility(visible = expanded) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.haptic_intro), fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 19.sp)
-                    HapticRow("•", stringResource(R.string.haptic_l_inhale), stringResource(R.string.breathe_inhale), accent) { haptics.inhale() }
-                    HapticRow("• •", stringResource(R.string.haptic_l_exhale), stringResource(R.string.breathe_exhale), accent) { haptics.exhale() }
-                    HapticRow("·", stringResource(R.string.haptic_l_hold), stringResource(R.string.breathe_hold), accent, onTest = null)
-                    HapticRow("▬", stringResource(R.string.haptic_l_done), stringResource(R.string.haptic_m_done), accent) { haptics.finish() }
-                    Text(stringResource(R.string.haptic_note), fontSize = 11.sp, color = Color(0xFF6B6B8A), lineHeight = 16.sp)
+                    if (mode == CueMode.VOICE) {
+                        Text(stringResource(R.string.cue_voice_intro), fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 19.sp)
+                        val listen = stringResource(R.string.cue_tap_listen)
+                        HapticRow("↑", listen, stringResource(R.string.breathe_inhale), accent) { cues.inhale(CueMode.VOICE) }
+                        if (cues.hasSound("hold")) HapticRow("→", listen, stringResource(R.string.breathe_hold), accent) { cues.hold(CueMode.VOICE) }
+                        HapticRow("↓", listen, stringResource(R.string.breathe_exhale), accent) { cues.exhale(CueMode.VOICE) }
+                        if (cues.hasSound("done")) HapticRow("✓", listen, stringResource(R.string.haptic_m_done), accent) { cues.done(CueMode.VOICE) }
+                        Text(stringResource(R.string.cue_voice_note), fontSize = 11.sp, color = Color(0xFF6B6B8A), lineHeight = 16.sp)
+                    } else {
+                        Text(stringResource(R.string.haptic_intro), fontSize = 13.sp, color = Color(0xFF1A1A2E), lineHeight = 19.sp)
+                        HapticRow("•", stringResource(R.string.haptic_l_inhale), stringResource(R.string.breathe_inhale), accent) { cues.inhale(CueMode.VIBRATION) }
+                        HapticRow("• •", stringResource(R.string.haptic_l_exhale), stringResource(R.string.breathe_exhale), accent) { cues.exhale(CueMode.VIBRATION) }
+                        HapticRow("·", stringResource(R.string.haptic_l_hold), stringResource(R.string.breathe_hold), accent, onTest = null)
+                        HapticRow("▬", stringResource(R.string.haptic_l_done), stringResource(R.string.haptic_m_done), accent) { cues.done(CueMode.VIBRATION) }
+                        Text(stringResource(R.string.haptic_note), fontSize = 11.sp, color = Color(0xFF6B6B8A), lineHeight = 16.sp)
+                    }
                 }
             }
         }

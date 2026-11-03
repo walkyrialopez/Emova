@@ -46,6 +46,15 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         }
     }
 
+    val tipPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            viewModel.setTipEnabled(true)
+            NotificationScheduler.scheduleDailyTip(context, uiState.tipHour, 0)
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -109,7 +118,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         Spacer(modifier = Modifier.height(20.dp))
 
         // ── Notifications ─────────────────────────────────────────────────────
-        SectionHeader("🔔 Notifications")
+        SectionHeader("🔔 " + stringResource(R.string.settings_notif_section))
         SettingsCard {
             // ... (El código de notificaciones queda exactamente igual) ...
             Row(
@@ -167,6 +176,75 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
                                 .clickable {
                                     viewModel.setReminderTime(hour, 0)
                                     NotificationScheduler.scheduleDailyReminder(context, hour, 0)
+                                }
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 12.sp,
+                                color = if (isSelected) Color.White else Color(0xFF666688),
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        // ── Tip of the day (its own switch and time, different from the reminder) ──
+        Spacer(modifier = Modifier.height(12.dp))
+        SettingsCard {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(stringResource(R.string.settings_tip_title), fontSize = 15.sp, fontWeight = FontWeight.Medium, color = Color(0xFF111130))
+                    Text(stringResource(R.string.settings_tip_subtitle), fontSize = 12.sp, color = Color(0xFF666688))
+                }
+                Switch(
+                    checked = uiState.tipEnabled,
+                    onCheckedChange = { enabled ->
+                        if (enabled) {
+                            val needsPermission = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                                ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                            if (needsPermission) {
+                                tipPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                viewModel.setTipEnabled(true)
+                                NotificationScheduler.scheduleDailyTip(context, uiState.tipHour, 0)
+                            }
+                        } else {
+                            viewModel.setTipEnabled(false)
+                            NotificationScheduler.cancelDailyTip(context)
+                        }
+                    },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = Color(0xFF6C63FF)
+                    )
+                )
+            }
+
+            if (uiState.tipEnabled) {
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider(color = Color(0xFFEEEEF5))
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(stringResource(R.string.settings_tip_time), fontSize = 14.sp, color = Color(0xFF666688))
+                Spacer(modifier = Modifier.height(10.dp))
+                // None of these hours coincides with the reminder options (8, 12, 18, 20, 22).
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    listOf(9 to "9 AM", 11 to "11 AM", 14 to "2 PM", 16 to "4 PM", 19 to "7 PM").forEach { (hour, label) ->
+                        val isSelected = uiState.tipHour == hour
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(if (isSelected) Color(0xFF6C63FF) else Color(0xFFEEEEF5))
+                                .clickable {
+                                    viewModel.setTipHour(hour)
+                                    NotificationScheduler.scheduleDailyTip(context, hour, 0)
                                 }
                                 .padding(horizontal = 12.dp, vertical = 8.dp),
                             contentAlignment = Alignment.Center
@@ -241,7 +319,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
         SettingsCard {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) { // Aumenté un poco el espaciado para que respire
                 AboutRow(stringResource(R.string.settings_about_app), stringResource(R.string.settings_about_app_value))
-                AboutRow(stringResource(R.string.settings_about_version), "1.0.0")
+                AboutRow(stringResource(R.string.settings_about_version), "2.0.0")
                 AboutRow(stringResource(R.string.settings_about_built), "Jetpack Compose + Room")
             }
         }

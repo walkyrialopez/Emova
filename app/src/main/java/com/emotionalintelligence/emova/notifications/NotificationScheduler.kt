@@ -9,15 +9,35 @@ import java.util.Calendar
 
 object NotificationScheduler {
 
+    private const val REQ_REMINDER = 0
+    private const val REQ_TIP = 1
+
+    // ── Daily check-in reminder ──────────────────────────────────────────────
     fun scheduleDailyReminder(context: Context, hourOfDay: Int = 20, minute: Int = 0) {
         createNotificationChannel(context)
+        schedule(context, REQ_REMINDER, CheckInReminderReceiver::class.java, hourOfDay, minute)
+    }
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, CheckInReminderReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, 0, intent,
+    fun cancelReminder(context: Context) = cancel(context, REQ_REMINDER, CheckInReminderReceiver::class.java)
+
+    // ── Daily tip (a different time than the reminder) ────────────────────────
+    fun scheduleDailyTip(context: Context, hourOfDay: Int = 11, minute: Int = 0) {
+        createTipChannel(context)
+        schedule(context, REQ_TIP, DailyTipReceiver::class.java, hourOfDay, minute)
+    }
+
+    fun cancelDailyTip(context: Context) = cancel(context, REQ_TIP, DailyTipReceiver::class.java)
+
+    // ── Shared ───────────────────────────────────────────────────────────────
+    private fun pendingIntent(context: Context, requestCode: Int, receiver: Class<*>): PendingIntent =
+        PendingIntent.getBroadcast(
+            context, requestCode, Intent(context, receiver),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+
+    private fun schedule(context: Context, requestCode: Int, receiver: Class<*>, hourOfDay: Int, minute: Int) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pending = pendingIntent(context, requestCode, receiver)
 
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, hourOfDay)
@@ -25,44 +45,21 @@ object NotificationScheduler {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
             // If time already passed today, schedule for tomorrow
-            if (timeInMillis <= System.currentTimeMillis()) {
-                add(Calendar.DAY_OF_YEAR, 1)
-            }
+            if (timeInMillis <= System.currentTimeMillis()) add(Calendar.DAY_OF_YEAR, 1)
         }
 
-        // Android 12+ requires canScheduleExactAlarms check
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (alarmManager.canScheduleExactAlarms()) {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
-                )
-            } else {
-                // Fallback to inexact if permission not granted
-                alarmManager.setInexactRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    AlarmManager.INTERVAL_DAY,
-                    pendingIntent
-                )
-            }
-        } else {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
+        // Android 12+ requires the canScheduleExactAlarms check
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pending
             )
+        } else {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pending)
         }
     }
 
-    fun cancelReminder(context: Context) {
+    private fun cancel(context: Context, requestCode: Int, receiver: Class<*>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, CheckInReminderReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager.cancel(pendingIntent)
+        alarmManager.cancel(pendingIntent(context, requestCode, receiver))
     }
 }

@@ -251,7 +251,7 @@ fun TodayScreen(
         if (state.checkInDone && state.todayEmotionName.isNotBlank()) {
             EmotionHeroCard(
                 emoji     = todayEmoji,
-                name      = state.todayEmotionName,
+                name      = displayEmotionName,
                 intensity = state.todayEmotionIntensity,
                 time      = state.checkInTime
             )
@@ -309,7 +309,7 @@ fun TodayScreen(
                 iconBg    = Color(0xFFEEEDFE),
                 title     = stringResource(R.string.habit_checkin_title),
                 subtitle  = if (state.checkInDone)
-                    stringResource(R.string.habit_checkin_done, state.todayEmotionName, state.checkInTime)
+                    stringResource(R.string.habit_checkin_done, displayEmotionName, state.checkInTime)
                 else
                     stringResource(R.string.habit_checkin_cta),
                 isDone    = state.checkInDone,
@@ -404,7 +404,7 @@ fun EmotionHeroCard(emoji: String, name: String, intensity: Int, time: String) {
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = "Intensity $intensity • $time",
+                text = "${stringResource(R.string.ins_h_intensity_single, intensity)} • $time",
                 fontSize = 13.sp,
                 color = Color(0xFF6B6B8A)
             )
@@ -416,7 +416,7 @@ fun EmotionHeroCard(emoji: String, name: String, intensity: Int, time: String) {
                 .padding(horizontal = 12.dp, vertical = 6.dp)
         ) {
             Text(
-                text = "Done",
+                text = stringResource(R.string.today_hero_done),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF6C63FF)
